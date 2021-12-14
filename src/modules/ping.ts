@@ -16,7 +16,7 @@ class Ping implements Command {
   }
 
   run(interaction: CommandInteraction): void {
-    interaction.reply(this.id);
+    interaction.reply(`${this.id} Pong 🏓!`);
   }
 }
 

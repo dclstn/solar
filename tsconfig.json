@@ -2,7 +2,6 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "watch": true,
     "outDir": "dist",
     "moduleResolution": "node",
     "baseUrl": "src"

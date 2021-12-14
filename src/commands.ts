@@ -1,4 +1,4 @@
-import {Interaction} from 'discord.js';
+import {CommandInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Command} from 'types/command';
 import client from './client.js';
@@ -10,8 +10,8 @@ class Commands extends EventEmitter {
     super();
     this.commands = [];
 
-    client.on('interactionCreate', (interaction: Interaction) => {
-      console.log(interaction);
+    client.on('interactionCreate', (interaction: CommandInteraction) => {
+      this.emit(interaction.commandName, interaction);
     });
   }
 
