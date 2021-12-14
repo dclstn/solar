@@ -17,11 +17,11 @@ class Commands extends EventEmitter {
     });
   }
 
-  register(command: Command) {
+  registerCommand(command: Command): void {
     this.commands.push(command);
   }
 
-  async reload() {
+  async reloadApplicationCommands(): Promise<void> {
     const commands = this.commands.map((command: Command) => ({
       name: command.name,
       description: command.description,

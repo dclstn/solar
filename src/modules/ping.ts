@@ -18,4 +18,4 @@ class Ping implements Command {
   }
 }
 
-commands.register(new Ping());
+commands.registerCommand(new Ping());

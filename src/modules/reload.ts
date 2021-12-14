@@ -15,9 +15,9 @@ class Reload implements Command {
 
   async run(interaction: CommandInteraction): Promise<void> {
     try {
-      await commands.reload();
+      await commands.reloadApplicationCommands();
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       interaction.reply('Failed to reload commands.');
       return;
     }
@@ -26,4 +26,4 @@ class Reload implements Command {
   }
 }
 
-commands.register(new Reload());
+commands.registerCommand(new Reload());
