@@ -2,6 +2,7 @@
   "name": "solar-ts",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0",
     "glob": "^7.2.0"
   }
 }

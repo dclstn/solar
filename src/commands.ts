@@ -1,5 +1,7 @@
+import {Interaction} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Command} from 'types/command';
+import client from './client.js';
 
 class Commands extends EventEmitter {
   commands: Command[];
@@ -7,6 +9,10 @@ class Commands extends EventEmitter {
   constructor() {
     super();
     this.commands = [];
+
+    client.on('interactionCreate', (interaction: Interaction) => {
+      console.log(interaction);
+    });
   }
 
   register(command: Command) {
