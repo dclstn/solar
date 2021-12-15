@@ -25,6 +25,7 @@ class Commands extends EventEmitter {
     const commands = this.commands.map((command: Command) => ({
       name: command.name,
       description: command.description,
+      options: command.options,
     }));
 
     await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID), {body: commands});

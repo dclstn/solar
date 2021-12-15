@@ -17,7 +17,7 @@ class Reload implements Command {
     try {
       await commands.reloadApplicationCommands();
     } catch (err) {
-      // console.error(err);
+      console.error(err);
       interaction.reply('Failed to reload commands.');
       return;
     }
