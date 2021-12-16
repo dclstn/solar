@@ -6,23 +6,31 @@ import rest from './rest.js';
 import client from './client.js';
 
 class Commands extends EventEmitter {
-  commands: Command[];
+  commands: Map<string, Command>;
 
   constructor() {
     super();
-    this.commands = [];
+    this.commands = new Map();
 
     client.on('interactionCreate', (interaction: CommandInteraction) => {
       this.emit(interaction.commandName, interaction);
     });
   }
 
+  getCommands() {
+    return this.commands;
+  }
+
   registerCommand(command: Command): void {
-    this.commands.push(command);
+    if (this.commands.has(command.name)) {
+      throw new Error(`Command name '${command.name}' is already registered.`);
+    }
+
+    this.commands.set(command.name, command);
   }
 
   async reloadApplicationCommands(): Promise<void> {
-    const commands = this.commands.map((command: Command) => ({
+    const commands = Array.from(this.commands.values()).map((command: Command) => ({
       name: command.name,
       description: command.description,
       options: command.options,

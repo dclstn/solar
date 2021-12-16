@@ -10,6 +10,8 @@ export interface CommandOption {
   type: number;
   description: string;
   required?: boolean;
+  min_value?: number;
+  max_value?: number;
   choices?: Array<CommandOptionChoice>;
 }
 

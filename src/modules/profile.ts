@@ -11,11 +11,11 @@ class Profile implements Command {
 
   constructor() {
     this.name = 'profile';
-    this.description = "Return a user's profile.";
+    this.description = "🔎 Return a user's profile.";
     this.options = [
       {
         name: 'user',
-        description: "🔎 Inspect a selected user's profile",
+        description: "Inspect a selected user's profile",
         type: ApplicationCommandOptionTypes.USER,
       },
     ];

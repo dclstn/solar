@@ -16,7 +16,9 @@ export interface UserInterface extends Mongoose.Document {
   flags: number;
   level: number;
   gems: number;
+  gold: number;
   inventory: Array<ItemInterface>;
+  updated: Date;
   buyItem(item: Item, amount: number): Promise<void>;
   sellItem(itemId: string): Promise<void>;
 }
@@ -34,7 +36,9 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   flags: {type: Number, required: false, default: 0},
   level: {type: Number, default: 0, min: 0},
   gems: {type: Number, default: 0, min: 0},
+  gold: {type: Number, default: 0, min: 0},
   inventory: {type: [ItemSchema], default: []},
+  updated: {type: Date, default: new Date()},
 });
 
 UserSchema.statics = statics;
