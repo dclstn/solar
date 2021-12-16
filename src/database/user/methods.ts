@@ -1,8 +1,7 @@
 import {Item} from 'items.js';
-import client from '../../client.js';
 import constants from '../../constants.js';
 
-export async function buyItem(item: Item, amount: number): Promise<void> {
+export function buyItem(item: Item, amount: number) {
   const totalCost = item.price * amount;
 
   if (totalCost > this.gold) {
@@ -20,7 +19,18 @@ export async function buyItem(item: Item, amount: number): Promise<void> {
   this.gold -= totalCost;
 }
 
-export async function sellItem(id: string) {
-  const user = await client.users.fetch(id);
-  return this.getUser(user);
+export function sellItem(item: Item, amount: number) {
+  if (item == null) {
+    throw new Error(`Item does not exist`);
+  }
+
+  for (let i = 0; i < amount; i += 1) {
+    if (this.inventory.find(({id}) => item.id === id) == null) {
+      throw new Error(`You do not own ${amount}x ${item.name}`);
+    }
+
+    this.inventory.splice(i, 1);
+  }
+
+  this.gold += item.price * amount;
 }

@@ -21,3 +21,8 @@ export interface Command {
   options?: Array<CommandOption>;
   run(interaction: CommandInteraction): void;
 }
+
+export interface MessageCommand {
+  name: string;
+  type: number;
+}

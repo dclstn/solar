@@ -19,8 +19,8 @@ export interface UserInterface extends Mongoose.Document {
   gold: number;
   inventory: Array<ItemInterface>;
   updated: Date;
-  buyItem(item: Item, amount: number): Promise<void>;
-  sellItem(itemId: string): Promise<void>;
+  buyItem(item: Item, amount: number): void;
+  sellItem(item: Item, amount: number): void;
 }
 
 export interface UserModelInterface extends Mongoose.Model<UserInterface> {

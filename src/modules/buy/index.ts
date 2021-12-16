@@ -1,11 +1,11 @@
 import {CommandInteraction} from 'discord.js';
 import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
-import {BuyableItems, findById} from '../items.js';
-import commands from '../commands.js';
-import {Command, CommandOption} from '../types/command';
-import User from '../database/user/index.js';
-import {success, warning} from '../utils/embed.js';
-import logger from '../logger.js';
+import {BuyableItems, findById} from '../../items.js';
+import commands from '../../commands.js';
+import {Command, CommandOption} from '../../types/command';
+import User from '../../database/user/index.js';
+import {success, warning} from '../../utils/embed.js';
+import logger from '../../logger.js';
 
 class Buy implements Command {
   name: string;

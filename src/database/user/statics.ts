@@ -22,7 +22,6 @@ export async function get(user: User) {
   return doc;
 }
 
-export async function getUserById(id: string) {
-  const user = await client.users.fetch(id);
-  return this.getUser(user);
+export async function getById(id: string) {
+  return this.get(await client.users.fetch(id));
 }

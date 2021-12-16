@@ -1,6 +1,6 @@
 import {CommandInteraction} from 'discord.js';
-import commands from '../commands.js';
-import {Command} from '../types/command';
+import commands from '../../commands.js';
+import {Command} from '../../types/command';
 
 class Ping implements Command {
   name: string;

@@ -11,7 +11,7 @@ try {
   process.exit(1);
 }
 
-glob('./dist/modules/*.js', async (err: Error, files: [string]) => {
+glob('./dist/modules/**/index.js', async (err: Error, files: [string]) => {
   if (err) {
     process.exit(1);
   }

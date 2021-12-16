@@ -1,8 +1,8 @@
 import {CommandInteraction, MessageEmbed} from 'discord.js';
 import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
-import User from '../database/user/index.js';
-import commands from '../commands.js';
-import {Command, CommandOption} from '../types/command';
+import User from '../../database/user/index.js';
+import commands from '../../commands.js';
+import {Command, CommandOption} from '../../types/command';
 
 class Profile implements Command {
   name: string;
