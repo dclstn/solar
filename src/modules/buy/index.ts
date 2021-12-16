@@ -1,39 +1,15 @@
 import {CommandInteraction} from 'discord.js';
-import {ApplicationCommandOptionTypes, ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {BuyableItems, findById} from '../../items.js';
+import {ApplicationCommandTypes} from 'discord.js/typings/enums';
+import {findById} from '../../items.js';
 import commands from '../../commands.js';
-import {Command, CommandOption} from '../../types/command';
+import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
 import User from '../../database/user/index.js';
 import {success, warning} from '../../utils/embed.js';
 import logger from '../../logger.js';
 
-class Buy implements Command {
-  type: number;
-  name: string;
-  description: string;
-  options: CommandOption[];
-
+class Buy {
   constructor() {
-    this.type = ApplicationCommandTypes.CHAT_INPUT;
-    this.name = 'buy';
-    this.description = '🛍️ Buy an item for your inventory';
-    this.options = [
-      {
-        name: 'item',
-        description: 'Select the item you wish to buy',
-        type: ApplicationCommandOptionTypes.STRING,
-        required: true,
-        choices: BuyableItems.map(({id, name}) => ({name, value: id})),
-      },
-      {
-        name: 'amount',
-        description: 'How many?',
-        min_value: 1,
-        type: ApplicationCommandOptionTypes.NUMBER,
-      },
-    ];
-
-    commands.on(this.name, async (interaction: CommandInteraction) => {
+    commands.on(CommandNames.BUY, async (interaction: CommandInteraction) => {
       try {
         await this.run(interaction);
       } catch (err) {
@@ -66,4 +42,11 @@ class Buy implements Command {
   }
 }
 
-commands.registerCommand(new Buy());
+commands.registerCommand({
+  type: ApplicationCommandTypes.CHAT_INPUT,
+  name: CommandNames.BUY,
+  description: CommandDescriptions[CommandNames.BUY],
+  options: CommandOptions[CommandNames.BUY],
+});
+
+export default new Buy();

@@ -1,17 +1,11 @@
 import {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
+import {CommandNames, CommandDescriptions} from '../../constants.js';
 import commands from '../../commands.js';
-import {Command} from '../../types/command';
 
-class Ping implements Command {
-  type: ApplicationCommandTypes.CHAT_INPUT;
-  name: string;
-  description: string;
-
+class Ping {
   constructor() {
-    this.name = 'ping';
-    this.description = '🏓 replies with pong!';
-    commands.on(this.name, this.run);
+    commands.on(CommandNames.PING, this.run);
   }
 
   run(interaction: CommandInteraction): void {
@@ -19,4 +13,10 @@ class Ping implements Command {
   }
 }
 
-commands.registerCommand(new Ping());
+commands.registerCommand({
+  type: ApplicationCommandTypes.CHAT_INPUT,
+  name: CommandNames.PING,
+  description: CommandDescriptions[CommandNames.PING],
+});
+
+export default new Ping();

@@ -1,5 +1,5 @@
-import {Item} from 'items.js';
-import constants from '../../constants.js';
+import {Defaults} from '../../constants.js';
+import {findById, Item} from '../../items.js';
 
 export function buyItem(item: Item, amount: number) {
   const totalCost = item.price * amount;
@@ -8,7 +8,7 @@ export function buyItem(item: Item, amount: number) {
     throw new Error(`You do not have enough gold for this purchase`);
   }
 
-  if (amount + this.inventory.length > constants.MAX_SLOTS) {
+  if (amount + this.inventory.length > Defaults.MAX_SLOTS) {
     throw new Error(`You do not have enough slots to complete this purchase`);
   }
 
@@ -33,4 +33,8 @@ export function sellItem(item: Item, amount: number) {
   }
 
   this.gold += item.price * amount;
+}
+
+export function fetchInventory(): Item[] {
+  return this.inventory.map(({id}) => findById(id));
 }

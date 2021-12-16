@@ -1,37 +1,15 @@
 import {CommandInteraction} from 'discord.js';
-import {ApplicationCommandOptionTypes, ApplicationCommandTypes} from 'discord.js/typings/enums';
+import {ApplicationCommandTypes} from 'discord.js/typings/enums';
+import {CommandDescriptions, CommandNames, CommandOptions} from '../../constants.js';
 import {findById} from '../../items.js';
 import commands from '../../commands.js';
-import {Command, CommandOption} from '../../types/command';
 import User from '../../database/user/index.js';
 import {success, warning} from '../../utils/embed.js';
 import logger from '../../logger.js';
 
-class Sell implements Command {
-  type: ApplicationCommandTypes.CHAT_INPUT;
-  name: string;
-  description: string;
-  options: CommandOption[];
-
+class Sell {
   constructor() {
-    this.name = 'sell';
-    this.description = '🛍️ Sell an item for gold';
-    this.options = [
-      {
-        name: 'item',
-        description: 'Select the item you wish to buy',
-        type: ApplicationCommandOptionTypes.STRING,
-        required: true,
-      },
-      {
-        name: 'amount',
-        description: 'How many?',
-        min_value: 1,
-        type: ApplicationCommandOptionTypes.NUMBER,
-      },
-    ];
-
-    commands.on(this.name, async (interaction: CommandInteraction) => {
+    commands.on(CommandNames.SELL, async (interaction: CommandInteraction) => {
       try {
         await this.run(interaction);
       } catch (err) {
@@ -64,4 +42,11 @@ class Sell implements Command {
   }
 }
 
-commands.registerCommand(new Sell());
+commands.registerCommand({
+  type: ApplicationCommandTypes.CHAT_INPUT,
+  name: CommandNames.SELL,
+  description: CommandDescriptions[CommandNames.SELL],
+  options: CommandOptions[CommandNames.SELL],
+});
+
+export default new Sell();
