@@ -1,8 +1,10 @@
 import {CommandInteraction} from 'discord.js';
+import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import commands from '../../commands.js';
 import {Command} from '../../types/command';
 
 class Reload implements Command {
+  type: ApplicationCommandTypes.CHAT_INPUT;
   name: string;
   description: string;
 
@@ -17,7 +19,7 @@ class Reload implements Command {
     try {
       await commands.reloadApplicationCommands();
     } catch (err) {
-      // console.error(err);
+      console.error(err);
       interaction.reply('Failed to reload commands.');
       return;
     }

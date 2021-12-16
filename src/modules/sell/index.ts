@@ -1,5 +1,5 @@
 import {CommandInteraction} from 'discord.js';
-import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
+import {ApplicationCommandOptionTypes, ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {findById} from '../../items.js';
 import commands from '../../commands.js';
 import {Command, CommandOption} from '../../types/command';
@@ -8,6 +8,7 @@ import {success, warning} from '../../utils/embed.js';
 import logger from '../../logger.js';
 
 class Sell implements Command {
+  type: ApplicationCommandTypes.CHAT_INPUT;
   name: string;
   description: string;
   options: CommandOption[];

@@ -1,5 +1,5 @@
 import {CommandInteraction} from 'discord.js';
-import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
+import {ApplicationCommandOptionTypes, ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {BuyableItems, findById} from '../../items.js';
 import commands from '../../commands.js';
 import {Command, CommandOption} from '../../types/command';
@@ -8,11 +8,13 @@ import {success, warning} from '../../utils/embed.js';
 import logger from '../../logger.js';
 
 class Buy implements Command {
+  type: number;
   name: string;
   description: string;
   options: CommandOption[];
 
   constructor() {
+    this.type = ApplicationCommandTypes.CHAT_INPUT;
     this.name = 'buy';
     this.description = '🛍️ Buy an item for your inventory';
     this.options = [

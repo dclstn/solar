@@ -31,6 +31,7 @@ class Commands extends EventEmitter {
 
   async reloadApplicationCommands(): Promise<void> {
     const commands = Array.from(this.commands.values()).map((command: Command) => ({
+      type: command.type,
       name: command.name,
       description: command.description,
       options: command.options,
