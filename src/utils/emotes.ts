@@ -5,6 +5,7 @@ export default {
   right: '<a:right:768500035083698186>',
   left: '<a:left:768499967136104539>',
   gem: '<:gem:768816036245536788>',
+  blank: '<:blankemoji:757302737464721529>',
   invis: '<:invis:769041854251139113>',
   notification: '<:notification:769049918065082369>',
   loading: '<a:loading:762810546067865610>',

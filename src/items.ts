@@ -11,7 +11,7 @@ interface BaseItem {
   name: string;
   type: ItemTypes;
   emojiId: string;
-  price: number;
+  level: number;
   buyable: boolean;
 }
 
@@ -23,7 +23,7 @@ const BaseItems: BaseItem[] = [
     name: 'Basic',
     type: ItemTypes.GENERATOR,
     emojiId: '757396142962245752',
-    price: 0.1,
+    level: 1,
     buyable: true,
   },
   {
@@ -31,7 +31,7 @@ const BaseItems: BaseItem[] = [
     name: 'Bronze',
     type: ItemTypes.GENERATOR,
     emojiId: '757395337685237771',
-    price: 0.2,
+    level: 2,
     buyable: true,
   },
   {
@@ -39,7 +39,7 @@ const BaseItems: BaseItem[] = [
     name: 'Gold',
     type: ItemTypes.GENERATOR,
     emojiId: '757394237623894118',
-    price: 0.3,
+    level: 3,
     buyable: true,
   },
   {
@@ -47,7 +47,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '757333439782453359',
     id: 'ruby',
-    price: 0.5,
+    level: 4,
     buyable: true,
   },
   {
@@ -55,7 +55,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '757333439631589486',
     id: 'diamond',
-    price: 1,
+    level: 5,
     buyable: true,
   },
   {
@@ -63,7 +63,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '757333439648366642',
     id: 'emerald',
-    price: 2,
+    level: 6,
     buyable: true,
   },
   {
@@ -71,7 +71,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '761298415149121578',
     id: 'acid',
-    price: 3,
+    level: 7,
     buyable: true,
   },
   {
@@ -79,7 +79,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '766695960817827861',
     id: 'seaside',
-    price: 5,
+    level: 8,
     buyable: true,
   },
   {
@@ -87,7 +87,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '757611084101451846',
     id: 'fade',
-    price: 10,
+    level: 9,
     buyable: true,
   },
   {
@@ -95,7 +95,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '757615307811586048',
     id: 'moon',
-    price: 20,
+    level: 10,
     buyable: true,
   },
   {
@@ -103,7 +103,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '757628531264978944',
     id: 'sun',
-    price: 30,
+    level: 11,
     buyable: true,
   },
   {
@@ -111,7 +111,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '761280663017881640',
     id: 'rainbow',
-    price: 50,
+    level: 12,
     buyable: true,
   },
   {
@@ -119,7 +119,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '761289756692185098',
     id: 'disco',
-    price: 100,
+    level: 13,
     buyable: true,
   },
   {
@@ -127,7 +127,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '765942419518521366',
     id: 'king',
-    price: 200,
+    level: 14,
     buyable: true,
   },
   {
@@ -135,7 +135,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '775214117719769140',
     id: 'mythic',
-    price: 300,
+    level: 15,
     buyable: true,
   },
   {
@@ -143,7 +143,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '772493391082553354',
     id: 'pepe',
-    price: 500,
+    level: 15,
     buyable: false,
   },
   {
@@ -151,7 +151,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '766678940970123296',
     id: 'pumpkin',
-    price: 500,
+    level: 15,
     buyable: month === '10',
   },
   {
@@ -159,7 +159,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '766680624504635443',
     id: 'skeleton',
-    price: 500,
+    level: 15,
     buyable: month === '10',
   },
   {
@@ -167,7 +167,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '780028217092341780',
     id: 'present',
-    price: 500,
+    level: 15,
     buyable: month === '12',
   },
   {
@@ -175,7 +175,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '791567451422851082',
     id: 'snowman',
-    price: 500,
+    level: 15,
     buyable: month === '12',
   },
   {
@@ -183,7 +183,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '797932521999564821',
     id: 'minecraft',
-    price: 500,
+    level: 15,
     buyable: false,
   },
   {
@@ -191,7 +191,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '768521388754862110',
     id: 'mystic',
-    price: 1000,
+    level: 16,
     buyable: false,
   },
   {
@@ -199,7 +199,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '771335875220602900',
     id: 'bluediamond',
-    price: 2000,
+    level: 17,
     buyable: false,
   },
   {
@@ -207,7 +207,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '775288572595929099',
     id: 'reddiamond',
-    price: 3000,
+    level: 18,
     buyable: false,
   },
   {
@@ -215,7 +215,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '772311731556843570',
     id: 'tortoise',
-    price: 5000,
+    level: 19,
     buyable: false,
   },
   {
@@ -223,7 +223,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '779853678021836830',
     id: 'burning',
-    price: 10000,
+    level: 20,
     buyable: false,
   },
   {
@@ -231,7 +231,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '779853678295121930',
     id: 'scorching',
-    price: 20000,
+    level: 21,
     buyable: false,
   },
   {
@@ -239,7 +239,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '778186833557323786',
     id: 'rgb',
-    price: 30000,
+    level: 22,
     buyable: false,
   },
   {
@@ -247,7 +247,7 @@ const BaseItems: BaseItem[] = [
     type: ItemTypes.GENERATOR,
     emojiId: '802954138702053416',
     id: 'omega',
-    price: 50000,
+    level: 23,
     buyable: false,
   },
 ];
@@ -255,11 +255,15 @@ const BaseItems: BaseItem[] = [
 export interface Item extends BaseItem {
   emoji: string;
   url: string;
+  price: number;
+  gph: number;
 }
 
 export const Items: Item[] = BaseItems.map((item: BaseItem) => ({
   ...item,
-  emoji: `<a:${item.name}:${item.emojiId}>`,
+  gph: item.level / 2,
+  price: item.level ** 3,
+  emoji: `<a:${item.id}:${item.emojiId}>`,
   url: `https://cdn.discordapp.com/emojis/${item.emojiId}.gif`,
 }));
 

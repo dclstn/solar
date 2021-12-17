@@ -2,7 +2,7 @@ import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
 import {BuyableItems} from './items.js';
 
 export const Defaults = {
-  MAX_SLOTS: 25,
+  MAX_SLOTS: 36,
 };
 
 export const CommandNames = {

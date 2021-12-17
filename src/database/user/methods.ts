@@ -38,3 +38,7 @@ export function sellItem(item: Item, amount: number) {
 export function fetchInventory(): Item[] {
   return this.inventory.map(({id}) => findById(id));
 }
+
+export function totalGoldPerHour(): number {
+  return this.fetchInventory().reduce((a: number, {gph}) => a + gph, 0);
+}

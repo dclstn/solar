@@ -9,9 +9,9 @@ import logger from '../../logger.js';
 
 class Sell {
   constructor() {
-    commands.on(CommandNames.SELL, async (interaction: CommandInteraction) => {
+    commands.on(CommandNames.SELL, (interaction: CommandInteraction) => {
       try {
-        await this.run(interaction);
+        this.run(interaction);
       } catch (err) {
         logger.error(err);
         interaction.reply({content: 'Something went wrong', ephemeral: true});
@@ -27,7 +27,7 @@ class Sell {
     const item = findById(itemId);
 
     try {
-      await user.sellItem(item, amount);
+      user.sellItem(item, amount);
     } catch (err) {
       interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
       return;

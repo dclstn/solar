@@ -1,4 +1,5 @@
 import {User} from 'discord.js';
+import moment from 'moment';
 import client from '../../client.js';
 
 export async function get(user: User) {
@@ -18,6 +19,12 @@ export async function get(user: User) {
       setDefaultsOnInsert: true,
     }
   );
+
+  // get diffMinutes instead of hours for a more accurate reading
+  const diffMinutes = moment(new Date()).diff(moment(doc.updated), 'minutes');
+
+  doc.gold += (doc.totalGoldPerHour() / 60) * diffMinutes;
+  doc.updated = new Date();
 
   return doc;
 }

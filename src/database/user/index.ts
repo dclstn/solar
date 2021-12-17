@@ -22,6 +22,7 @@ export interface UserInterface extends Mongoose.Document {
   buyItem(item: Item, amount: number): void;
   sellItem(item: Item, amount: number): void;
   fetchInventory(): Item[];
+  totalGoldPerHour(): number;
 }
 
 export interface UserModelInterface extends Mongoose.Model<UserInterface> {
