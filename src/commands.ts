@@ -13,6 +13,7 @@ class Commands extends EventEmitter {
     this.commands = new Map();
 
     client.on('interactionCreate', (interaction: CommandInteraction) => {
+      if (!interaction.isApplicationCommand()) return;
       this.emit(interaction.commandName, interaction);
     });
   }

@@ -1,7 +1,16 @@
-export interface CommandOptionChoice {
+interface CommandOptionChoiceBase {
   name: string;
+}
+
+interface CommandOptionChoiceString extends CommandOptionChoiceBase {
   value: string;
 }
+
+interface CommandOptionChoiceNumber extends CommandOptionChoiceBase {
+  value: number;
+}
+
+type CommandOptionChoice = CommandOptionChoiceNumber | CommandOptionChoiceString;
 
 export interface CommandOption {
   name: string;

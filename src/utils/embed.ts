@@ -4,7 +4,7 @@ import chunk from 'lodash.chunk';
 import {Defaults} from '../constants.js';
 import emotes from './emotes.js';
 
-function numberWithCommas(x: number): string {
+export function numberWithCommas(x: number): string {
   const y = x < 100 ? x.toFixed(2) : Math.floor(x);
   return y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }

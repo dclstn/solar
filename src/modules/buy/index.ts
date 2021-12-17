@@ -1,44 +1,46 @@
-import {CommandInteraction} from 'discord.js';
+import {ButtonInteraction, CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {findById} from '../../items.js';
 import commands from '../../commands.js';
-import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
 import User from '../../database/user/index.js';
 import {success, warning} from '../../utils/embed.js';
-import logger from '../../logger.js';
+import components from '../../components.js';
+
+async function processPurchase(interaction: CommandInteraction | ButtonInteraction, itemId: string, amount: number) {
+  const user = await User.get(interaction.user);
+  const item = findById(itemId);
+
+  try {
+    await user.buyItem(item, amount);
+  } catch (err) {
+    interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
+    return;
+  }
+
+  await user.save();
+
+  interaction.reply({
+    embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
+    ephemeral: true,
+  });
+}
 
 class Buy {
   constructor() {
-    commands.on(CommandNames.BUY, async (interaction: CommandInteraction) => {
-      try {
-        await this.run(interaction);
-      } catch (err) {
-        logger.error(err);
-        interaction.reply({content: 'Something went wrong', ephemeral: true});
-      }
-    });
+    commands.on(CommandNames.BUY, this.handleChatInputInteraction);
+    components.on(MessageComponentIds.BUY, this.handleMessageComponentInteraction);
   }
 
-  async run(interaction: CommandInteraction): Promise<void> {
+  handleMessageComponentInteraction(interaction: ButtonInteraction) {
+    const itemId = interaction.message.embeds[0].title.toLowerCase();
+    processPurchase(interaction, itemId, 1);
+  }
+
+  handleChatInputInteraction(interaction: CommandInteraction) {
     const itemId = interaction.options.getString('item');
     const amount = interaction.options.getNumber('amount') || 1;
-
-    const user = await User.get(interaction.user);
-    const item = findById(itemId);
-
-    try {
-      await user.buyItem(item, amount);
-    } catch (err) {
-      interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
-      return;
-    }
-
-    await user.save();
-
-    interaction.reply({
-      embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
-      ephemeral: true,
-    });
+    processPurchase(interaction, itemId, amount);
   }
 }
 

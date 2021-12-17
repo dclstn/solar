@@ -32,7 +32,7 @@ export function sellItem(item: Item, amount: number) {
     this.inventory.splice(i, 1);
   }
 
-  this.gold += item.price * amount;
+  this.gold += (item.price * amount) / 2;
 }
 
 export function fetchInventory(): Item[] {
