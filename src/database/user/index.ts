@@ -23,6 +23,7 @@ export interface UserInterface extends Mongoose.Document {
   sellItem(item: Item, amount: number): void;
   fetchInventory(): Item[];
   totalGoldPerHour(): number;
+  hasItem(item: Item): boolean;
 }
 
 export interface UserModelInterface extends Mongoose.Model<UserInterface> {

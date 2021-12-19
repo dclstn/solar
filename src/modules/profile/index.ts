@@ -15,10 +15,7 @@ class Profile {
     const interactionUser = interaction.options.getUser('user') || interaction.user;
     const user = await User.get(interactionUser);
 
-    interaction.reply({
-      embeds: [profileEmbed(user)],
-      ephemeral: true,
-    });
+    interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
   }
 }
 

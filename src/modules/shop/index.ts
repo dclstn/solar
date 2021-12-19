@@ -12,15 +12,20 @@ function renderPage(interaction: CommandInteraction | ButtonInteraction, pageInd
   const page = PAGES[pageIndex - 1];
   const embed = new MessageEmbed().setTitle(`Page ${pageIndex}`).setDescription(page.toString());
 
+  const itemButtons = page.map((item) =>
+    new MessageButton().setCustomId(item.id).setEmoji(item.emojiId).setStyle('SECONDARY').setLabel('')
+  );
+
   const actionRow = new MessageActionRow().addComponents(
     new MessageButton()
       .setCustomId(MessageComponentIds.LAST)
-      .setLabel('Page')
+      .setLabel('Last')
       .setStyle('PRIMARY')
       .setDisabled(pageIndex === 1),
+    ...itemButtons,
     new MessageButton()
       .setCustomId(MessageComponentIds.NEXT)
-      .setLabel('Next Page')
+      .setLabel('Next')
       .setStyle('PRIMARY')
       .setDisabled(pageIndex >= PAGES.length)
   );

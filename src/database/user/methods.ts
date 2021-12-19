@@ -42,3 +42,7 @@ export function fetchInventory(): Item[] {
 export function totalGoldPerHour(): number {
   return this.fetchInventory().reduce((a: number, {gph}) => a + gph, 0);
 }
+
+export function hasItem(item: Item): boolean {
+  return this.inventory.find(({id}) => id === item.id);
+}

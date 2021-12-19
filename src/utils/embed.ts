@@ -2,7 +2,7 @@ import {UserInterface} from 'database/user';
 import {MessageEmbed} from 'discord.js';
 import chunk from 'lodash.chunk';
 import {Defaults} from '../constants.js';
-import emotes from './emotes.js';
+import {emoteStrings} from './emotes.js';
 
 export function numberWithCommas(x: number): string {
   const y = x < 100 ? x.toFixed(2) : Math.floor(x);
@@ -12,7 +12,7 @@ export function numberWithCommas(x: number): string {
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
 💰 Gold: **${numberWithCommas(user.gold)}**
-${emotes.gem} Gems: **${numberWithCommas(user.gems)}**
+${emoteStrings.gem} Gems: **${numberWithCommas(user.gems)}**
 
 ${grid}
 `;
@@ -21,21 +21,21 @@ export function success(user: UserInterface, content: string): MessageEmbed {
   return new MessageEmbed()
     .setAuthor(user.username, user.avatar)
     .setColor('GREEN')
-    .setDescription(`${emotes.success} ${content}`);
+    .setDescription(`${emoteStrings.success} ${content}`);
 }
 
 export function warning(user: UserInterface, content: string): MessageEmbed {
   return new MessageEmbed()
     .setAuthor(user.username, user.avatar)
     .setColor('RED')
-    .setDescription(`${emotes.error} ${content}`);
+    .setDescription(`${emoteStrings.error} ${content}`);
 }
 
 export function profileEmbed(user: UserInterface): MessageEmbed {
   const items = user.fetchInventory();
   const emojis = items.map((item) => item.emoji);
 
-  const grid = chunk([...emojis, ...new Array(Defaults.MAX_SLOTS - emojis.length).fill(emotes.blank)], 6);
+  const grid = chunk([...emojis, ...new Array(Defaults.MAX_SLOTS - emojis.length).fill(emoteStrings.blank)], 6);
   const gridString = grid.map((row: Array<string>) => row.join(' ')).join('\n');
 
   return new MessageEmbed()
