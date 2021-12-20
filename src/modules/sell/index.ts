@@ -50,26 +50,14 @@ class Sell {
   }
 
   handleComponent(interaction: ButtonInteraction) {
-    Sentry.configureScope((scope) => {
-      scope.setUser({
-        id: interaction.user.id,
-        username: interaction.user.username,
-      });
-      const itemId = interaction.message.embeds[0].title.toLowerCase();
-      processSale(interaction, itemId, 1);
-    });
+    const itemId = interaction.message.embeds[0].title.toLowerCase();
+    processSale(interaction, itemId, 1);
   }
 
   handleCommand(interaction: CommandInteraction) {
-    Sentry.configureScope((scope) => {
-      scope.setUser({
-        id: interaction.user.id,
-        username: interaction.user.username,
-      });
-      const itemId = interaction.options.getString('item');
-      const amount = interaction.options.getNumber('amount') || 1;
-      processSale(interaction, itemId, amount);
-    });
+    const itemId = interaction.options.getString('item');
+    const amount = interaction.options.getNumber('amount') || 1;
+    processSale(interaction, itemId, amount);
   }
 }
 

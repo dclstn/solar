@@ -12,6 +12,7 @@ export function numberWithCommas(x: number): string {
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
 ${emoteStrings.gem} Gems: **${numberWithCommas(user.gems)}**
+💰 Gems Per Hour: **${numberWithCommas(user.inventory.gph())}**
 
 ${grid}
 `;

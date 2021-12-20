@@ -2,6 +2,7 @@ import {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {CommandNames, CommandDescriptions} from '../../constants.js';
 import commands from '../../commands.js';
+import Sentry from '../../sentry.js';
 
 class Reload {
   constructor() {
@@ -12,7 +13,7 @@ class Reload {
     try {
       await commands.reloadApplicationCommands();
     } catch (err) {
-      console.error(err);
+      Sentry.captureException(err);
       interaction.reply('Failed to reload commands.');
       return;
     }

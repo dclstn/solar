@@ -1,6 +1,7 @@
 import {CommandInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Routes} from 'discord-api-types/v9';
+import Sentry from './sentry.js';
 import rest from './rest.js';
 import client from './client.js';
 
@@ -20,7 +21,23 @@ class Commands extends EventEmitter {
 
     client.on('interactionCreate', (interaction: CommandInteraction) => {
       if (!interaction.isApplicationCommand()) return;
-      this.emit(interaction.commandName, interaction);
+
+      Sentry.configureScope((scope) => {
+        scope.setUser({
+          id: interaction.user.id,
+          username: interaction.user.username,
+        });
+
+        scope.setTag('interaction', 'command');
+
+        scope.addBreadcrumb({
+          category: 'command-name',
+          message: interaction.commandName,
+          level: Sentry.Severity.Info,
+        });
+
+        this.emit(interaction.commandName, interaction);
+      });
     });
   }
 
@@ -34,10 +51,6 @@ class Commands extends EventEmitter {
     }
 
     this.commands.set(command.name, command);
-
-    setTimeout(() => {
-      this.reloadApplicationCommands();
-    }, 10000);
   }
 
   async reloadApplicationCommands(): Promise<void> {

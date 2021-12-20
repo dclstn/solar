@@ -16,19 +16,18 @@ const NAV_ROW = new MessageActionRow().addComponents(
 );
 
 async function processPurchase(interaction: CommandInteraction | ButtonInteraction, itemId: string, amount: number) {
-  const lock = await acquireUserLock(interaction.user.id, 1000);
-
   const transaction = Sentry.startTransaction({
     op: 'buy-transaction',
     name: 'Item Purchase Transaction',
+    status: 'waiting for lock',
   });
 
+  const lock = await acquireUserLock(interaction.user.id, 1000);
   let user = null;
 
   try {
     user = await User.get(interaction.user);
     const item = findById(itemId);
-
     user.buy(item, amount);
     await user.save();
 
@@ -45,8 +44,8 @@ async function processPurchase(interaction: CommandInteraction | ButtonInteracti
 
     Sentry.captureException(err);
   } finally {
-    transaction.finish();
     await lock.release();
+    transaction.finish();
   }
 }
 
@@ -57,28 +56,14 @@ class Buy {
   }
 
   handleComponent(interaction: ButtonInteraction) {
-    Sentry.configureScope((scope) => {
-      scope.setUser({
-        id: interaction.user.id,
-        username: interaction.user.username,
-      });
-
-      const itemId = interaction.message.embeds[0].title.toLowerCase();
-      processPurchase(interaction, itemId, 1);
-    });
+    const itemId = interaction.message.embeds[0].title.toLowerCase();
+    processPurchase(interaction, itemId, 1);
   }
 
   handleCommand(interaction: CommandInteraction) {
-    Sentry.configureScope((scope) => {
-      scope.setUser({
-        id: interaction.user.id,
-        username: interaction.user.username,
-      });
-
-      const itemId = interaction.options.getString('item');
-      const amount = interaction.options.getNumber('amount') || 1;
-      processPurchase(interaction, itemId, amount);
-    });
+    const itemId = interaction.options.getString('item');
+    const amount = interaction.options.getNumber('amount') || 1;
+    processPurchase(interaction, itemId, amount);
   }
 }
 

@@ -7,6 +7,7 @@ dotenv.config();
 try {
   await mongoose.connect(process.env.MONGO_URI);
 } catch (err) {
+  // eslint-disable-next-line no-console
   console.error(err);
   process.exit(1);
 }
@@ -16,5 +17,11 @@ glob('./dist/modules/**/index.js', async (err: Error, files: [string]) => {
     process.exit(1);
   }
 
-  await Promise.all(files.map((file: string) => import(`../${file}`)));
+  try {
+    await Promise.all(files.map((file: string) => import(`../${file}`)));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    process.exit(1);
+  }
 });

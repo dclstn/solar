@@ -1,5 +1,6 @@
 import {ButtonInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
+import Sentry from './sentry.js';
 import client from './client.js';
 
 class Components extends EventEmitter {
@@ -8,7 +9,23 @@ class Components extends EventEmitter {
 
     client.on('interactionCreate', (interaction: ButtonInteraction) => {
       if (!interaction.isMessageComponent()) return;
-      this.emit(interaction.customId, interaction);
+
+      Sentry.configureScope((scope) => {
+        scope.setUser({
+          id: interaction.user.id,
+          username: interaction.user.username,
+        });
+
+        scope.setTag('interaction', 'button');
+
+        scope.addBreadcrumb({
+          category: 'custom-id',
+          message: interaction.customId,
+          level: Sentry.Severity.Info,
+        });
+
+        this.emit(interaction.customId, interaction);
+      });
     });
   }
 }

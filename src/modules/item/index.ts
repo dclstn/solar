@@ -16,6 +16,7 @@ Gems per hour: **${item.gph}/h**
 
 async function handleReply(interaction: CommandInteraction | ButtonInteraction, item: Item) {
   const user = await User.get(interaction.user);
+
   const embed = new MessageEmbed()
     .setTitle(item.name)
     .setDescription(itemDescription(item))
