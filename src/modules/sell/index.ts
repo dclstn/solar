@@ -1,29 +1,40 @@
 import {ButtonInteraction, CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
+import {acquireUserLock} from '../../locks/index.js';
 import components from '../../components.js';
 import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../constants.js';
 import {findById} from '../../items.js';
 import commands from '../../commands.js';
 import User from '../../database/user/index.js';
 import {success, warning} from '../../utils/embed.js';
+import ResponseError from '../../utils/error.js';
+import logger from '../../logger.js';
 
 async function processSale(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
-  const user = await User.get(interaction.user);
-  const item = findById(itemId);
+  const lock = await acquireUserLock(interaction.user.id, 1000);
+  let user = null;
 
   try {
+    user = await User.get(interaction.user);
+    const item = findById(itemId);
+
     user.sell(item, amount);
+    await user.save();
+
+    interaction.reply({
+      embeds: [success(user, `Successfully sold\n\n${item.emoji} **${item.name}** x${amount}`)],
+      ephemeral: true,
+    });
   } catch (err) {
-    interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
-    return;
+    if (err instanceof ResponseError) {
+      interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
+      return;
+    }
+
+    logger.error(err);
+  } finally {
+    await lock.release();
   }
-
-  await user.save();
-
-  interaction.reply({
-    embeds: [success(user, `Successfully sold\n\n${item.emoji} **${item.name}** x${amount}`)],
-    ephemeral: true,
-  });
 }
 
 class Sell {

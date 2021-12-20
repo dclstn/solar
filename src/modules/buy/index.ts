@@ -6,24 +6,35 @@ import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} 
 import User from '../../database/user/index.js';
 import {success, warning} from '../../utils/embed.js';
 import components from '../../components.js';
+import {acquireUserLock} from '../../locks/index.js';
+import ResponseError from '../../utils/error.js';
+import logger from '../../logger.js';
 
 async function processPurchase(interaction: CommandInteraction | ButtonInteraction, itemId: string, amount: number) {
-  const user = await User.get(interaction.user);
-  const item = findById(itemId);
+  const lock = await acquireUserLock(interaction.user.id, 1000);
+  let user = null;
 
   try {
-    await user.buy(item, amount);
+    user = await User.get(interaction.user);
+    const item = findById(itemId);
+
+    user.buy(item, amount);
+    await user.save();
+
+    interaction.reply({
+      embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
+      ephemeral: true,
+    });
   } catch (err) {
-    interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
-    return;
+    if (err instanceof ResponseError) {
+      interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
+      return;
+    }
+
+    logger.error(err);
+  } finally {
+    await lock.release();
   }
-
-  await user.save();
-
-  interaction.reply({
-    embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
-    ephemeral: true,
-  });
 }
 
 class Buy {
