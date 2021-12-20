@@ -3,7 +3,7 @@ import {BuyableItems, Items} from './items.js';
 
 export const Defaults = {
   MAX_SLOTS: 36,
-  STORE_PAGE_SIZE: 3,
+  STORE_PAGE_SIZE: 5,
 };
 
 export const CommandNames = {

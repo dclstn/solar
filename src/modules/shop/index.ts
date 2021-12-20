@@ -8,29 +8,32 @@ import components from '../../components.js';
 
 const PAGES: Item[][] = chunk(BuyableItems, Defaults.STORE_PAGE_SIZE);
 
+const SHOP_DESCRIPTION = `
+'**How to get started**
+*Click on a button below to inspect information!*'
+
+`;
+
 function renderPage(interaction: CommandInteraction | ButtonInteraction, pageIndex: number): void {
-  const page = PAGES[pageIndex - 1];
-  const embed = new MessageEmbed().setTitle(`Page ${pageIndex}`).setDescription(page.toString());
+  // const page = PAGES[pageIndex - 1];
+  const embed = new MessageEmbed()
+    .setTitle('Welcome to the Official Solar Shop!')
+    .setDescription(SHOP_DESCRIPTION)
+    .setColor('BLURPLE');
 
-  const itemButtons = page.map((item) =>
-    new MessageButton().setCustomId(item.id).setEmoji(item.emojiId).setStyle('SECONDARY').setLabel('')
+  const actionRows = PAGES.map((page) =>
+    new MessageActionRow().addComponents(
+      ...page.map((item) =>
+        new MessageButton().setCustomId(item.id).setEmoji(item.emojiId).setStyle('PRIMARY').setLabel('')
+      )
+    )
   );
 
-  const actionRow = new MessageActionRow().addComponents(
-    new MessageButton()
-      .setCustomId(MessageComponentIds.LAST)
-      .setLabel('Last')
-      .setStyle('PRIMARY')
-      .setDisabled(pageIndex === 1),
-    ...itemButtons,
-    new MessageButton()
-      .setCustomId(MessageComponentIds.NEXT)
-      .setLabel('Next')
-      .setStyle('PRIMARY')
-      .setDisabled(pageIndex >= PAGES.length)
-  );
-
-  interaction.reply({embeds: [embed], ephemeral: true, components: [actionRow]});
+  interaction.reply({
+    embeds: [embed],
+    ephemeral: true,
+    components: actionRows,
+  });
 }
 
 class Shop {

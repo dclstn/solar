@@ -12,7 +12,7 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
   const item = findById(itemId);
 
   try {
-    user.sellItem(item, amount);
+    user.sell(item, amount);
   } catch (err) {
     interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
     return;

@@ -11,7 +11,6 @@ export function numberWithCommas(x: number): string {
 
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
-💰 Gold: **${numberWithCommas(user.gold)}**
 ${emoteStrings.gem} Gems: **${numberWithCommas(user.gems)}**
 
 ${grid}
@@ -32,7 +31,7 @@ export function warning(user: UserInterface, content: string): MessageEmbed {
 }
 
 export function profileEmbed(user: UserInterface): MessageEmbed {
-  const items = user.fetchInventory();
+  const items = user.inventory.fetchAll();
   const emojis = items.map((item) => item.emoji);
 
   const grid = chunk([...emojis, ...new Array(Defaults.MAX_SLOTS - emojis.length).fill(emoteStrings.blank)], 6);

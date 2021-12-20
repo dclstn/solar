@@ -12,7 +12,7 @@ async function processPurchase(interaction: CommandInteraction | ButtonInteracti
   const item = findById(itemId);
 
   try {
-    await user.buyItem(item, amount);
+    await user.buy(item, amount);
   } catch (err) {
     interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
     return;
