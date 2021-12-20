@@ -15,21 +15,29 @@ const NAV_ROW = new MessageActionRow().addComponents(
   new MessageButton().setCustomId(MessageComponentIds.SHOP).setStyle('PRIMARY').setLabel('Open Shop')
 );
 
-async function processPurchase(interaction: CommandInteraction | ButtonInteraction, itemId: string, amount: number) {
+async function processPurchase(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
   const transaction = Sentry.startTransaction({
     op: 'buy-transaction',
     name: 'Item Purchase Transaction',
-    status: 'waiting for lock',
   });
 
+  const lockSpan = transaction.startChild({op: 'acquire-lock'});
   const lock = await acquireUserLock(interaction.user.id, 1000);
+  lockSpan.finish();
+
   let user = null;
 
   try {
+    const userSpan = transaction.startChild({op: 'acquire-user'});
     user = await User.get(interaction.user);
+    userSpan.finish();
+
     const item = findById(itemId);
     user.buy(item, amount);
+
+    const saveSpan = transaction.startChild({op: 'save-doc'});
     await user.save();
+    saveSpan.finish();
 
     interaction.reply({
       embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
@@ -44,7 +52,10 @@ async function processPurchase(interaction: CommandInteraction | ButtonInteracti
 
     Sentry.captureException(err);
   } finally {
+    const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();
+    releaseSpan.finish();
+
     transaction.finish();
   }
 }

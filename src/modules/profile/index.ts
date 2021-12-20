@@ -9,8 +9,9 @@ import {
   MessageComponentIds,
 } from '../../constants.js';
 import commands from '../../commands.js';
-import User from '../../database/user/index.js';
+import User, {UserInterface} from '../../database/user/index.js';
 import components from '../../components.js';
+import Sentry from '../../sentry.js';
 
 class Profile {
   constructor() {
@@ -20,15 +21,26 @@ class Profile {
   }
 
   async handleMessageComponent(interaction: ButtonInteraction) {
-    const interactionUser = interaction.user;
-    const user = await User.get(interactionUser);
+    let user: UserInterface;
+
+    try {
+      user = await User.get(interaction.user);
+    } catch (err) {
+      Sentry.captureException(err);
+    }
 
     interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
   }
 
   async run(interaction: CommandInteraction): Promise<void> {
     const interactionUser = interaction.options.getUser('user') || interaction.user;
-    const user = await User.get(interactionUser);
+    let user: UserInterface;
+
+    try {
+      user = await User.get(interactionUser);
+    } catch (err) {
+      Sentry.captureException(err);
+    }
 
     interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
   }

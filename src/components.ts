@@ -18,12 +18,6 @@ class Components extends EventEmitter {
 
         scope.setTag('interaction', 'button');
 
-        scope.addBreadcrumb({
-          category: 'custom-id',
-          message: interaction.customId,
-          level: Sentry.Severity.Info,
-        });
-
         this.emit(interaction.customId, interaction);
       });
     });

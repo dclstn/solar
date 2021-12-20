@@ -4,9 +4,10 @@ import {numberWithCommas} from '../../utils/embed.js';
 import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
 import commands from '../../commands.js';
 import {findById, Item, Items} from '../../items.js';
-import User from '../../database/user/index.js';
+import User, {UserInterface} from '../../database/user/index.js';
 import {emoteIds, emoteStrings} from '../../utils/emotes.js';
 import components from '../../components.js';
+import Sentry from '../../sentry.js';
 
 const itemDescription = (item: Item): string => `
 Price: ${emoteStrings.gem} **${numberWithCommas(item.price)}**
@@ -15,7 +16,13 @@ Gems per hour: **${item.gph}/h**
 `;
 
 async function handleReply(interaction: CommandInteraction | ButtonInteraction, item: Item) {
-  const user = await User.get(interaction.user);
+  let user: UserInterface;
+
+  try {
+    user = await User.get(interaction.user);
+  } catch (err) {
+    Sentry.captureException(err);
+  }
 
   const embed = new MessageEmbed()
     .setTitle(item.name)

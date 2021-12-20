@@ -30,12 +30,6 @@ class Commands extends EventEmitter {
 
         scope.setTag('interaction', 'command');
 
-        scope.addBreadcrumb({
-          category: 'command-name',
-          message: interaction.commandName,
-          level: Sentry.Severity.Info,
-        });
-
         this.emit(interaction.commandName, interaction);
       });
     });
@@ -62,6 +56,12 @@ class Commands extends EventEmitter {
     }));
 
     await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID), {body: commands});
+
+    Sentry.addBreadcrumb({
+      category: 'commands',
+      message: 'Application commands were reloaded',
+      level: Sentry.Severity.Info,
+    });
   }
 }
 

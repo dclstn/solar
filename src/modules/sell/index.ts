@@ -11,20 +11,28 @@ import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
 
 async function processSale(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
-  const lock = await acquireUserLock(interaction.user.id, 1000);
-  let user = null;
-
   const transaction = Sentry.startTransaction({
     op: 'sell-transaction',
     name: 'Item Sale Transaction',
   });
 
-  try {
-    user = await User.get(interaction.user);
-    const item = findById(itemId);
+  const lockSpan = transaction.startChild({op: 'acquire-lock'});
+  const lock = await acquireUserLock(interaction.user.id, 1000);
+  lockSpan.finish();
 
+  let user = null;
+
+  try {
+    const userSpan = transaction.startChild({op: 'acquire-user'});
+    user = await User.get(interaction.user);
+    userSpan.finish();
+
+    const item = findById(itemId);
     user.sell(item, amount);
+
+    const saveSpan = transaction.startChild({op: 'save-doc'});
     await user.save();
+    saveSpan.finish();
 
     interaction.reply({
       embeds: [success(user, `Successfully sold\n\n${item.emoji} **${item.name}** x${amount}`)],
@@ -38,8 +46,11 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
 
     Sentry.captureException(err);
   } finally {
-    transaction.finish();
+    const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();
+    releaseSpan.finish();
+
+    transaction.finish();
   }
 }
 
