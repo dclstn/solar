@@ -20,6 +20,7 @@ async function handleReply(interaction: CommandInteraction | ButtonInteraction, 
     .setTitle(item.name)
     .setDescription(itemDescription(item))
     .setThumbnail(item.url)
+    .setFooter('Some items may leave or join the shop at any time!')
     .setColor('GREEN');
 
   const actionRow = new MessageActionRow().addComponents(

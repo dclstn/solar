@@ -1,6 +1,6 @@
 import Client from 'ioredis';
 import Redlock, {Lock, ResourceLockedError, Settings} from 'redlock';
-import logger from '../logger.js';
+import Sentry from '../sentry.js';
 
 const client = new Client();
 
@@ -16,7 +16,7 @@ redlock.on('error', (error: Error) => {
     return;
   }
 
-  logger.error(error.message);
+  Sentry.captureException(error);
 });
 
 export function acquireUserLock(id: string, duration: number, settings?: Settings): Promise<Lock> {

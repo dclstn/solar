@@ -17,7 +17,7 @@ const SHOP_DESCRIPTION = `
 function renderPage(interaction: CommandInteraction | ButtonInteraction, pageIndex: number): void {
   // const page = PAGES[pageIndex - 1];
   const embed = new MessageEmbed()
-    .setTitle('Welcome to the Official Solar Shop!')
+    .setTitle('Welcome to the Official CastleMania Shop!')
     .setDescription(SHOP_DESCRIPTION)
     .setColor('BLURPLE');
 
@@ -39,6 +39,7 @@ function renderPage(interaction: CommandInteraction | ButtonInteraction, pageInd
 class Shop {
   constructor() {
     commands.on(CommandNames.SHOP, this.run);
+    components.on(MessageComponentIds.SHOP, (interaction) => renderPage(interaction, 1));
     components.on(MessageComponentIds.NEXT, this.next);
     components.on(MessageComponentIds.LAST, this.last);
   }

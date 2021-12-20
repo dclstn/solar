@@ -16,7 +16,7 @@ export default {
 
   rem(item: Item): void {
     this.items.splice(
-      this.items.indexOf(({id}) => id === item.id),
+      this.items.findIndex(({id}) => id === item.id),
       1
     );
   },

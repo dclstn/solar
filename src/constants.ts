@@ -92,4 +92,6 @@ export const MessageComponentIds = {
   LAST: 'last',
   BUY: 'buy',
   SELL: 'sell',
+  SHOP: 'shop',
+  PROFILE: 'profile',
 };

@@ -1,9 +1,15 @@
 import {CommandInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
-import {Command} from 'types/command';
 import {Routes} from 'discord-api-types/v9';
 import rest from './rest.js';
 import client from './client.js';
+
+interface Command {
+  type: number;
+  name: string;
+  description?: string;
+  options?: Array<unknown>;
+}
 
 class Commands extends EventEmitter {
   commands: Map<string, Command>;
@@ -28,6 +34,10 @@ class Commands extends EventEmitter {
     }
 
     this.commands.set(command.name, command);
+
+    setTimeout(() => {
+      this.reloadApplicationCommands();
+    }, 10000);
   }
 
   async reloadApplicationCommands(): Promise<void> {

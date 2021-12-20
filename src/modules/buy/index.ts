@@ -1,4 +1,4 @@
-import {ButtonInteraction, CommandInteraction} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageButton} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {findById} from '../../items.js';
 import commands from '../../commands.js';
@@ -8,10 +8,21 @@ import {success, warning} from '../../utils/embed.js';
 import components from '../../components.js';
 import {acquireUserLock} from '../../locks/index.js';
 import ResponseError from '../../utils/error.js';
-import logger from '../../logger.js';
+import Sentry from '../../sentry.js';
+
+const NAV_ROW = new MessageActionRow().addComponents(
+  new MessageButton().setCustomId(MessageComponentIds.PROFILE).setStyle('PRIMARY').setLabel('View Profile'),
+  new MessageButton().setCustomId(MessageComponentIds.SHOP).setStyle('PRIMARY').setLabel('Open Shop')
+);
 
 async function processPurchase(interaction: CommandInteraction | ButtonInteraction, itemId: string, amount: number) {
   const lock = await acquireUserLock(interaction.user.id, 1000);
+
+  const transaction = Sentry.startTransaction({
+    op: 'buy-transaction',
+    name: 'Item Purchase Transaction',
+  });
+
   let user = null;
 
   try {
@@ -23,6 +34,7 @@ async function processPurchase(interaction: CommandInteraction | ButtonInteracti
 
     interaction.reply({
       embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
+      components: [NAV_ROW],
       ephemeral: true,
     });
   } catch (err) {
@@ -31,27 +43,42 @@ async function processPurchase(interaction: CommandInteraction | ButtonInteracti
       return;
     }
 
-    logger.error(err);
+    Sentry.captureException(err);
   } finally {
+    transaction.finish();
     await lock.release();
   }
 }
 
 class Buy {
   constructor() {
-    commands.on(CommandNames.BUY, this.handleChatInputInteraction);
-    components.on(MessageComponentIds.BUY, this.handleMessageComponentInteraction);
+    commands.on(CommandNames.BUY, this.handleCommand);
+    components.on(MessageComponentIds.BUY, this.handleComponent);
   }
 
-  handleMessageComponentInteraction(interaction: ButtonInteraction) {
-    const itemId = interaction.message.embeds[0].title.toLowerCase();
-    processPurchase(interaction, itemId, 1);
+  handleComponent(interaction: ButtonInteraction) {
+    Sentry.configureScope((scope) => {
+      scope.setUser({
+        id: interaction.user.id,
+        username: interaction.user.username,
+      });
+
+      const itemId = interaction.message.embeds[0].title.toLowerCase();
+      processPurchase(interaction, itemId, 1);
+    });
   }
 
-  handleChatInputInteraction(interaction: CommandInteraction) {
-    const itemId = interaction.options.getString('item');
-    const amount = interaction.options.getNumber('amount') || 1;
-    processPurchase(interaction, itemId, amount);
+  handleCommand(interaction: CommandInteraction) {
+    Sentry.configureScope((scope) => {
+      scope.setUser({
+        id: interaction.user.id,
+        username: interaction.user.username,
+      });
+
+      const itemId = interaction.options.getString('item');
+      const amount = interaction.options.getNumber('amount') || 1;
+      processPurchase(interaction, itemId, amount);
+    });
   }
 }
 

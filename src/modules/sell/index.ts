@@ -8,11 +8,16 @@ import commands from '../../commands.js';
 import User from '../../database/user/index.js';
 import {success, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
-import logger from '../../logger.js';
+import Sentry from '../../sentry.js';
 
 async function processSale(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
   const lock = await acquireUserLock(interaction.user.id, 1000);
   let user = null;
+
+  const transaction = Sentry.startTransaction({
+    op: 'sell-transaction',
+    name: 'Item Sale Transaction',
+  });
 
   try {
     user = await User.get(interaction.user);
@@ -31,27 +36,40 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
       return;
     }
 
-    logger.error(err);
+    Sentry.captureException(err);
   } finally {
+    transaction.finish();
     await lock.release();
   }
 }
 
 class Sell {
   constructor() {
-    commands.on(CommandNames.SELL, this.handleChatInputInteraction);
-    components.on(MessageComponentIds.SELL, this.handleMessageComponentInteraction);
+    commands.on(CommandNames.SELL, this.handleCommand);
+    components.on(MessageComponentIds.SELL, this.handleComponent);
   }
 
-  handleMessageComponentInteraction(interaction: ButtonInteraction) {
-    const itemId = interaction.message.embeds[0].title.toLowerCase();
-    processSale(interaction, itemId, 1);
+  handleComponent(interaction: ButtonInteraction) {
+    Sentry.configureScope((scope) => {
+      scope.setUser({
+        id: interaction.user.id,
+        username: interaction.user.username,
+      });
+      const itemId = interaction.message.embeds[0].title.toLowerCase();
+      processSale(interaction, itemId, 1);
+    });
   }
 
-  handleChatInputInteraction(interaction: CommandInteraction) {
-    const itemId = interaction.options.getString('item');
-    const amount = interaction.options.getNumber('amount') || 1;
-    processSale(interaction, itemId, amount);
+  handleCommand(interaction: CommandInteraction) {
+    Sentry.configureScope((scope) => {
+      scope.setUser({
+        id: interaction.user.id,
+        username: interaction.user.username,
+      });
+      const itemId = interaction.options.getString('item');
+      const amount = interaction.options.getNumber('amount') || 1;
+      processSale(interaction, itemId, amount);
+    });
   }
 }
 

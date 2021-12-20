@@ -60,7 +60,7 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   avatar: {type: String, required: false},
   flags: {type: Number, required: false, default: 0},
   level: {type: Number, default: 0, min: 0},
-  gems: {type: Number, default: 0, min: 0},
+  gems: {type: Number, default: 10000, min: 0},
   /* Mongoose recommends you set defaults by returning an empty object however typescript forbids this */
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore

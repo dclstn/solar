@@ -9,7 +9,7 @@ export function buy(item: Item, amount: number) {
     throw new ResponseError(`You do not have enough gems for this purchase`);
   }
 
-  if (amount + this.inventory.length > Defaults.MAX_SLOTS) {
+  if (amount + this.inventory.items.length > Defaults.MAX_SLOTS) {
     throw new ResponseError(`You do not have enough slots to complete this purchase`);
   }
 
@@ -26,11 +26,11 @@ export function sell(item: Item, amount: number) {
   }
 
   for (let i = 0; i < amount; i += 1) {
-    if (!this.inventory.has(item.id)) {
+    if (!this.inventory.has(item)) {
       throw new ResponseError(`You do not own ${amount}x ${item.name}`);
     }
 
-    this.inventory.rem(item.id);
+    this.inventory.rem(item);
   }
 
   this.gems += (item.price * amount) / 2;
