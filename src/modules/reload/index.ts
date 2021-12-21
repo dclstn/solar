@@ -10,6 +10,12 @@ class Reload {
   }
 
   async run(interaction: CommandInteraction): Promise<void> {
+    // TODO: add admin flag to user obj
+    if (interaction.user.id !== '176306508085067776') {
+      interaction.reply('Admin protected');
+      return;
+    }
+
     try {
       await commands.reloadApplicationCommands();
     } catch (err) {
