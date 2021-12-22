@@ -48,7 +48,7 @@ class ItemCommand {
           .setLabel(`Buy for ${numberWithCommas(item.price)}`)
           .setStyle('SUCCESS')
           .setEmoji(emoteIds.gem)
-          .setDisabled(!item.buyable || item.price > user.gems),
+          .setDisabled(!item.buyable || item.price > user.money),
         new MessageButton()
           .setCustomId(MessageComponentIds.SELL)
           .setLabel(`Sell for ${numberWithCommas(item.price / 2)}`)

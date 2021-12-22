@@ -5,7 +5,7 @@ import {Item} from '../../items.js';
 export function buy(item: Item, amount: number) {
   const totalCost = item.price * amount;
 
-  if (totalCost > this.gems) {
+  if (totalCost > this.money) {
     throw new ResponseError(`You do not have enough gems for this purchase`);
   }
 
@@ -17,7 +17,7 @@ export function buy(item: Item, amount: number) {
     this.inventory.add(item);
   }
 
-  this.gems -= totalCost;
+  this.money -= totalCost;
 }
 
 export function sell(item: Item, amount: number) {
@@ -33,5 +33,5 @@ export function sell(item: Item, amount: number) {
     this.inventory.rem(item);
   }
 
-  this.gems += (item.price * amount) / 2;
+  this.money += (item.price * amount) / 2;
 }

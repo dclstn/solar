@@ -30,7 +30,7 @@ export interface UserInterface extends Mongoose.Document {
   avatar?: string;
   flags: number;
   level: number;
-  gems: number;
+  money: number;
   inventory: InventoryInterface;
   updated: Date;
   buy(item: Item, amount: number): void;
@@ -61,7 +61,7 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   avatar: {type: String, required: false},
   flags: {type: Number, required: false, default: 0},
   level: {type: Number, default: 0, min: 0},
-  gems: {type: Number, default: 10000, min: 0},
+  money: {type: Number, default: 10000, min: 0},
   /* Mongoose recommends you set defaults by returning an empty object however typescript forbids this */
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -80,7 +80,7 @@ UserSchema.plugin(mongooseLeanMethods);
 // eslint-disable-next-line prefer-arrow-callback
 UserSchema.post<UserInterface>('init', function initCallback() {
   const diffMinutes = moment(new Date()).diff(moment(this.updated), 'minutes');
-  this.gems += (this.inventory.gph() / 60) * diffMinutes;
+  this.money += (this.inventory.gph() / 60) * diffMinutes;
   this.updated = new Date();
 });
 
