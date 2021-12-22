@@ -5,7 +5,7 @@ import commands from '../../commands.js';
 
 class Raid {
   constructor() {
-    commands.on(CommandNames.PING, this.startRaid);
+    commands.on(CommandNames.RAID, this.startRaid);
   }
 
   startRaid(interaction: CommandInteraction): void {
