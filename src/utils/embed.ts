@@ -1,6 +1,7 @@
 import {UserInterface} from 'database/user';
 import {MessageEmbed} from 'discord.js';
 import chunk from 'lodash.chunk';
+import {findById} from '../items.js';
 import {Defaults} from '../constants.js';
 import {emoteStrings} from './emotes.js';
 
@@ -32,10 +33,12 @@ export function warning(user: UserInterface, content: string): MessageEmbed {
 }
 
 export function profileEmbed(user: UserInterface): MessageEmbed {
-  const items = user.inventory.fetchAll();
-  const emojis = items.map((item) => item.emoji);
+  const grid = chunk(new Array(Defaults.MAX_SLOTS).fill(emoteStrings.blank), Math.sqrt(Defaults.MAX_SLOTS));
 
-  const grid = chunk([...emojis, ...new Array(Defaults.MAX_SLOTS - emojis.length).fill(emoteStrings.blank)], 6);
+  user.inventory.items.forEach(({cords, id}) => {
+    grid[cords.y][cords.x] = findById(id).emoji;
+  });
+
   const gridString = grid.map((row: Array<string>) => row.join(' ')).join('\n');
 
   return new MessageEmbed()

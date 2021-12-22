@@ -3,18 +3,17 @@ import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
 import moment from 'moment';
 import mongooseLeanMethods from 'mongoose-lean-methods';
+import type {GroupInterface} from '../group/index.js';
 import {ItemSchema, ItemInterface, Cords} from '../item/index.js';
 import * as statics from './statics.js';
 import * as methods from './methods.js';
 import {Item} from '../../items.js';
-import {Defaults} from '../../constants.js';
 import inventory from './inventory.js';
 
 mongooseLong(Mongoose);
 
 export interface InventoryInterface extends Mongoose.Types.Subdocument {
   items: ItemInterface[];
-  size: number;
   add(item: Item, cords?: Cords): void;
   rem(item: Item | Cords): void;
   has(item: Item): boolean;
@@ -31,6 +30,7 @@ export interface UserInterface extends Mongoose.Document {
   flags: number;
   level: number;
   money: number;
+  group: GroupInterface;
   inventory: InventoryInterface;
   updated: Date;
   buy(item: Item, amount: number): void;
@@ -44,8 +44,17 @@ export interface UserModelInterface extends Mongoose.Model<UserInterface> {
 
 const InventorySchema: Mongoose.Schema = new Mongoose.Schema<InventoryInterface>(
   {
-    items: {type: [ItemSchema], default: []},
-    size: {type: Number, default: Defaults.MAX_SLOTS},
+    items: {
+      type: [ItemSchema],
+      default: [],
+      validate: {
+        validator: (value) => {
+          const allCords = value.map(({cords}) => `${cords.x}:${cords.y}`);
+          return new Set(allCords).size === allCords.length;
+        },
+        message: 'Multiple items with duplicated coordinates',
+      },
+    },
   },
   {
     _id: false,
@@ -66,6 +75,7 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   inventory: {type: InventorySchema, required: true, default: () => ({})},
+  group: {type: Mongoose.Schema.Types.ObjectId, ref: 'Group', default: null},
   updated: {type: Date, default: new Date()},
 });
 

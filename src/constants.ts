@@ -121,6 +121,12 @@ export const CommandOptions = {
       name: GroupSubCommandNames.CREATE,
       description: '🌍 Create a new kingdom',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      // options: {
+      //   name: 'name',
+      //   description: 'The name of your kingdom',
+      //   type: ApplicationCommandOptionTypes.STRING,
+      //   required: true,
+      // },
     },
     {
       name: GroupSubCommandNames.DEPOSIT,

@@ -2,6 +2,7 @@ import {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {CommandNames, CommandDescriptions, CommandOptions, GroupSubCommandNames} from '../../constants.js';
 import commands from '../../commands.js';
+import {create, deposit} from './actions.js';
 
 class Group {
   constructor() {
@@ -9,15 +10,15 @@ class Group {
   }
 
   run(interaction: CommandInteraction): void {
-    // switch (interaction.options.getSubcommand()) {
-    //   case GroupSubCommandNames.DEPOSIT:
-    //     deposit(interaction);
-    //     break;
-    //   case GroupSubCommandNames.CREATE:
-    //   default:
-    //     create(interaction);
-    //     break;
-    // }
+    switch (interaction.options.getSubcommand()) {
+      case GroupSubCommandNames.DEPOSIT:
+        deposit(interaction);
+        break;
+      case GroupSubCommandNames.CREATE:
+      default:
+        create(interaction);
+        break;
+    }
   }
 }
 

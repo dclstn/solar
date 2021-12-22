@@ -20,7 +20,7 @@ class Reload {
       await commands.reloadApplicationCommands();
       interaction.reply('Reloaded commands.');
     } catch (err) {
-      Sentry.captureException(err);
+      console.error(err);
     }
   }
 }
