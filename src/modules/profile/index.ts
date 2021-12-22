@@ -24,7 +24,7 @@ class Profile {
     let user: UserInterface;
 
     try {
-      user = await User.get(interaction.user, true);
+      user = await User.get(interaction.user);
       interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
     } catch (err) {
       Sentry.captureException(err);
@@ -36,7 +36,7 @@ class Profile {
     let user: UserInterface;
 
     try {
-      user = await User.get(interactionUser, true);
+      user = await User.get(interactionUser);
       interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
     } catch (err) {
       Sentry.captureException(err);

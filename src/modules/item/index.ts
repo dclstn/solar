@@ -19,7 +19,7 @@ async function handleReply(interaction: CommandInteraction | ButtonInteraction, 
   let user: UserInterface;
 
   try {
-    user = await User.get(interaction.user, true);
+    user = await User.get(interaction.user);
 
     const embed = new MessageEmbed()
       .setTitle(item.name)

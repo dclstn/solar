@@ -1,8 +1,9 @@
 import {CommandInteraction} from 'discord.js';
+import {success} from '../../utils/embed.js';
 import {acquireUserLock} from '../../redis/locks.js';
 import User, {UserInterface} from '../../database/user/index.js';
 import Sentry from '../../sentry.js';
-import Group from '../../database/group/index.js';
+import Group, {Roles} from '../../database/group/index.js';
 
 export async function create(interaction: CommandInteraction) {
   let user: UserInterface;
@@ -15,12 +16,22 @@ export async function create(interaction: CommandInteraction) {
 
     const group = await Group.create({
       name,
-      users: [user._id],
+      users: [
+        {
+          role: Roles.OWNER,
+          user: user._id,
+        },
+      ],
     });
 
     user.group = group._id;
 
     await user.save();
+
+    interaction.reply({
+      embeds: [success(user, 'Successfully created kingdom')],
+      ephemeral: true,
+    });
   } catch (err) {
     Sentry.captureException(err);
   } finally {

@@ -38,7 +38,7 @@ export interface UserInterface extends Mongoose.Document {
 }
 
 export interface UserModelInterface extends Mongoose.Model<UserInterface> {
-  get(user: User, lean?: boolean): Promise<UserInterface>;
+  get(user: User): Promise<UserInterface>;
   getById(discordId: string): Promise<UserInterface>;
 }
 
