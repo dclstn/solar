@@ -15,10 +15,19 @@ export const CommandNames = {
   SHOP: 'shop',
   ITEM: 'item',
   RAID: 'raid',
+  GROUP: 'group',
+};
+
+export const GroupSubCommandNames = {
+  ADD: 'add',
+  REMOVE: 'remove',
+  CREATE: 'create',
+  DEPOSIT: 'deposit',
 };
 
 export const UserCommandNames = {
   PROFILE: 'View Profile',
+  GROUP: 'View Kingdom',
   RAID: 'Start Raid',
 };
 
@@ -31,6 +40,7 @@ export const CommandDescriptions = {
   [CommandNames.SHOP]: '🛍️ Browse the buyable items',
   [CommandNames.ITEM]: '🔎 Inspect an item',
   [CommandNames.RAID]: '🛡️ Raid another user for their gems',
+  [CommandNames.GROUP]: '🌏 Kingdom commands',
 };
 
 export const CommandOptions = {
@@ -94,6 +104,28 @@ export const CommandOptions = {
       description: 'The amount of gems will decide the impact of your raid',
       min_value: 1,
       type: ApplicationCommandOptionTypes.NUMBER,
+    },
+  ],
+  [CommandNames.GROUP]: [
+    {
+      name: GroupSubCommandNames.ADD,
+      description: '📬 Invite a user to your kingdom',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: GroupSubCommandNames.REMOVE,
+      description: '📬 Remove a user from your kingdom',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: GroupSubCommandNames.CREATE,
+      description: '🌍 Create a new kingdom',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: GroupSubCommandNames.DEPOSIT,
+      description: '💰 Deposit gems into your kingdom',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
   ],
 };

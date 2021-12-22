@@ -18,13 +18,10 @@ class Reload {
 
     try {
       await commands.reloadApplicationCommands();
+      interaction.reply('Reloaded commands.');
     } catch (err) {
       Sentry.captureException(err);
-      interaction.reply('Failed to reload commands.');
-      return;
     }
-
-    interaction.reply('Reloaded commands.');
   }
 }
 

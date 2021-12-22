@@ -1,4 +1,4 @@
-import Mongoose from 'mongoose';
+import Mongoose, {Schema} from 'mongoose';
 import {UserInterface} from '../user/index.js';
 
 export interface GroupInterface extends Mongoose.Document {
@@ -9,15 +9,10 @@ export interface GroupInterface extends Mongoose.Document {
   rem(user: UserInterface): void;
 }
 
-const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface>({
-  id: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
-  username: {type: String, required: true},
-  discriminator: {type: String, required: true},
-  avatar: {type: String, required: false},
-  flags: {type: Number, required: false, default: 0},
-  level: {type: Number, default: 0, min: 0},
-  money: {type: Number, default: 10000, min: 0},
-  updated: {type: Date, default: new Date()},
+const GroupSchema: Mongoose.Schema = new Mongoose.Schema<GroupInterface>({
+  name: {type: String, required: true, index: {unique: true}},
+  owner: {type: Schema.Types.ObjectId, required: true, ref: 'User'},
+  users: {type: [{type: Schema.Types.ObjectId, ref: 'User'}], default: []},
 });
 
-export default UserSchema;
+export default Mongoose.model<GroupInterface>('Group', GroupSchema);

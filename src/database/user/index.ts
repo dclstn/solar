@@ -65,11 +65,7 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   /* Mongoose recommends you set defaults by returning an empty object however typescript forbids this */
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  inventory: {
-    type: InventorySchema,
-    required: true,
-    default: () => ({}),
-  },
+  inventory: {type: InventorySchema, required: true, default: () => ({})},
   updated: {type: Date, default: new Date()},
 });
 
