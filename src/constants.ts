@@ -14,10 +14,12 @@ export const CommandNames = {
   SELL: 'sell',
   SHOP: 'shop',
   ITEM: 'item',
+  RAID: 'raid',
 };
 
 export const UserCommandNames = {
   PROFILE: 'View Profile',
+  RAID: 'Start Raid',
 };
 
 export const CommandDescriptions = {
@@ -28,6 +30,7 @@ export const CommandDescriptions = {
   [CommandNames.SELL]: '🛍️ Sell an item from your inventory',
   [CommandNames.SHOP]: '🛍️ Browse the buyable items',
   [CommandNames.ITEM]: '🔎 Inspect an item',
+  [CommandNames.RAID]: '🛡️ Raid another user for their gems',
 };
 
 export const CommandOptions = {
@@ -85,6 +88,14 @@ export const CommandOptions = {
       choices: Items.slice(0, 25).map(({id, name}) => ({name, value: id})),
     },
   ],
+  [CommandNames.RAID]: [
+    {
+      name: 'gem_wager',
+      description: 'The amount of gems will decide the impact of your raid',
+      min_value: 1,
+      type: ApplicationCommandOptionTypes.NUMBER,
+    },
+  ],
 };
 
 export const MessageComponentIds = {
@@ -94,4 +105,6 @@ export const MessageComponentIds = {
   SELL: 'sell',
   SHOP: 'shop',
   PROFILE: 'profile',
+  JOIN_RAID: 'join-raid',
+  LEAVE_RAID: 'leave-raid',
 };

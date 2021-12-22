@@ -14,49 +14,33 @@ const SHOP_DESCRIPTION = `
 
 `;
 
-function renderPage(interaction: CommandInteraction | ButtonInteraction, pageIndex: number): void {
-  // const page = PAGES[pageIndex - 1];
-  const embed = new MessageEmbed()
-    .setTitle('Welcome to the Official CastleMania Shop!')
-    .setDescription(SHOP_DESCRIPTION)
-    .setColor('BLURPLE');
+const EMBED = new MessageEmbed()
+  .setTitle('Welcome to the Official CastleMania Shop!')
+  .setDescription(SHOP_DESCRIPTION)
+  .setColor('BLURPLE');
 
-  const actionRows = PAGES.map((page) =>
-    new MessageActionRow().addComponents(
-      ...page.map((item) =>
-        new MessageButton().setCustomId(item.id).setEmoji(item.emojiId).setStyle('PRIMARY').setLabel('')
-      )
+const ACTION_ROWS = PAGES.map((page) =>
+  new MessageActionRow().addComponents(
+    ...page.map((item) =>
+      new MessageButton().setCustomId(item.id).setEmoji(item.emojiId).setStyle('PRIMARY').setLabel('')
     )
-  );
-
-  interaction.reply({
-    embeds: [embed],
-    ephemeral: true,
-    components: actionRows,
-  });
-}
+  )
+);
 
 class Shop {
   constructor() {
     commands.on(CommandNames.SHOP, this.run);
-    components.on(MessageComponentIds.SHOP, (interaction) => renderPage(interaction, 1));
-    components.on(MessageComponentIds.NEXT, this.next);
-    components.on(MessageComponentIds.LAST, this.last);
+    components.on(MessageComponentIds.SHOP, this.run);
+    components.on(MessageComponentIds.NEXT, this.run);
+    components.on(MessageComponentIds.LAST, this.run);
   }
 
-  last(interaction: ButtonInteraction): void {
-    const pageIndex = Number(interaction.message.embeds[0].title.split(' ')[1]) - 1;
-    renderPage(interaction, pageIndex);
-  }
-
-  next(interaction: ButtonInteraction): void {
-    const pageIndex = Number(interaction.message.embeds[0].title.split(' ')[1]) + 1;
-    renderPage(interaction, pageIndex);
-  }
-
-  run(interaction: CommandInteraction) {
-    const pageIndex = interaction.options.getInteger('page') || 1;
-    renderPage(interaction, pageIndex);
+  run(interaction: CommandInteraction | ButtonInteraction) {
+    interaction.reply({
+      embeds: [EMBED],
+      ephemeral: true,
+      components: ACTION_ROWS,
+    });
   }
 }
 

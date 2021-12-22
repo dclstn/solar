@@ -6,7 +6,7 @@ import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} 
 import User from '../../database/user/index.js';
 import {success, warning} from '../../utils/embed.js';
 import components from '../../components.js';
-import {acquireUserLock} from '../../locks/index.js';
+import {acquireUserLock} from '../../redis/locks.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
 
@@ -14,51 +14,6 @@ const NAV_ROW = new MessageActionRow().addComponents(
   new MessageButton().setCustomId(MessageComponentIds.PROFILE).setStyle('PRIMARY').setLabel('View Profile'),
   new MessageButton().setCustomId(MessageComponentIds.SHOP).setStyle('PRIMARY').setLabel('Open Shop')
 );
-
-async function processPurchase(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
-  const transaction = Sentry.startTransaction({
-    op: 'buy-transaction',
-    name: 'Item Purchase Transaction',
-  });
-
-  const lockSpan = transaction.startChild({op: 'acquire-lock'});
-  const lock = await acquireUserLock(interaction.user.id, 1000);
-  lockSpan.finish();
-
-  let user = null;
-
-  try {
-    const userSpan = transaction.startChild({op: 'acquire-user'});
-    user = await User.get(interaction.user);
-    userSpan.finish();
-
-    const item = findById(itemId);
-    user.buy(item, amount);
-
-    const saveSpan = transaction.startChild({op: 'save-doc'});
-    await user.save();
-    saveSpan.finish();
-
-    interaction.reply({
-      embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
-      components: [NAV_ROW],
-      ephemeral: true,
-    });
-  } catch (err) {
-    if (err instanceof ResponseError) {
-      interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
-      return;
-    }
-
-    Sentry.captureException(err);
-  } finally {
-    const releaseSpan = transaction.startChild({op: 'release-lock'});
-    await lock.release();
-    releaseSpan.finish();
-
-    transaction.finish();
-  }
-}
 
 class Buy {
   constructor() {
@@ -68,13 +23,58 @@ class Buy {
 
   handleComponent(interaction: ButtonInteraction) {
     const itemId = interaction.message.embeds[0].title.toLowerCase();
-    processPurchase(interaction, itemId, 1);
+    this.processPurchase(interaction, itemId, 1);
   }
 
   handleCommand(interaction: CommandInteraction) {
     const itemId = interaction.options.getString('item');
     const amount = interaction.options.getNumber('amount') || 1;
-    processPurchase(interaction, itemId, amount);
+    this.processPurchase(interaction, itemId, amount);
+  }
+
+  async processPurchase(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
+    const transaction = Sentry.startTransaction({
+      op: 'buy-transaction',
+      name: 'Item Purchase Transaction',
+    });
+
+    const lockSpan = transaction.startChild({op: 'acquire-lock'});
+    const lock = await acquireUserLock(interaction.user.id, 1000);
+    lockSpan.finish();
+
+    let user = null;
+
+    try {
+      const userSpan = transaction.startChild({op: 'acquire-user'});
+      user = await User.get(interaction.user);
+      userSpan.finish();
+
+      const item = findById(itemId);
+      user.buy(item, amount);
+
+      const saveSpan = transaction.startChild({op: 'save-doc'});
+      await user.save();
+      saveSpan.finish();
+
+      interaction.reply({
+        embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
+        components: [NAV_ROW],
+        ephemeral: true,
+      });
+    } catch (err) {
+      if (err instanceof ResponseError) {
+        interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
+        return;
+      }
+
+      Sentry.captureException(err);
+    } finally {
+      const releaseSpan = transaction.startChild({op: 'release-lock'});
+      await lock.release();
+      releaseSpan.finish();
+
+      transaction.finish();
+    }
   }
 }
 

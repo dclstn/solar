@@ -2,6 +2,7 @@ import {User} from 'discord.js';
 import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
 import moment from 'moment';
+import mongooseLeanMethods from 'mongoose-lean-methods';
 import {ItemSchema, ItemInterface, Cords} from '../item/index.js';
 import * as statics from './statics.js';
 import * as methods from './methods.js';
@@ -74,6 +75,7 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
 
 UserSchema.statics = statics;
 UserSchema.methods = methods;
+UserSchema.plugin(mongooseLeanMethods);
 
 // eslint-disable-next-line prefer-arrow-callback
 UserSchema.post<UserInterface>('init', function initCallback() {

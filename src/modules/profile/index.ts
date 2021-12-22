@@ -24,12 +24,11 @@ class Profile {
     let user: UserInterface;
 
     try {
-      user = await User.get(interaction.user);
+      user = await User.get(interaction.user, true);
+      interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
     } catch (err) {
       Sentry.captureException(err);
     }
-
-    interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
   }
 
   async run(interaction: CommandInteraction): Promise<void> {
@@ -37,12 +36,11 @@ class Profile {
     let user: UserInterface;
 
     try {
-      user = await User.get(interactionUser);
+      user = await User.get(interactionUser, true);
+      interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
     } catch (err) {
       Sentry.captureException(err);
     }
-
-    interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
   }
 }
 
