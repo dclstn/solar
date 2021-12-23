@@ -23,6 +23,8 @@ export default {
       return {x: 0, y: 0};
     }
 
+    this.sort();
+
     for (let j = 0; j < o; j += 1) {
       const r = j * o;
       for (let i = 0; i < o; i += 1) {
