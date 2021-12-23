@@ -26,8 +26,9 @@ export default {
     for (let j = 0; j < o; j += 1) {
       const r = j * o;
       for (let i = 0; i < o; i += 1) {
-        const f = this.items[i + r];
-        if (!f || (f.cords.x !== i && f.cords.y !== j)) {
+        const l = i + r;
+        const f = this.items[l];
+        if (!f || f.cords.x + f.cords.y * o !== l) {
           return {x: i, y: j};
         }
       }
