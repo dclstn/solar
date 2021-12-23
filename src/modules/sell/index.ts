@@ -44,7 +44,7 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
       return;
     }
 
-    console.error(err);
+    Sentry.captureException(err);
   } finally {
     const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();

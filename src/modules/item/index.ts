@@ -58,7 +58,7 @@ class ItemCommand {
   }
 
   async run(interaction: CommandInteraction): Promise<void> {
-    const itemId = interaction.options.getString('Item');
+    const itemId = interaction.options.getString('item');
     const item = findById(itemId);
     handleReply(interaction, item);
   }
