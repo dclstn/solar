@@ -1,5 +1,5 @@
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {ButtonInteraction, CommandInteraction, Interaction, Message, MessageEmbed, User} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageEmbed, User} from 'discord.js';
 import chunk from 'lodash.chunk';
 import {numberWithCommas} from '../../utils/embed.js';
 import {
@@ -50,7 +50,7 @@ async function createEmbed(interactionUser: User, inventoryType: number): Promis
 class Profile {
   constructor() {
     commands.on(CommandNames.PROFILE, this.handleCommand);
-    commands.on(UserCommandNames.PROFILE, this.handleButton);
+    commands.on(UserCommandNames.PROFILE, this.handleCommand);
     components.on(MessageComponentIds.PROFILE, this.handleButton);
   }
 

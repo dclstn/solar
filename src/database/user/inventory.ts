@@ -6,7 +6,6 @@ const o = Math.sqrt(Defaults.MAX_SLOTS);
 
 export default {
   add(item: Item, cords?: Cords): void {
-    console.log(this.next());
     this.items.push({
       id: item.id,
       purchased: Date.now(),

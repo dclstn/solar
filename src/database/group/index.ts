@@ -17,6 +17,7 @@ const GroupSchema: Mongoose.Schema = new Mongoose.Schema<GroupInterface>({
       },
     ],
     default: [],
+    _id: false,
   },
 });
 
