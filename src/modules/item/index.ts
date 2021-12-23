@@ -4,8 +4,10 @@ import {numberWithCommas} from '../../utils/embed.js';
 import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
 import commands from '../../commands.js';
 import {findById, Item, Items} from '../../items.js';
-import User, {UserInterface} from '../../database/user/index.js';
+import User from '../../database/user/index.js';
 import {emoteIds, emoteStrings} from '../../utils/emotes.js';
+import type {UserInterface} from '../../types/user.js';
+import {InventoryType} from '../../utils/enums.js';
 import components from '../../components.js';
 import Sentry from '../../sentry.js';
 
@@ -40,7 +42,7 @@ async function handleReply(interaction: CommandInteraction | ButtonInteraction, 
         .setLabel(`Sell for ${numberWithCommas(item.price / 2)}`)
         .setEmoji(emoteIds.gem)
         .setStyle('DANGER')
-        .setDisabled(!user.inventory.has(item))
+        .setDisabled(!user.getInventory(InventoryType.MAIN).has(item))
     );
 
     interaction.reply({embeds: [embed], components: [actionRow], ephemeral: true});

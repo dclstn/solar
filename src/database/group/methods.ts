@@ -1,4 +1,4 @@
-import {UserInterface} from '../user/index.js';
+import type {UserInterface} from '../../types/user';
 
 export function add(user: UserInterface) {
   this.users.push(user._id);

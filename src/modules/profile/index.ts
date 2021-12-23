@@ -9,7 +9,8 @@ import {
   MessageComponentIds,
 } from '../../constants.js';
 import commands from '../../commands.js';
-import User, {UserInterface} from '../../database/user/index.js';
+import User from '../../database/user/index.js';
+import type {UserInterface} from '../../types/user.js';
 import components from '../../components.js';
 import Sentry from '../../sentry.js';
 

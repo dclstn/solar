@@ -1,10 +1,5 @@
 import moment from 'moment';
-
-export enum ItemTypes {
-  GENERATOR,
-  TOTEM,
-  MISC,
-}
+import {ItemTypes} from './utils/enums.js';
 
 interface BaseItem {
   id: string;

@@ -1,9 +1,10 @@
-import {UserInterface} from 'database/user';
 import {MessageEmbed} from 'discord.js';
 import chunk from 'lodash.chunk';
+import type {UserInterface} from '../types/user.js';
 import {findById} from '../items.js';
 import {Defaults} from '../constants.js';
 import {emoteStrings} from './emotes.js';
+import {InventoryType} from './enums.js';
 
 export function numberWithCommas(x: number): string {
   const y = x < 100 ? x.toFixed(2) : Math.floor(x);
@@ -13,7 +14,7 @@ export function numberWithCommas(x: number): string {
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
 ${emoteStrings.gem} Gems: **${numberWithCommas(user.money)}**
-💰 Gems Per Hour: **${numberWithCommas(user.inventory.gph())}**
+💰 Gems Per Hour: **${numberWithCommas(user.getInventory(InventoryType.MAIN).gph())}**
 
 ${grid}
 `;
@@ -35,7 +36,7 @@ export function warning(user: UserInterface, content: string): MessageEmbed {
 export function profileEmbed(user: UserInterface): MessageEmbed {
   const grid = chunk(new Array(Defaults.MAX_SLOTS).fill(emoteStrings.blank), Math.sqrt(Defaults.MAX_SLOTS));
 
-  user.inventory.items.forEach(({cords, id}) => {
+  user.getInventory(InventoryType.MAIN).items.forEach(({cords, id}) => {
     grid[cords.y][cords.x] = findById(id).emoji;
   });
 

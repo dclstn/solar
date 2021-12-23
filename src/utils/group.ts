@@ -1,6 +1,7 @@
 import {Defaults} from '../constants.js';
-import Group, {Roles} from '../database/group/index.js';
-import type {UserInterface} from '../database/user/index.js';
+import Group from '../database/group/index.js';
+import {Roles} from './enums.js';
+import type {UserInterface} from '../types/user.js';
 import {numberWithCommas} from './embed.js';
 import ResponseError from './error.js';
 

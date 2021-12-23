@@ -1,6 +1,6 @@
 import {Defaults} from '../../constants.js';
 import {findById, Item} from '../../items.js';
-import {Cords} from '../item/index.js';
+import type {Cords} from '../../types/item.js';
 
 const o = Math.sqrt(Defaults.MAX_SLOTS);
 
@@ -11,10 +11,6 @@ export default {
       purchased: Date.now(),
       cords: cords || this.next(),
     });
-
-    if (cords != null) {
-      this.sort();
-    }
   },
 
   /* A fast way of determining the next available slot */

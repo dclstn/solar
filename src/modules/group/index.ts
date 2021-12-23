@@ -1,4 +1,4 @@
-import {CommandInteraction} from 'discord.js';
+import type {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {CommandNames, CommandDescriptions, CommandOptions, GroupSubCommandNames} from '../../constants.js';
 import commands from '../../commands.js';
