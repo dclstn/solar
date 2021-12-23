@@ -14,7 +14,7 @@ mongooseLong(Mongoose);
 export async function create(interaction: CommandInteraction) {
   let user: UserInterface;
 
-  const name = interaction.options.getString('Name');
+  const name = interaction.options.getString('name');
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
 
   try {
