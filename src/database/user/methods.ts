@@ -17,6 +17,8 @@ export function buy(item: Item, amount: number) {
     this.inventory.add(item);
   }
 
+  this.inventory.sort();
+
   this.money -= totalCost;
 }
 
@@ -32,6 +34,8 @@ export function sell(item: Item, amount: number) {
 
     this.inventory.rem(item);
   }
+
+  this.inventory.sort();
 
   this.money += (item.price * amount) / 2;
 }

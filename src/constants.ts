@@ -4,6 +4,7 @@ import {BuyableItems, Items} from './items.js';
 export const Defaults = {
   MAX_SLOTS: 36,
   STORE_PAGE_SIZE: 5,
+  GROUP_COST: 100,
 };
 
 export const CommandNames = {
@@ -134,6 +135,15 @@ export const CommandOptions = {
       name: GroupSubCommandNames.DEPOSIT,
       description: '💰 Deposit gems into your kingdom',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'amount',
+          description: 'The amount of gems you wish to deposit',
+          type: ApplicationCommandOptionTypes.INTEGER,
+          required: true,
+          min_value: 1,
+        },
+      ],
     },
   ],
 };

@@ -20,6 +20,7 @@ export interface InventoryInterface extends Mongoose.Types.Subdocument {
   fetch(cords: Cords): Item;
   fetchAll(): Item[];
   gph(): number;
+  sort(): void;
 }
 
 export interface UserInterface extends Mongoose.Document {

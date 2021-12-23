@@ -11,20 +11,34 @@ export default {
       purchased: Date.now(),
       cords: cords || this.next(),
     });
+
+    if (cords != null) {
+      this.sort();
+    }
   },
 
+  /* A fast way of determining the next available slot */
   next(): Cords {
-    let x = 0;
-    let y = 0;
-    let i = 0;
-
-    while (this.fetch({x, y}) != null) {
-      x = i % o;
-      y = Math.floor(i / o);
-      i += 1;
+    if (this.items.length === 0) {
+      return {x: 0, y: 0};
     }
 
-    return {x, y};
+    for (let j = 0; j < o; j += 1) {
+      const r = j * o;
+      for (let i = 0; i < o; i += 1) {
+        const f = this.items[i + r];
+        if (!f || (f.cords.x !== i && f.cords.y !== j)) {
+          return {x: i, y: j};
+        }
+      }
+    }
+
+    return null;
+  },
+
+  /* sorts the array of items corresponding to coordinates */
+  sort() {
+    this.items.sort(({cords: {x, y}}, {cords: {x: q, y: p}}) => x + y * o - (q + p * o));
   },
 
   fetch(cords: Cords): Item {

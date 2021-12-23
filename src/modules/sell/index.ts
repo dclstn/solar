@@ -1,6 +1,6 @@
 import {ButtonInteraction, CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {acquireUserLock} from '../../redis/locks.js';
+import redlock, {userLock} from '../../redis/locks.js';
 import components from '../../components.js';
 import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../constants.js';
 import {findById} from '../../items.js';
@@ -17,7 +17,7 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
   });
 
   const lockSpan = transaction.startChild({op: 'acquire-lock'});
-  const lock = await acquireUserLock(interaction.user.id, 1000);
+  const lock = await redlock.acquire([userLock(interaction.user)], 1000);
   lockSpan.finish();
 
   let user = null;

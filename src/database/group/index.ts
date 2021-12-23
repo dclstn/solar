@@ -23,11 +23,7 @@ const GroupSchema: Mongoose.Schema = new Mongoose.Schema<GroupInterface>({
   users: {
     type: [
       {
-        role: {
-          type: Number,
-          required: true,
-          default: Roles.USER,
-        },
+        role: {type: Number, required: true, default: Roles.USER},
         user: {
           type: Mongoose.Schema.Types.ObjectId,
           ref: 'User',

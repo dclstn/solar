@@ -1,3 +1,4 @@
+import {User} from 'discord.js';
 import Client from 'ioredis';
 import Redlock, {Lock, ResourceLockedError, Settings} from 'redlock';
 import Sentry from '../sentry.js';
@@ -19,8 +20,7 @@ redlock.on('error', (error: Error) => {
   Sentry.captureException(error);
 });
 
-export function acquireUserLock(id: string, duration: number, settings?: Settings): Promise<Lock> {
-  return redlock.acquire([`account.${id}`], duration, settings);
-}
+export const userLock = (user: User): string => `account.${user.id}`;
+export const groupLock = (name: string): string => `group.${name}`;
 
 export default redlock;

@@ -6,7 +6,7 @@ import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} 
 import User from '../../database/user/index.js';
 import {success, warning} from '../../utils/embed.js';
 import components from '../../components.js';
-import {acquireUserLock} from '../../redis/locks.js';
+import redlock, {userLock} from '../../redis/locks.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
 
@@ -22,7 +22,7 @@ async function processPurchase(interaction: ButtonInteraction | CommandInteracti
   });
 
   const lockSpan = transaction.startChild({op: 'acquire-lock'});
-  const lock = await acquireUserLock(interaction.user.id, 1000);
+  const lock = await redlock.acquire([userLock(interaction.user)], 1000);
   lockSpan.finish();
 
   let user = null;
