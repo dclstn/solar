@@ -1,44 +1,83 @@
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {ButtonInteraction, CommandInteraction} from 'discord.js';
-import {profileEmbed} from '../../utils/embed.js';
+import {ButtonInteraction, CommandInteraction, Interaction, Message, MessageEmbed, User} from 'discord.js';
+import chunk from 'lodash.chunk';
+import {numberWithCommas} from '../../utils/embed.js';
 import {
   CommandNames,
   CommandDescriptions,
   CommandOptions,
   UserCommandNames,
   MessageComponentIds,
+  Defaults,
 } from '../../constants.js';
 import commands from '../../commands.js';
-import User from '../../database/user/index.js';
+import UserModel from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
 import components from '../../components.js';
 import Sentry from '../../sentry.js';
+import {findById} from '../../items.js';
+import {InventoryType} from '../../utils/enums.js';
+import {emoteStrings} from '../../utils/emotes.js';
+
+const createProfileDescription = (user: UserInterface, grid: string) => `
+
+${emoteStrings.gem} Gems: **${numberWithCommas(user.money)}**
+💰 Gems Per Hour: **${numberWithCommas(user.getInventory(InventoryType.Main).gph())}**
+
+${grid}
+`;
+
+async function createEmbed(interactionUser: User, inventoryType: number): Promise<MessageEmbed> {
+  const user = await UserModel.get(interactionUser);
+  const inventory = user.getInventory(inventoryType);
+
+  const grid = chunk(new Array(Defaults.MAX_SLOTS).fill(emoteStrings.blank), Math.sqrt(Defaults.MAX_SLOTS));
+
+  inventory.items.forEach(({cords, id}) => {
+    grid[cords.y][cords.x] = findById(id).emoji;
+  });
+
+  const gridString = grid.map((row: Array<string>) => row.join(' ')).join('\n');
+
+  return new MessageEmbed()
+    .setAuthor(user.username, user.avatar)
+    .setDescription(createProfileDescription(user, gridString))
+    .setColor('BLURPLE')
+    .setTimestamp(new Date())
+    .setFooter(InventoryType[inventoryType]);
+}
 
 class Profile {
   constructor() {
-    commands.on(CommandNames.PROFILE, this.run);
-    commands.on(UserCommandNames.PROFILE, this.run);
-    components.on(MessageComponentIds.PROFILE, this.handleMessageComponent);
+    commands.on(CommandNames.PROFILE, this.handleCommand);
+    commands.on(UserCommandNames.PROFILE, this.handleButton);
+    components.on(MessageComponentIds.PROFILE, this.handleButton);
   }
 
-  async handleMessageComponent(interaction: ButtonInteraction) {
-    let user: UserInterface;
-
+  async handleCommand(interaction: CommandInteraction) {
     try {
-      user = await User.get(interaction.user);
-      interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
+      const user = interaction.options.getUser('user') || interaction.user;
+      const inventory = interaction.options.getInteger('inventory') || InventoryType.Main;
+      const embed = await createEmbed(user, inventory);
+
+      interaction.reply({
+        ephemeral: true,
+        embeds: [embed],
+      });
     } catch (err) {
       Sentry.captureException(err);
     }
   }
 
-  async run(interaction: CommandInteraction): Promise<void> {
-    const interactionUser = interaction.options.getUser('user') || interaction.user;
-    let user: UserInterface;
-
+  async handleButton(interaction: ButtonInteraction) {
     try {
-      user = await User.get(interactionUser);
-      interaction.reply({embeds: [profileEmbed(user)], ephemeral: true});
+      const {user} = interaction;
+      const embed = await createEmbed(user, InventoryType.Main);
+
+      interaction.reply({
+        ephemeral: true,
+        embeds: [embed],
+      });
     } catch (err) {
       Sentry.captureException(err);
     }

@@ -5,8 +5,8 @@ export enum Roles {
 }
 
 export enum InventoryType {
-  MAIN = 0,
-  STORAGE = 1,
+  Main = 0,
+  Storage = 1,
 }
 
 export enum ItemTypes {

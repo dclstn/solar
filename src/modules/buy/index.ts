@@ -50,7 +50,7 @@ async function processPurchase(interaction: ButtonInteraction | CommandInteracti
       return;
     }
 
-    Sentry.captureException(err);
+    // Sentry.captureException(err);
   } finally {
     const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();

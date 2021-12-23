@@ -6,6 +6,7 @@ const o = Math.sqrt(Defaults.MAX_SLOTS);
 
 export default {
   add(item: Item, cords?: Cords): void {
+    console.log(this.next());
     this.items.push({
       id: item.id,
       purchased: Date.now(),
@@ -52,7 +53,7 @@ export default {
   },
 
   has(item: Item): boolean {
-    return this.items.find(({id}) => id === item.id);
+    return this.items.find(({id}) => id === item.id) != null;
   },
 
   gph(): number {

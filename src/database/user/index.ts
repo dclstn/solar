@@ -66,11 +66,11 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
     required: true,
     default: () => [
       {
-        type: InventoryType.MAIN,
+        type: InventoryType.Main,
         items: [],
       },
       {
-        type: InventoryType.STORAGE,
+        type: InventoryType.Storage,
         items: [],
       },
     ],
@@ -85,7 +85,7 @@ UserSchema.methods = methods;
 // eslint-disable-next-line prefer-arrow-callback
 UserSchema.post<UserInterface>('init', function initCallback() {
   const diffMinutes = moment(new Date()).diff(moment(this.updated), 'minutes');
-  this.money += (this.getInventory(InventoryType.MAIN).gph() / 60) * diffMinutes;
+  this.money += (this.getInventory(InventoryType.Main).gph() / 60) * diffMinutes;
   this.updated = new Date();
 });
 

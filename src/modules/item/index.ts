@@ -42,7 +42,7 @@ async function handleReply(interaction: CommandInteraction | ButtonInteraction, 
         .setLabel(`Sell for ${numberWithCommas(item.price / 2)}`)
         .setEmoji(emoteIds.gem)
         .setStyle('DANGER')
-        .setDisabled(!user.getInventory(InventoryType.MAIN).has(item))
+        .setDisabled(!user.getInventory(InventoryType.Main).has(item))
     );
 
     interaction.reply({embeds: [embed], components: [actionRow], ephemeral: true});
@@ -58,7 +58,7 @@ class ItemCommand {
   }
 
   async run(interaction: CommandInteraction): Promise<void> {
-    const itemId = interaction.options.getString('item');
+    const itemId = interaction.options.getString('Item');
     const item = findById(itemId);
     handleReply(interaction, item);
   }

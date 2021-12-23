@@ -1,4 +1,5 @@
 import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
+import {InventoryType} from './utils/enums.js';
 import {BuyableItems, Items} from './items.js';
 
 export const Defaults = {
@@ -66,6 +67,21 @@ export const CommandOptions = {
       description: "Inspect a selected user's profile",
       type: ApplicationCommandOptionTypes.USER,
     },
+    {
+      name: 'inventory',
+      description: "Select which inventory you'd like to inspect",
+      type: ApplicationCommandOptionTypes.INTEGER,
+      choices: [
+        {
+          name: 'Main',
+          value: InventoryType.Main,
+        },
+        {
+          name: 'Storage',
+          value: InventoryType.Storage,
+        },
+      ],
+    },
   ],
   [CommandNames.SELL]: [
     {
@@ -99,25 +115,25 @@ export const CommandOptions = {
       choices: Items.slice(0, 25).map(({id, name}) => ({name, value: id})),
     },
   ],
-  [CommandNames.RAID]: [
-    {
-      name: 'gem_wager',
-      description: 'The amount of gems will decide the impact of your raid',
-      min_value: 1,
-      type: ApplicationCommandOptionTypes.NUMBER,
-    },
-  ],
+  // [CommandNames.RAID]: [
+  //   {
+  //     name: 'gem_wager',
+  //     description: 'The amount of gems will decide the impact of your raid',
+  //     min_value: 1,
+  //     type: ApplicationCommandOptionTypes.NUMBER,
+  //   },
+  // ],
   [CommandNames.GROUP]: [
-    {
-      name: GroupSubCommandNames.ADD,
-      description: '📬 Invite a user to your kingdom',
-      type: ApplicationCommandOptionTypes.SUB_COMMAND,
-    },
-    {
-      name: GroupSubCommandNames.REMOVE,
-      description: '📬 Remove a user from your kingdom',
-      type: ApplicationCommandOptionTypes.SUB_COMMAND,
-    },
+    // {
+    //   name: GroupSubCommandNames.ADD,
+    //   description: '📬 Invite a user to your kingdom',
+    //   type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    // },
+    // {
+    //   name: GroupSubCommandNames.REMOVE,
+    //   description: '📬 Remove a user from your kingdom',
+    //   type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    // },
     {
       name: GroupSubCommandNames.CREATE,
       description: '🌍 Create a new kingdom',
@@ -131,20 +147,20 @@ export const CommandOptions = {
         },
       ],
     },
-    {
-      name: GroupSubCommandNames.DEPOSIT,
-      description: '💰 Deposit gems into your kingdom',
-      type: ApplicationCommandOptionTypes.SUB_COMMAND,
-      options: [
-        {
-          name: 'amount',
-          description: 'The amount of gems you wish to deposit',
-          type: ApplicationCommandOptionTypes.INTEGER,
-          required: true,
-          min_value: 1,
-        },
-      ],
-    },
+    // {
+    //   name: GroupSubCommandNames.DEPOSIT,
+    //   description: '💰 Deposit gems into your kingdom',
+    //   type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    //   options: [
+    //     {
+    //       name: 'amount',
+    //       description: 'The amount of gems you wish to deposit',
+    //       type: ApplicationCommandOptionTypes.INTEGER,
+    //       required: true,
+    //       min_value: 1,
+    //     },
+    //   ],
+    // },
   ],
 };
 
