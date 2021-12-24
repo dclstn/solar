@@ -183,11 +183,6 @@ export const CommandOptions = {
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
     {
-      name: SortCommandNames.AGE,
-      description: '🧵 Sort your inventories by the age of each item',
-      type: ApplicationCommandOptionTypes.SUB_COMMAND,
-    },
-    {
       name: SortCommandNames.RANDOM,
       description: '🧵 Randomly sort your inventories',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
