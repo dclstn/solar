@@ -26,6 +26,7 @@ export const GroupSubCommandNames = {
   REMOVE: 'remove',
   CREATE: 'create',
   DEPOSIT: 'deposit',
+  INVITE: 'invite',
 };
 
 export const SortCommandNames = {
@@ -138,11 +139,11 @@ export const CommandOptions = {
     //   description: '📬 Invite a user to your kingdom',
     //   type: ApplicationCommandOptionTypes.SUB_COMMAND,
     // },
-    // {
-    //   name: GroupSubCommandNames.REMOVE,
-    //   description: '📬 Remove a user from your kingdom',
-    //   type: ApplicationCommandOptionTypes.SUB_COMMAND,
-    // },
+    {
+      name: GroupSubCommandNames.INVITE,
+      description: '📬 Invite a user to your group',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
     {
       name: GroupSubCommandNames.CREATE,
       description: '🌍 Create a new kingdom',
@@ -185,6 +186,11 @@ export const CommandOptions = {
     {
       name: SortCommandNames.RANDOM,
       description: '🧵 Randomly sort your inventories',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: SortCommandNames.AGE,
+      description: '🧵 Sort by the age of each item',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
   ],

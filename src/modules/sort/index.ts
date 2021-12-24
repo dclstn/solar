@@ -32,6 +32,10 @@ class Sort {
         case SortCommandNames.RANDOM:
           user.sort(() => (Math.random() > 0.5 ? 1 : -1));
           break;
+        case SortCommandNames.AGE:
+          user.sort((a, b) => a.id.localeCompare(b.id));
+          user.sort((a, b) => a.purchased.getTime() - b.purchased.getTime());
+          break;
         default:
           return;
       }
