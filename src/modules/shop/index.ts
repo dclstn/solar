@@ -14,7 +14,7 @@ ${emoteStrings.success} **How to get started**
 *Click on an item below to inspect information!*
 
 ${emoteStrings.success} **How do I buy/sell?**
-*You should see a green orred button these will allow you 
+*You should see a green or red button these will allow you 
 buy or sell*
 
 ${emoteStrings.success} **Why are some buttons disabled?**
