@@ -44,7 +44,7 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
     });
   } catch (err) {
     if (err instanceof ResponseError) {
-      interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
+      interaction.reply({embeds: [warning(err.message)], ephemeral: true});
       return;
     }
 

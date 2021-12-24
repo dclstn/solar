@@ -143,6 +143,14 @@ export const CommandOptions = {
       name: GroupSubCommandNames.INVITE,
       description: '📬 Invite a user to your group',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'user',
+          description: 'Select the user you wish to invite',
+          type: ApplicationCommandOptionTypes.USER,
+          required: true,
+        },
+      ],
     },
     {
       name: GroupSubCommandNames.CREATE,

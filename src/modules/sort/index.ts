@@ -43,7 +43,7 @@ class Sort {
       await user.save();
 
       interaction.reply({
-        embeds: [success(user, `Successfully sorted your inventories by \`${subCommand}\``)],
+        embeds: [success(`Successfully sorted your inventories by \`${subCommand}\``)],
         ephemeral: true,
       });
     } catch (err) {

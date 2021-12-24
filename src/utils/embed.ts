@@ -21,18 +21,12 @@ ${item.emoji} **${item.name}** x${amount}
 + ${emoteStrings.gem} **${numberWithCommas((amount * item.price) / 2)}**
 `;
 
-export function success(user: UserInterface, content: string): MessageEmbed {
-  return new MessageEmbed()
-    .setAuthor(user.username, user.avatar)
-    .setColor('GREEN')
-    .setDescription(`${emoteStrings.success} ${content}`);
+export function success(content: string): MessageEmbed {
+  return new MessageEmbed().setColor('GREEN').setDescription(`${emoteStrings.success} ${content}`);
 }
 
-export function warning(user: UserInterface, content: string): MessageEmbed {
-  return new MessageEmbed()
-    .setAuthor(user.username, user.avatar)
-    .setColor('RED')
-    .setDescription(`${emoteStrings.error} ${content}`);
+export function warning(content: string): MessageEmbed {
+  return new MessageEmbed().setColor('RED').setDescription(`${emoteStrings.error} ${content}`);
 }
 
 export function purchase(item: Item, amount: number) {

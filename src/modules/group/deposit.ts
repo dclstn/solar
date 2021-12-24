@@ -40,12 +40,12 @@ export default async function deposit(interaction: CommandInteraction) {
     await Promise.all([user.save(), group.save()]);
 
     interaction.reply({
-      embeds: [success(user, depositDescription(amount, group))],
+      embeds: [success(depositDescription(amount, group))],
       ephemeral: true,
     });
   } catch (err) {
     if (err instanceof ResponseError) {
-      interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
+      interaction.reply({embeds: [warning(err.message)], ephemeral: true});
       return;
     }
 

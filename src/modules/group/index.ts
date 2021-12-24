@@ -4,6 +4,7 @@ import {CommandNames, CommandDescriptions, CommandOptions, GroupSubCommandNames}
 import commands from '../../commands.js';
 import deposit from './deposit.js';
 import create from './create.js';
+import invite from './invite.js';
 
 class Group {
   constructor() {
@@ -14,6 +15,9 @@ class Group {
     switch (interaction.options.getSubcommand()) {
       case GroupSubCommandNames.DEPOSIT:
         deposit(interaction);
+        break;
+      case GroupSubCommandNames.INVITE:
+        invite(interaction);
         break;
       case GroupSubCommandNames.CREATE:
       default:

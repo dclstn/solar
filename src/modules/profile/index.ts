@@ -63,8 +63,8 @@ class Profile {
       const embed = await createEmbed(user, inventory);
 
       const actionRow = new MessageActionRow().addComponents(
-        inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON,
-        SHOP_BUTTON
+        SHOP_BUTTON,
+        inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
       );
 
       interaction.reply({
@@ -83,8 +83,8 @@ class Profile {
       const embed = await createEmbed(user, inventoryType);
 
       const actionRow = new MessageActionRow().addComponents(
-        inventoryType === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON,
-        SHOP_BUTTON
+        SHOP_BUTTON,
+        inventoryType === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
       );
 
       interaction.reply({

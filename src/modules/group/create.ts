@@ -17,10 +17,10 @@ export default async function create(interaction: CommandInteraction) {
   try {
     user = await User.get(interaction.user);
     await createGroup(user, name);
-    interaction.reply({embeds: [success(user, 'Successfully created kingdom')], ephemeral: true});
+    interaction.reply({embeds: [success('Successfully created kingdom')], ephemeral: true});
   } catch (err) {
     if (err instanceof ResponseError) {
-      interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
+      interaction.reply({embeds: [warning(err.message)], ephemeral: true});
       return;
     }
 
