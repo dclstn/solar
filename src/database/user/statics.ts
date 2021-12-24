@@ -4,7 +4,7 @@ import client from '../../client.js';
 export async function get(user: User) {
   return this.findOneAndUpdate(
     {
-      id: user.id,
+      discordId: user.id,
     },
     {
       username: user.username,

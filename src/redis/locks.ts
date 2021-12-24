@@ -1,6 +1,6 @@
 import {User} from 'discord.js';
 import Client from 'ioredis';
-import Redlock, {Lock, ResourceLockedError, Settings} from 'redlock';
+import Redlock, {ResourceLockedError} from 'redlock';
 import Sentry from '../sentry.js';
 
 const client = new Client();

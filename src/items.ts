@@ -123,7 +123,7 @@ const BaseItems: BaseItem[] = [
     emojiId: '765942419518521366',
     id: 'king',
     level: 14,
-    buyable: true,
+    buyable: false,
   },
   {
     name: 'Mythic',
@@ -179,7 +179,7 @@ const BaseItems: BaseItem[] = [
     emojiId: '797932521999564821',
     id: 'minecraft',
     level: 15,
-    buyable: false,
+    buyable: true,
   },
   {
     name: 'Mystic',
@@ -203,7 +203,7 @@ const BaseItems: BaseItem[] = [
     emojiId: '775288572595929099',
     id: 'reddiamond',
     level: 18,
-    buyable: false,
+    buyable: true,
   },
   {
     name: 'Tortoise',
@@ -219,7 +219,7 @@ const BaseItems: BaseItem[] = [
     emojiId: '779853678021836830',
     id: 'burning',
     level: 20,
-    buyable: false,
+    buyable: true,
   },
   {
     name: 'Scorching',
@@ -227,7 +227,7 @@ const BaseItems: BaseItem[] = [
     emojiId: '779853678295121930',
     id: 'scorching',
     level: 21,
-    buyable: false,
+    buyable: true,
   },
   {
     name: 'RGB',

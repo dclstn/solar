@@ -2,7 +2,8 @@ import type {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {CommandNames, CommandDescriptions, CommandOptions, GroupSubCommandNames} from '../../constants.js';
 import commands from '../../commands.js';
-import {create, deposit} from './actions.js';
+import deposit from './deposit.js';
+import create from './create.js';
 
 class Group {
   constructor() {

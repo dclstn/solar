@@ -51,7 +51,7 @@ const InventorySchema: Mongoose.Schema = new Mongoose.Schema<InventoryInterface>
 InventorySchema.methods = inventory;
 
 const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModelInterface>({
-  id: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
+  discordId: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
   username: {type: String, required: true},
   discriminator: {type: String, required: true},
   avatar: {type: String, required: false},
