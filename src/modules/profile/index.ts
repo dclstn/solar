@@ -1,5 +1,5 @@
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {ButtonInteraction, CommandInteraction, MessageEmbed, User} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed, User} from 'discord.js';
 import chunk from 'lodash.chunk';
 import {numberWithCommas} from '../../utils/embed.js';
 import {
@@ -18,6 +18,7 @@ import Sentry from '../../sentry.js';
 import {findById} from '../../items.js';
 import {InventoryType} from '../../utils/enums.js';
 import {emoteStrings} from '../../utils/emotes.js';
+import {STORAGE_BUTTON, PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
 
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
@@ -51,7 +52,8 @@ class Profile {
   constructor() {
     commands.on(CommandNames.PROFILE, this.handleCommand);
     commands.on(UserCommandNames.PROFILE, this.handleCommand);
-    components.on(MessageComponentIds.PROFILE, this.handleButton);
+    components.on(MessageComponentIds.PROFILE, (interaction) => this.handleButton(interaction, InventoryType.Main));
+    components.on(MessageComponentIds.STORAGE, (interaction) => this.handleButton(interaction, InventoryType.Storage));
   }
 
   async handleCommand(interaction: CommandInteraction) {
@@ -60,23 +62,35 @@ class Profile {
       const inventory = interaction.options.getInteger('inventory') || InventoryType.Main;
       const embed = await createEmbed(user, inventory);
 
+      const actionRow = new MessageActionRow().addComponents(
+        inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON,
+        SHOP_BUTTON
+      );
+
       interaction.reply({
         ephemeral: true,
         embeds: [embed],
+        components: [actionRow],
       });
     } catch (err) {
       Sentry.captureException(err);
     }
   }
 
-  async handleButton(interaction: ButtonInteraction) {
+  async handleButton(interaction: ButtonInteraction, inventoryType: InventoryType) {
     try {
       const {user} = interaction;
-      const embed = await createEmbed(user, InventoryType.Main);
+      const embed = await createEmbed(user, inventoryType);
+
+      const actionRow = new MessageActionRow().addComponents(
+        inventoryType === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON,
+        SHOP_BUTTON
+      );
 
       interaction.reply({
         ephemeral: true,
         embeds: [embed],
+        components: [actionRow],
       });
     } catch (err) {
       Sentry.captureException(err);

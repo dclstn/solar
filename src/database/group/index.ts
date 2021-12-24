@@ -5,6 +5,7 @@ import * as methods from './methods.js';
 
 const GroupSchema: Mongoose.Schema = new Mongoose.Schema<GroupInterface>({
   name: {type: String, required: true, index: {unique: true}},
+  money: {type: Number, required: true, default: 0},
   users: {
     type: [
       {

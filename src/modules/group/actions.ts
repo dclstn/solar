@@ -1,8 +1,9 @@
 import type {CommandInteraction} from 'discord.js';
 import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
-import {success, warning} from '../../utils/embed.js';
-import redlock, {userLock} from '../../redis/locks.js';
+import {emoteStrings} from '../../utils/emotes.js';
+import {numberWithCommas, success, warning} from '../../utils/embed.js';
+import redlock, {groupLock, userLock} from '../../redis/locks.js';
 import User from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
 import Sentry from '../../sentry.js';
@@ -38,16 +39,35 @@ export async function deposit(interaction: CommandInteraction) {
 
   const amount = interaction.options.getInteger('amount');
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
+  let userGroupLock = null;
 
   try {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const id = Mongoose.Schema.Types.Long.fromString(interaction.user.id);
-    const group = await User.findOne({id}).populate('group');
+    user = await User.findOne({id: interaction.user.id}).populate('group');
 
-    console.log(group);
+    if (user == null || user.group == null) {
+      throw new ResponseError('You do not belong to a kingdom');
+    }
 
-    interaction.reply({embeds: [success(user, 'Successfully created kingdom')], ephemeral: true});
+    if (user.money < amount) {
+      throw new ResponseError('You do not have that many gems');
+    }
+
+    const {group} = user;
+    userGroupLock = await redlock.acquire([groupLock(group.name)], 1000);
+
+    group.set('money', (group.money += amount));
+    user.set('money', (user.money -= amount));
+
+    await Promise.all([user.save(), group.save()]);
+
+    interaction.reply({
+      embeds: [
+        success(user, `Successfully deposited ${emoteStrings.gem} **${numberWithCommas(amount)}** into ${group.name}`),
+      ],
+      ephemeral: true,
+    });
   } catch (err) {
     if (err instanceof ResponseError) {
       interaction.reply({embeds: [warning(user, err.message)], ephemeral: true});
@@ -57,5 +77,8 @@ export async function deposit(interaction: CommandInteraction) {
     Sentry.captureException(err);
   } finally {
     lock.release();
+    if (userGroupLock) {
+      userGroupLock.release();
+    }
   }
 }

@@ -115,14 +115,14 @@ export const CommandOptions = {
       choices: Items.slice(0, 25).map(({id, name}) => ({name, value: id})),
     },
   ],
-  // [CommandNames.RAID]: [
-  //   {
-  //     name: 'gem_wager',
-  //     description: 'The amount of gems will decide the impact of your raid',
-  //     min_value: 1,
-  //     type: ApplicationCommandOptionTypes.NUMBER,
-  //   },
-  // ],
+  [CommandNames.RAID]: [
+    {
+      name: 'gem_wager',
+      description: 'The amount of gems will decide the impact of your raid',
+      min_value: 1,
+      type: ApplicationCommandOptionTypes.NUMBER,
+    },
+  ],
   [CommandNames.GROUP]: [
     // {
     //   name: GroupSubCommandNames.ADD,
@@ -147,20 +147,20 @@ export const CommandOptions = {
         },
       ],
     },
-    // {
-    //   name: GroupSubCommandNames.DEPOSIT,
-    //   description: '💰 Deposit gems into your kingdom',
-    //   type: ApplicationCommandOptionTypes.SUB_COMMAND,
-    //   options: [
-    //     {
-    //       name: 'amount',
-    //       description: 'The amount of gems you wish to deposit',
-    //       type: ApplicationCommandOptionTypes.INTEGER,
-    //       required: true,
-    //       min_value: 1,
-    //     },
-    //   ],
-    // },
+    {
+      name: GroupSubCommandNames.DEPOSIT,
+      description: '💰 Deposit gems into your kingdom',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'amount',
+          description: 'The amount of gems you wish to deposit',
+          type: ApplicationCommandOptionTypes.INTEGER,
+          required: true,
+          min_value: 1,
+        },
+      ],
+    },
   ],
 };
 
@@ -170,6 +170,7 @@ export const MessageComponentIds = {
   BUY: 'buy',
   SELL: 'sell',
   SHOP: 'shop',
+  STORAGE: 'storage',
   PROFILE: 'profile',
   JOIN_RAID: 'join-raid',
   LEAVE_RAID: 'leave-raid',

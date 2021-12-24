@@ -1,4 +1,6 @@
 import {MessageEmbed} from 'discord.js';
+import client from '../client.js';
+import {Item} from '../items.js';
 import type {UserInterface} from '../types/user.js';
 import {emoteStrings} from './emotes.js';
 
@@ -6,6 +8,18 @@ export function numberWithCommas(x: number): string {
   const y = x < 100 ? x.toFixed(2) : Math.floor(x);
   return y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+
+const purchaseDescription = (item: Item, amount: number) => `
+${item.emoji} **${item.name}** x${amount}
+
+- ${emoteStrings.gem} **${numberWithCommas(amount * item.price)}**
+`;
+
+const saleDescription = (item: Item, amount: number) => `
+${item.emoji} **${item.name}** x${amount}
+
++ ${emoteStrings.gem} **${numberWithCommas((amount * item.price) / 2)}**
+`;
 
 export function success(user: UserInterface, content: string): MessageEmbed {
   return new MessageEmbed()
@@ -19,4 +33,22 @@ export function warning(user: UserInterface, content: string): MessageEmbed {
     .setAuthor(user.username, user.avatar)
     .setColor('RED')
     .setDescription(`${emoteStrings.error} ${content}`);
+}
+
+export function purchase(item: Item, amount: number) {
+  return new MessageEmbed()
+    .setAuthor('Your Reciept', client.user.avatarURL())
+    .setColor('GREEN')
+    .setDescription(purchaseDescription(item, amount))
+    .setFooter('Thank you for your purchase!')
+    .setTimestamp(new Date());
+}
+
+export function sale(item: Item, amount: number) {
+  return new MessageEmbed()
+    .setAuthor('Your Reciept', client.user.avatarURL())
+    .setColor('GREEN')
+    .setDescription(saleDescription(item, amount))
+    .setFooter('Thank you for your sale!')
+    .setTimestamp(new Date());
 }

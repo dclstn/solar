@@ -1,19 +1,17 @@
-import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageButton} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
+import {PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
 import {findById} from '../../items.js';
 import commands from '../../commands.js';
 import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
 import User from '../../database/user/index.js';
-import {success, warning} from '../../utils/embed.js';
+import {purchase, warning} from '../../utils/embed.js';
 import components from '../../components.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
 
-const NAV_ROW = new MessageActionRow().addComponents(
-  new MessageButton().setCustomId(MessageComponentIds.PROFILE).setStyle('PRIMARY').setLabel('View Profile'),
-  new MessageButton().setCustomId(MessageComponentIds.SHOP).setStyle('PRIMARY').setLabel('Open Shop')
-);
+const NAV_ROW = new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON);
 
 async function processPurchase(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
   const transaction = Sentry.startTransaction({
@@ -40,7 +38,7 @@ async function processPurchase(interaction: ButtonInteraction | CommandInteracti
     saveSpan.finish();
 
     interaction.reply({
-      embeds: [success(user, `Successfully purchased\n\n${item.emoji} **${item.name}** x${amount}`)],
+      embeds: [purchase(item, amount)],
       components: [NAV_ROW],
       ephemeral: true,
     });
@@ -50,7 +48,7 @@ async function processPurchase(interaction: ButtonInteraction | CommandInteracti
       return;
     }
 
-    // Sentry.captureException(err);
+    Sentry.captureException(err);
   } finally {
     const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();

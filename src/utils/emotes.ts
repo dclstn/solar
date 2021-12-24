@@ -11,6 +11,8 @@ export const emoteIds = {
   blank: '757302737464721529',
   invis: '769041854251139113',
   notification: '769049918065082369',
+  rucksack: '923894799352868874',
+  shopping: '923924831223816242',
 };
 
 export const emoteStrings = {
@@ -26,4 +28,6 @@ export const emoteStrings = {
   blank: `<:blank:${emoteIds.blank}>`,
   invis: `<:invis:${emoteIds.invis}>`,
   notification: `<a:notification:${emoteIds.notification}>`,
+  rucksack: `<:rucksack:${emoteIds.rucksack}>`,
+  shopping: `<:shopping:${emoteIds.shopping}>`,
 };

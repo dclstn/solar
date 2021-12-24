@@ -1,4 +1,4 @@
-import {ButtonInteraction, CommandInteraction} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import redlock, {userLock} from '../../redis/locks.js';
 import components from '../../components.js';
@@ -6,9 +6,12 @@ import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} 
 import {findById} from '../../items.js';
 import commands from '../../commands.js';
 import User from '../../database/user/index.js';
-import {success, warning} from '../../utils/embed.js';
+import {sale, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
+import {PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
+
+const NAV_ROW = new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON);
 
 async function processSale(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
   const transaction = Sentry.startTransaction({
@@ -35,8 +38,9 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
     saveSpan.finish();
 
     interaction.reply({
-      embeds: [success(user, `Successfully sold\n\n${item.emoji} **${item.name}** x${amount}`)],
+      embeds: [sale(item, amount)],
       ephemeral: true,
+      components: [NAV_ROW],
     });
   } catch (err) {
     if (err instanceof ResponseError) {
