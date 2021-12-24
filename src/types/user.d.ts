@@ -14,7 +14,7 @@ export interface InventoryInterface extends Mongoose.Types.Subdocument {
   fetch(cords: Cords): Item;
   fetchAll(): Item[];
   gph(): number;
-  sort(): void;
+  sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;
 }
 
 export interface UserInterface extends Mongoose.Document {
@@ -31,6 +31,7 @@ export interface UserInterface extends Mongoose.Document {
   buy(item: Item, amount: number): void;
   sell(item: Item, amount: number): void;
   getInventory(type: InventoryType): InventoryInterface;
+  sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;
 }
 
 export interface UserModelInterface extends Mongoose.Model<UserInterface> {

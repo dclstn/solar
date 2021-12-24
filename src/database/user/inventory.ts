@@ -1,6 +1,6 @@
 import {Defaults} from '../../constants.js';
 import {findById, Item} from '../../items.js';
-import type {Cords} from '../../types/item.js';
+import type {Cords, ItemInterface} from '../../types/item.js';
 
 const o = Math.sqrt(Defaults.MAX_SLOTS);
 
@@ -19,7 +19,7 @@ export default {
       return {x: 0, y: 0};
     }
 
-    this.sort();
+    this.items.sort(({cords: {x, y}}, {cords: {x: q, y: p}}) => x + y * o - (q + p * o));
 
     for (let j = 0; j < o; j += 1) {
       const r = j * o;
@@ -35,9 +35,16 @@ export default {
     return null;
   },
 
-  /* sorts the array of items corresponding to coordinates */
-  sort() {
-    this.items.sort(({cords: {x, y}}, {cords: {x: q, y: p}}) => x + y * o - (q + p * o));
+  sort(fn: (a: ItemInterface, b: ItemInterface) => number) {
+    this.items.sort(fn);
+    this.items = this.items.map((a: ItemInterface, index: number) => ({
+      id: a.id,
+      purchased: a.purchased,
+      cords: {
+        x: index % o,
+        y: Math.floor(index / o),
+      },
+    }));
   },
 
   fetch(cords: Cords): Item {

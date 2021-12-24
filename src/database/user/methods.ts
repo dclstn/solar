@@ -2,6 +2,7 @@ import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
 import {Item} from '../../items.js';
 import type {InventoryInterface} from '../../types/user.js';
+import {ItemInterface} from '../../types/item.js';
 
 export function buy(item: Item, amount: number) {
   const totalCost = item.price * amount;
@@ -49,6 +50,10 @@ export function sell(item: Item, amount: number) {
   }
 
   this.money += (item.price * amount) / 2;
+}
+
+export function sort(fn: (a: ItemInterface, b: ItemInterface) => number) {
+  this.inventories.forEach((inventory) => inventory.sort(fn));
 }
 
 export function getInventory(find: number) {

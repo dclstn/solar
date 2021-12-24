@@ -18,6 +18,7 @@ export const CommandNames = {
   ITEM: 'item',
   RAID: 'raid',
   GROUP: 'group',
+  SORT: 'sort',
 };
 
 export const GroupSubCommandNames = {
@@ -25,6 +26,13 @@ export const GroupSubCommandNames = {
   REMOVE: 'remove',
   CREATE: 'create',
   DEPOSIT: 'deposit',
+};
+
+export const SortCommandNames = {
+  ASCENDING: 'ascending',
+  DECENDING: 'decending',
+  AGE: 'age',
+  RANDOM: 'random',
 };
 
 export const UserCommandNames = {
@@ -43,6 +51,7 @@ export const CommandDescriptions = {
   [CommandNames.ITEM]: '🔎 Inspect an item',
   [CommandNames.RAID]: '🛡️ Raid another user for their gems',
   [CommandNames.GROUP]: '🌏 Kingdom commands',
+  [CommandNames.SORT]: '🧵 Sort your inventory',
 };
 
 export const CommandOptions = {
@@ -160,6 +169,28 @@ export const CommandOptions = {
           min_value: 1,
         },
       ],
+    },
+  ],
+  [CommandNames.SORT]: [
+    {
+      name: SortCommandNames.ASCENDING,
+      description: '🧵 Sort your inventories by ascending gems per hour',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: SortCommandNames.DECENDING,
+      description: '🧵 Sort your inventories by decending gems per hour',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: SortCommandNames.AGE,
+      description: '🧵 Sort your inventories by the age of each item',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: SortCommandNames.RANDOM,
+      description: '🧵 Randomly sort your inventories',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
   ],
 };
