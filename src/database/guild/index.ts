@@ -1,16 +1,17 @@
 import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
-import type {ServerInterface} from '../../types/server';
+import type {GuildInterface} from '../../types/guild';
 
 mongooseLong(Mongoose);
 
-const ServerSchema: Mongoose.Schema = new Mongoose.Schema<ServerInterface>({
+const GuildSchema: Mongoose.Schema = new Mongoose.Schema<GuildInterface>({
   guildId: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
   name: {type: String},
+  icon: {type: String},
   memberCount: {type: Number},
   preferredLocale: {type: String},
   owner: {type: Mongoose.Schema.Types.ObjectId, ref: 'User'},
   users: [{type: Mongoose.Schema.Types.ObjectId, ref: 'User'}],
 });
 
-export default Mongoose.model<ServerInterface>('Server', ServerSchema);
+export default Mongoose.model<GuildInterface>('Guild', GuildSchema);

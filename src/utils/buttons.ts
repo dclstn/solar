@@ -19,3 +19,13 @@ export const SHOP_BUTTON = new MessageButton()
   .setStyle('SUCCESS')
   .setLabel('Shop')
   .setEmoji(emoteIds.shopping);
+
+export const ACCEPT_INVITE_BUTTON = new MessageButton()
+  .setCustomId(MessageComponentIds.ACCEPT_INVITE)
+  .setStyle('SUCCESS')
+  .setLabel('Accept');
+
+export const DECLINE_INVITE_BUTTON = new MessageButton()
+  .setCustomId(MessageComponentIds.DECLINE_INVITE)
+  .setStyle('DANGER')
+  .setLabel('Decline');

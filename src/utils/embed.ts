@@ -1,7 +1,7 @@
 import {MessageEmbed} from 'discord.js';
+import table from 'text-table';
 import client from '../client.js';
 import {Item} from '../items.js';
-import type {UserInterface} from '../types/user.js';
 import {emoteStrings} from './emotes.js';
 
 export function numberWithCommas(x: number): string {
@@ -29,7 +29,7 @@ export function warning(content: string): MessageEmbed {
   return new MessageEmbed().setColor('RED').setDescription(`${emoteStrings.error} ${content}`);
 }
 
-export function purchase(item: Item, amount: number) {
+export function purchase(item: Item, amount: number): MessageEmbed {
   return new MessageEmbed()
     .setAuthor('Your Reciept', client.user.avatarURL())
     .setColor('GREEN')
@@ -38,11 +38,18 @@ export function purchase(item: Item, amount: number) {
     .setTimestamp(new Date());
 }
 
-export function sale(item: Item, amount: number) {
+export function sale(item: Item, amount: number): MessageEmbed {
   return new MessageEmbed()
     .setAuthor('Your Reciept', client.user.avatarURL())
     .setColor('GREEN')
     .setDescription(saleDescription(item, amount))
     .setFooter('Thank you for your sale!')
+    .setTimestamp(new Date());
+}
+
+export function createLeaderboardEmbed(headers: string[], values: string[][]): MessageEmbed {
+  return new MessageEmbed()
+    .setDescription(`\`\`\`md\n${table([headers, ...values])}\`\`\``)
+    .setColor('GOLD')
     .setTimestamp(new Date());
 }

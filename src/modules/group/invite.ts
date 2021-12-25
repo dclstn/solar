@@ -1,15 +1,22 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import type {CommandInteraction} from 'discord.js';
+import {CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
+import Mongoose from 'mongoose';
+import {ACCEPT_INVITE_BUTTON, DECLINE_INVITE_BUTTON} from '../../utils/buttons.js';
 import {Roles} from '../../utils/enums.js';
-import {warning} from '../../utils/embed.js';
+import {success, warning} from '../../utils/embed.js';
 import User from '../../database/user/index.js';
 import Sentry from '../../sentry.js';
 import ResponseError from '../../utils/error.js';
+import type {GroupInterface} from '../../types/group.js';
+
+const actionRow = new MessageActionRow().addComponents(ACCEPT_INVITE_BUTTON, DECLINE_INVITE_BUTTON);
+
+const inviteEmbed = (group: GroupInterface) =>
+  new MessageEmbed().setColor('GREEN').setTitle(group.name).setDescription('Has invited you to their kingdom!');
 
 export default async function invite(interaction: CommandInteraction) {
   try {
-    // @ts-ignore
-    const inviter = await User.findOne({id: interaction.user.id}).populate('group');
+    const id = interaction.user.id as unknown as Mongoose.Schema.Types.Long;
+    const inviter = await User.findOne({id}).populate('group');
     const discordInvitee = interaction.options.getUser('user');
     const invitee = await User.get(discordInvitee);
 
@@ -33,10 +40,18 @@ export default async function invite(interaction: CommandInteraction) {
     }
 
     try {
-      await discordInvitee.send('Hello');
+      await discordInvitee.send({
+        embeds: [inviteEmbed(inviter.group)],
+        components: [actionRow],
+      });
     } catch (err) {
       throw new ResponseError('Unable to send DM to user');
     }
+
+    interaction.reply({
+      embeds: [success(`Sent invite to **${discordInvitee.username}**!`)],
+      ephemeral: true,
+    });
   } catch (err) {
     if (err instanceof ResponseError) {
       interaction.reply({embeds: [warning(err.message)], ephemeral: true});

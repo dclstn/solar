@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type {CommandInteraction} from 'discord.js';
+import Mongoose from 'mongoose';
 import {emoteStrings} from '../../utils/emotes.js';
 import {numberWithCommas, success, warning} from '../../utils/embed.js';
 import redlock, {groupLock, userLock} from '../../redis/locks.js';
@@ -20,8 +20,8 @@ export default async function deposit(interaction: CommandInteraction) {
   let userGroupLock = null;
 
   try {
-    // @ts-ignore
-    user = await User.findOne({id: interaction.user.id}).populate('group');
+    const id = interaction.user.id as unknown as Mongoose.Schema.Types.Long;
+    user = await User.findOne({id}).populate('group');
 
     if (user == null || user.group == null) {
       throw new ResponseError('You do not belong to a kingdom');

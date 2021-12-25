@@ -56,10 +56,8 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   discriminator: {type: String, required: true},
   avatar: {type: String, required: false},
   flags: {type: Number, required: false, default: 0},
-  level: {type: Number, default: 0, min: 0},
+  exp: {type: Number, default: 0, min: 0},
   money: {type: Number, default: 10000, min: 0},
-  /* Mongoose recommends you set defaults by returning an empty object however typescript forbids this */
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   inventories: {
     type: [InventorySchema],
@@ -79,14 +77,23 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   updated: {type: Date, default: new Date()},
 });
 
+UserSchema.virtual('level');
+
 UserSchema.statics = statics;
 UserSchema.methods = methods;
+
+UserSchema.virtual('level').get(function calcLevel() {
+  return Math.floor(Math.sqrt(this.exp));
+});
 
 // eslint-disable-next-line prefer-arrow-callback
 UserSchema.post<UserInterface>('init', function initCallback() {
   const diffMinutes = moment(new Date()).diff(moment(this.updated), 'minutes');
-  this.money += (this.getInventory(InventoryType.Main).gph() / 60) * diffMinutes;
-  this.updated = new Date();
+  const earned = (this.getInventory(InventoryType.Main).gph() / 60) * diffMinutes;
+
+  this.set('exp', (this.exp += 1));
+  this.set('money', this.money + earned);
+  this.set('updated', new Date());
 });
 
 export default Mongoose.model<UserInterface, UserModelInterface>('User', UserSchema);

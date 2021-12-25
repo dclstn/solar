@@ -1,5 +1,6 @@
 import {ButtonInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
+import {Context} from '@sentry/types';
 import Sentry from './sentry.js';
 import client from './client.js';
 
@@ -16,7 +17,8 @@ class Components extends EventEmitter {
           username: interaction.user.username,
         });
 
-        scope.setTag('interaction', 'button');
+        scope.setTag('interaction_type', 'button');
+        scope.setContext('interaction', interaction.toJSON() as Context);
 
         this.emit(interaction.customId, interaction);
       });

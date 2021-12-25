@@ -42,10 +42,10 @@ async function createEmbed(interactionUser: User, inventoryType: number): Promis
 
   return new MessageEmbed()
     .setAuthor(user.username, user.avatar)
-    .setDescription(createProfileDescription(user, gridString))
+    .setDescription(inventoryType === InventoryType.Main ? createProfileDescription(user, gridString) : gridString)
     .setColor('BLURPLE')
     .setTimestamp(new Date())
-    .setFooter(InventoryType[inventoryType]);
+    .setFooter(`Lvl ${user.level} • ${InventoryType[inventoryType]}`);
 }
 
 class Profile {

@@ -34,6 +34,10 @@ export async function createGroup(user: UserInterface, name: string) {
     throw new ResponseError('You must disband/leave your current kingdom before creating one');
   }
 
+  if (await Group.exists({name})) {
+    throw new ResponseError(`The guild name: \`${name}\` has been taken`);
+  }
+
   const group = await Group.create({
     name,
     users: [

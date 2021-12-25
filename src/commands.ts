@@ -1,6 +1,7 @@
 import type {CommandInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Routes} from 'discord-api-types/v9';
+import {Context} from '@sentry/types';
 import Sentry from './sentry.js';
 import rest from './rest.js';
 import client from './client.js';
@@ -28,7 +29,8 @@ class Commands extends EventEmitter {
           username: interaction.user.username,
         });
 
-        scope.setTag('interaction', 'command');
+        scope.setTag('interaction_type', 'command');
+        scope.setContext('interaction', interaction.toJSON() as Context);
 
         this.emit(interaction.commandName, interaction);
       });

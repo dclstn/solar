@@ -24,6 +24,7 @@ export interface UserInterface extends Mongoose.Document {
   avatar?: string;
   flags: number;
   level: number;
+  exp: number;
   money: number;
   group: GroupInterface;
   inventories: InventoryInterface[];

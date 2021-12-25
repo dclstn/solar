@@ -19,6 +19,7 @@ export const CommandNames = {
   RAID: 'raid',
   GROUP: 'group',
   SORT: 'sort',
+  LEADERBOARD: 'leaderboard',
 };
 
 export const GroupSubCommandNames = {
@@ -27,6 +28,13 @@ export const GroupSubCommandNames = {
   CREATE: 'create',
   DEPOSIT: 'deposit',
   INVITE: 'invite',
+};
+
+export const LeaderbordSubCommands = {
+  LOCAL: 'local',
+  GLOBAL: 'global',
+  GROUP: 'group',
+  GUILDS: 'guild',
 };
 
 export const SortCommandNames = {
@@ -53,6 +61,7 @@ export const CommandDescriptions = {
   [CommandNames.RAID]: '🛡️ Raid another user for their gems',
   [CommandNames.GROUP]: '🌏 Kingdom commands',
   [CommandNames.SORT]: '🧵 Sort your inventory',
+  [CommandNames.LEADERBOARD]: '🌏 View the rankings',
 };
 
 export const CommandOptions = {
@@ -202,6 +211,13 @@ export const CommandOptions = {
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
   ],
+  [CommandNames.LEADERBOARD]: [
+    {
+      name: LeaderbordSubCommands.LOCAL,
+      description: '🧵 View the local leadboard',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+  ],
 };
 
 export const MessageComponentIds = {
@@ -214,4 +230,6 @@ export const MessageComponentIds = {
   PROFILE: 'profile',
   JOIN_RAID: 'join-raid',
   LEAVE_RAID: 'leave-raid',
+  ACCEPT_INVITE: 'accept-invite',
+  DECLINE_INVITE: 'decline-invite',
 };
