@@ -27,6 +27,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - name: Typescript compiler
-      uses: iCrawl/action-tsc@v1
+    - name: Create env file
+      run: |
+        touch .env
+        echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
+        echo DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} >> .env
+        echo GUILD_ID=${{ secrets.GUILD_ID }} >> .env
+        echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> .env
+        echo PUBLIC_KEY=${{ secrets.PUBLIC_KEY }} >> .env
+        cat .env
 
