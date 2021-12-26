@@ -29,3 +29,15 @@ export const DECLINE_INVITE_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.DECLINE_INVITE)
   .setStyle('DANGER')
   .setLabel('Decline');
+
+export const LOCAL_LEADERBOARD_BUTTON = new MessageButton()
+  .setCustomId(MessageComponentIds.LOCAL_LB_USER_MONEY)
+  .setStyle('PRIMARY')
+  .setEmoji(emoteIds.earth)
+  .setLabel('Local');
+
+export const GLOBAL_LEADERBOARD_BUTTON = new MessageButton()
+  .setCustomId(MessageComponentIds.GLOBAL_LB_USER_MONEY)
+  .setStyle('PRIMARY')
+  .setEmoji(emoteIds.earth)
+  .setLabel('Global');

@@ -13,6 +13,7 @@ export const emoteIds = {
   notification: '769049918065082369',
   rucksack: '923894799352868874',
   shopping: '923924831223816242',
+  earth: '924657486479364157',
 };
 
 export const emoteStrings = {
@@ -30,4 +31,5 @@ export const emoteStrings = {
   notification: `<a:notification:${emoteIds.notification}>`,
   rucksack: `<:rucksack:${emoteIds.rucksack}>`,
   shopping: `<:shopping:${emoteIds.shopping}>`,
+  earth: `<:earth:${emoteIds.earth}>`,
 };

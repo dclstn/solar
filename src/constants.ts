@@ -237,4 +237,6 @@ export const MessageComponentIds = {
   LEAVE_RAID: 'leave-raid',
   ACCEPT_INVITE: 'accept-invite',
   DECLINE_INVITE: 'decline-invite',
+  GLOBAL_LB_USER_MONEY: 'global-lb-user-money',
+  LOCAL_LB_USER_MONEY: 'local-lb-user-money',
 };

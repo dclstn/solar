@@ -1,5 +1,6 @@
-import {CommandInteraction} from 'discord.js';
+import {CommandInteraction, MessageActionRow} from 'discord.js';
 import Mongoose from 'mongoose';
+import {GLOBAL_LEADERBOARD_BUTTON} from '../../utils/buttons.js';
 import Sentry from '../../sentry.js';
 import {createLeaderboardEmbed, numberWithCommas, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
@@ -20,10 +21,11 @@ export default async function localLeaderboard(interaction: CommandInteraction) 
     const embed = createLeaderboardEmbed(
       ['#', 'Username', 'Gems'],
       users.map(({username, money}, index) => [(index + 1).toString(), username, numberWithCommas(money)])
-    ).setTitle(`${guild.name} Leaderboard`);
+    ).setTitle(`🏆 ${guild.name} Leaderboard`);
 
     interaction.reply({
       embeds: [embed],
+      components: [new MessageActionRow().addComponents(GLOBAL_LEADERBOARD_BUTTON)],
       ephemeral: true,
     });
   } catch (err) {

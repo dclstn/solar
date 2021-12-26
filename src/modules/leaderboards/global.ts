@@ -1,9 +1,10 @@
-import {CommandInteraction} from 'discord.js';
+import {CommandInteraction, MessageActionRow} from 'discord.js';
 import {TopUserMoneyModel} from '../../database/user/aggregation-models.js';
 import Sentry from '../../sentry.js';
 import {createLeaderboardEmbed, numberWithCommas, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import User from '../../database/user/index.js';
+import {LOCAL_LEADERBOARD_BUTTON} from '../../utils/buttons.js';
 
 function aggregate() {
   User.aggregate([
@@ -38,10 +39,11 @@ export default async function globalLeaderboard(interaction: CommandInteraction)
     const embed = createLeaderboardEmbed(
       ['#', 'Username', 'Gems'],
       users.map(({username, money}, index) => [(index + 1).toString(), username, numberWithCommas(money)])
-    ).setTitle(`Global Leaderboard`);
+    ).setTitle(`🏆 Global Leaderboard`);
 
     interaction.reply({
       embeds: [embed],
+      components: [new MessageActionRow().addComponents(LOCAL_LEADERBOARD_BUTTON)],
       ephemeral: true,
     });
   } catch (err) {
