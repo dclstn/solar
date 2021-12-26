@@ -2,7 +2,8 @@ import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
 import {Item} from '../../items.js';
 import type {InventoryInterface} from '../../types/user.js';
-import {ItemInterface} from '../../types/item.js';
+import type {ItemInterface} from '../../types/item.js';
+import type {GroupInterface} from '../../types/group.js';
 
 export function buy(item: Item, amount: number) {
   const totalCost = item.price * amount;
@@ -66,4 +67,19 @@ export function totalUsed() {
 
 export function totalFree() {
   return Defaults.MAX_SLOTS * this.inventories.length - this.totalUsed();
+}
+
+export function deposit(group: GroupInterface, amount: number) {
+  if (this == null || this.group == null) {
+    throw new ResponseError('You do not belong to a kingdom');
+  }
+
+  if (this.money < amount) {
+    throw new ResponseError('You do not have that many gems');
+  }
+
+  group.set('money', group.money + amount);
+  this.set('money', this.money - amount);
+
+  return this;
 }
