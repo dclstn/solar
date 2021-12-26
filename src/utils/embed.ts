@@ -10,15 +10,17 @@ export function numberWithCommas(x: number): string {
 }
 
 const purchaseDescription = (item: Item, amount: number) => `
-${item.emoji} **${item.name}** x${amount}
 
+${item.emoji} **${item.name}** x${amount}
 - ${emoteStrings.gem} **${numberWithCommas(amount * item.price)}**
+
 `;
 
 const saleDescription = (item: Item, amount: number) => `
-${item.emoji} **${item.name}** x${amount}
 
+${item.emoji} **${item.name}** x${amount}
 + ${emoteStrings.gem} **${numberWithCommas((amount * item.price) / 2)}**
+
 `;
 
 export function success(content: string): MessageEmbed {
