@@ -35,6 +35,13 @@ export interface UserInterface extends Mongoose.Document {
   sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;
 }
 
+export interface TopGemsUserInterface extends Mongoose.Document {
+  discordId: Mongoose.Schema.Types.Long;
+  username: string;
+  money: number;
+  avatar?: string;
+}
+
 export interface UserModelInterface extends Mongoose.Model<UserInterface> {
   get(user: User): Promise<UserInterface>;
   getById(discordId: string): Promise<UserInterface>;

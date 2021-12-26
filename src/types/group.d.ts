@@ -11,3 +11,7 @@ export interface GroupInterface extends Mongoose.Document {
   add(user: UserInterface): void;
   rem(user: UserInterface): void;
 }
+
+export interface GroupModelInterface extends Mongoose.Model<UserInterface> {
+  createGroup(user: UserInterface, name: string): Promise<GroupInterface>;
+}

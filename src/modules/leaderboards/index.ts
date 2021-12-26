@@ -7,22 +7,24 @@ import Guild from '../../database/guild/index.js';
 import User from '../../database/user/index.js';
 import commands from '../../commands.js';
 import {CommandDescriptions, CommandNames, CommandOptions, LeaderbordSubCommands} from '../../constants.js';
-import local from './local.js';
+import localLeaderboard from './local.js';
+import globalLeaderboard from './global.js';
 
-class ServerLeaderboard {
+class Leaderboards {
   constructor() {
     client.on('interactionCreate', this.logInteraction);
-    commands.on(CommandNames.LEADERBOARD, this.handleInteraction);
-  }
-
-  async handleInteraction(interaction: CommandInteraction) {
-    switch (interaction.options.getSubcommand()) {
-      case LeaderbordSubCommands.LOCAL:
-        local(interaction);
-        break;
-      default:
-        break;
-    }
+    commands.on(CommandNames.LEADERBOARD, (interaction) => {
+      switch (interaction.options.getSubcommand()) {
+        case LeaderbordSubCommands.LOCAL:
+          localLeaderboard(interaction);
+          break;
+        case LeaderbordSubCommands.GLOBAL:
+          globalLeaderboard(interaction);
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   async logInteraction(interaction: Interaction) {
@@ -70,4 +72,4 @@ commands.registerCommand({
   options: CommandOptions[CommandNames.LEADERBOARD],
 });
 
-export default new ServerLeaderboard();
+export default new Leaderboards();

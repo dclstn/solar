@@ -1,9 +1,8 @@
-import {Defaults} from '../constants.js';
-import Group from '../database/group/index.js';
-import {Roles} from './enums.js';
-import type {UserInterface} from '../types/user.js';
-import {numberWithCommas} from './embed.js';
-import ResponseError from './error.js';
+import {Defaults} from '../../constants.js';
+import {Roles} from '../../utils/enums.js';
+import type {UserInterface} from '../../types/user.js';
+import {numberWithCommas} from '../../utils/embed.js';
+import ResponseError from '../../utils/error.js';
 
 export function validGroupName(name: string): boolean {
   if (!/^[a-zA-Z0-9_.-]*$/.test(name)) {
@@ -34,11 +33,11 @@ export async function createGroup(user: UserInterface, name: string) {
     throw new ResponseError('You must disband/leave your current kingdom before creating one');
   }
 
-  if (await Group.exists({name})) {
+  if (await this.exists({name})) {
     throw new ResponseError(`The guild name: \`${name}\` has been taken`);
   }
 
-  const group = await Group.create({
+  const group = await this.create({
     name,
     users: [
       {
@@ -50,8 +49,6 @@ export async function createGroup(user: UserInterface, name: string) {
 
   user.set('group', group._id);
   user.set('money', user.money - Defaults.GROUP_COST);
-
-  await user.save();
 
   return group;
 }

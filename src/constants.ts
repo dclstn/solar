@@ -214,7 +214,12 @@ export const CommandOptions = {
   [CommandNames.LEADERBOARD]: [
     {
       name: LeaderbordSubCommands.LOCAL,
-      description: '🧵 View the local leadboard',
+      description: '🌏 View the local leadboard',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: LeaderbordSubCommands.GLOBAL,
+      description: '🌏 View the global leadboard',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
   ],

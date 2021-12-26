@@ -1,7 +1,8 @@
 import Mongoose from 'mongoose';
-import type {GroupInterface} from '../../types/group.js';
+import type {GroupInterface, GroupModelInterface} from '../../types/group.js';
 import {Roles} from '../../utils/enums.js';
 import * as methods from './methods.js';
+import * as statics from './statics.js';
 
 const GroupSchema: Mongoose.Schema = new Mongoose.Schema<GroupInterface>({
   name: {type: String, required: true, index: {unique: true}},
@@ -23,5 +24,6 @@ const GroupSchema: Mongoose.Schema = new Mongoose.Schema<GroupInterface>({
 });
 
 GroupSchema.methods = methods;
+GroupSchema.statics = statics;
 
-export default Mongoose.model<GroupInterface>('Group', GroupSchema);
+export default Mongoose.model<GroupInterface, GroupModelInterface>('Group', GroupSchema);
