@@ -1,6 +1,5 @@
 import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
-import moment from 'moment';
 import type {ItemInterface} from '../../types/item.js';
 import * as statics from './statics.js';
 import * as methods from './methods.js';
@@ -88,12 +87,13 @@ UserSchema.virtual('level').get(function calcLevel() {
 
 // eslint-disable-next-line prefer-arrow-callback
 UserSchema.post<UserInterface>('init', function initCallback() {
-  const diffMinutes = moment(new Date()).diff(moment(this.updated), 'minutes');
-  const earned = (this.getInventory(InventoryType.Main).gph() / 60) * diffMinutes;
+  this.updateDoc();
+});
 
-  this.set('exp', (this.exp += 1));
-  this.set('money', this.money + earned);
-  this.set('updated', new Date());
+// eslint-disable-next-line prefer-arrow-callback
+UserSchema.post('aggregate', function postCallback(docs, next) {
+  docs.forEach((doc: UserInterface) => doc.updateDoc());
+  next();
 });
 
 export default Mongoose.model<UserInterface, UserModelInterface>('User', UserSchema);

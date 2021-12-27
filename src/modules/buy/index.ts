@@ -37,11 +37,7 @@ async function processPurchase(interaction: ButtonInteraction | CommandInteracti
     await user.save();
     saveSpan.finish();
 
-    interaction.reply({
-      embeds: [purchase(item, amount)],
-      components: [NAV_ROW],
-      ephemeral: true,
-    });
+    interaction.reply({embeds: [purchase(item, amount)], components: [NAV_ROW], ephemeral: true});
   } catch (err) {
     if (err instanceof ResponseError) {
       interaction.reply({embeds: [warning(err.message)], ephemeral: true});
@@ -53,7 +49,6 @@ async function processPurchase(interaction: ButtonInteraction | CommandInteracti
     const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();
     releaseSpan.finish();
-
     transaction.finish();
   }
 }

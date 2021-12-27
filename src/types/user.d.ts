@@ -34,6 +34,7 @@ export interface UserInterface extends Mongoose.Document {
   getInventory(type: InventoryType): InventoryInterface;
   sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;
   deposit(group: GroupInterface, amount: number): void;
+  updateDoc(): void;
 }
 
 export interface TopGemsUserInterface extends Mongoose.Document {

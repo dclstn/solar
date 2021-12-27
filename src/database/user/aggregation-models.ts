@@ -2,7 +2,7 @@
 import Mongoose from 'mongoose';
 import type {TopGemsUserInterface} from '../../types/user';
 
-const topUserMoneySchema = new Mongoose.Schema<TopGemsUserInterface>({
+const TopUserMoneySchema = new Mongoose.Schema<TopGemsUserInterface>({
   discordId: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
   username: {type: String, required: true},
   avatar: {type: String, required: false},
@@ -11,6 +11,6 @@ const topUserMoneySchema = new Mongoose.Schema<TopGemsUserInterface>({
 
 export const TopUserMoneyModel = Mongoose.model<TopGemsUserInterface>(
   'top_user_money',
-  topUserMoneySchema,
+  TopUserMoneySchema,
   'top_user_money'
 );
