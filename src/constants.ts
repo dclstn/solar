@@ -39,7 +39,7 @@ export const LeaderbordSubCommands = {
 
 export const SortCommandNames = {
   ASCENDING: 'ascending',
-  DECENDING: 'decending',
+  DESCENDING: 'descending',
   AGE: 'age',
   RANDOM: 'random',
 };
@@ -196,7 +196,7 @@ export const CommandOptions = {
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
     {
-      name: SortCommandNames.DECENDING,
+      name: SortCommandNames.DESCENDING,
       description: '🧵 Sort your inventories by decending gems per hour',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },

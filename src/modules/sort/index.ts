@@ -25,7 +25,7 @@ class Sort {
           user.sort((a, b) => a.id.localeCompare(b.id));
           user.sort((a, b) => findById(a.id).gph - findById(b.id).gph);
           break;
-        case SortCommandNames.DECENDING:
+        case SortCommandNames.DESCENDING:
           user.sort((a, b) => a.id.localeCompare(b.id));
           user.sort((a, b) => findById(b.id).gph - findById(a.id).gph);
           break;
