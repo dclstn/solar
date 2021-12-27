@@ -7,15 +7,9 @@ import type {ItemInterface} from '../../types/item.js';
 import type {GroupInterface} from '../../types/group.js';
 import {InventoryType} from '../../utils/enums.js';
 
-export function buy(item: Item, amount: number) {
-  const totalCost = item.price * amount;
-
-  if (totalCost > this.money) {
-    throw new ResponseError(`You do not have enough gems for this purchase`);
-  }
-
+export function add(item: Item, amount: number) {
   if (amount > this.totalFree()) {
-    throw new ResponseError(`You do not have enough slots to complete this purchase`);
+    throw new ResponseError(`Not enough slots to complete this transaction`);
   }
 
   const inventories = this.inventories[Symbol.iterator]();
@@ -28,6 +22,16 @@ export function buy(item: Item, amount: number) {
 
     inventory.value.add(item);
   }
+}
+
+export function buy(item: Item, amount: number) {
+  const totalCost = item.price * amount;
+
+  if (totalCost > this.money) {
+    throw new ResponseError(`You do not have enough gems for this purchase`);
+  }
+
+  add(item, amount);
 
   this.money -= totalCost;
 }

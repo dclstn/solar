@@ -30,6 +30,7 @@ export interface UserInterface extends Mongoose.Document {
   inventories: InventoryInterface[];
   updated: Date;
   buy(item: Item, amount: number): void;
+  add(item: Item, amount: number): void;
   sell(item: Item, amount: number): void;
   getInventory(type: InventoryType): InventoryInterface;
   sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;

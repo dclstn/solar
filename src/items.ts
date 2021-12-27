@@ -8,6 +8,7 @@ interface BaseItem {
   emojiId: string;
   level: number;
   buyable: boolean;
+  animated?: boolean;
 }
 
 const month = moment(new Date(), 'YYYY/MM/DD').format('M');
@@ -20,6 +21,7 @@ const BaseItems: BaseItem[] = [
     emojiId: '757396142962245752',
     level: 1,
     buyable: true,
+    animated: true,
   },
   {
     id: 'bronze',
@@ -28,6 +30,7 @@ const BaseItems: BaseItem[] = [
     emojiId: '757395337685237771',
     level: 2,
     buyable: true,
+    animated: true,
   },
   {
     id: 'gold',
@@ -36,6 +39,7 @@ const BaseItems: BaseItem[] = [
     emojiId: '757394237623894118',
     level: 3,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Ruby',
@@ -44,6 +48,7 @@ const BaseItems: BaseItem[] = [
     id: 'ruby',
     level: 4,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Diamond',
@@ -52,6 +57,7 @@ const BaseItems: BaseItem[] = [
     id: 'diamond',
     level: 5,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Emerald',
@@ -60,6 +66,7 @@ const BaseItems: BaseItem[] = [
     id: 'emerald',
     level: 6,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Acid',
@@ -68,6 +75,7 @@ const BaseItems: BaseItem[] = [
     id: 'acid',
     level: 7,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Seaside',
@@ -76,6 +84,7 @@ const BaseItems: BaseItem[] = [
     id: 'seaside',
     level: 8,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Fade',
@@ -84,6 +93,7 @@ const BaseItems: BaseItem[] = [
     id: 'fade',
     level: 9,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Moon',
@@ -92,6 +102,7 @@ const BaseItems: BaseItem[] = [
     id: 'moon',
     level: 10,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Sun',
@@ -100,6 +111,7 @@ const BaseItems: BaseItem[] = [
     id: 'sun',
     level: 11,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Rainbow',
@@ -108,6 +120,7 @@ const BaseItems: BaseItem[] = [
     id: 'rainbow',
     level: 12,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Disco',
@@ -116,6 +129,7 @@ const BaseItems: BaseItem[] = [
     id: 'disco',
     level: 13,
     buyable: true,
+    animated: true,
   },
   {
     name: 'King',
@@ -124,6 +138,7 @@ const BaseItems: BaseItem[] = [
     id: 'king',
     level: 14,
     buyable: false,
+    animated: true,
   },
   {
     name: 'Mythic',
@@ -132,6 +147,7 @@ const BaseItems: BaseItem[] = [
     id: 'mythic',
     level: 15,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Pepe',
@@ -140,6 +156,7 @@ const BaseItems: BaseItem[] = [
     id: 'pepe',
     level: 15,
     buyable: false,
+    animated: true,
   },
   {
     name: 'Pumpkin',
@@ -148,6 +165,7 @@ const BaseItems: BaseItem[] = [
     id: 'pumpkin',
     level: 15,
     buyable: month === '10',
+    animated: true,
   },
   {
     name: 'Skeleton',
@@ -156,6 +174,7 @@ const BaseItems: BaseItem[] = [
     id: 'skeleton',
     level: 15,
     buyable: month === '10',
+    animated: true,
   },
   {
     name: 'Present',
@@ -164,6 +183,7 @@ const BaseItems: BaseItem[] = [
     id: 'present',
     level: 15,
     buyable: month === '12',
+    animated: true,
   },
   {
     name: 'Snowman',
@@ -172,6 +192,7 @@ const BaseItems: BaseItem[] = [
     id: 'snowman',
     level: 15,
     buyable: month === '12',
+    animated: true,
   },
   {
     name: 'Minecraft',
@@ -180,6 +201,7 @@ const BaseItems: BaseItem[] = [
     id: 'minecraft',
     level: 15,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Mystic',
@@ -188,6 +210,7 @@ const BaseItems: BaseItem[] = [
     id: 'mystic',
     level: 16,
     buyable: false,
+    animated: true,
   },
   {
     name: 'BlueDiamond',
@@ -196,6 +219,7 @@ const BaseItems: BaseItem[] = [
     id: 'bluediamond',
     level: 17,
     buyable: false,
+    animated: true,
   },
   {
     name: 'RedDiamond',
@@ -204,6 +228,7 @@ const BaseItems: BaseItem[] = [
     id: 'reddiamond',
     level: 18,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Tortoise',
@@ -212,6 +237,7 @@ const BaseItems: BaseItem[] = [
     id: 'tortoise',
     level: 19,
     buyable: false,
+    animated: true,
   },
   {
     name: 'Burning',
@@ -220,6 +246,7 @@ const BaseItems: BaseItem[] = [
     id: 'burning',
     level: 20,
     buyable: true,
+    animated: true,
   },
   {
     name: 'Scorching',
@@ -228,6 +255,7 @@ const BaseItems: BaseItem[] = [
     id: 'scorching',
     level: 21,
     buyable: true,
+    animated: true,
   },
   {
     name: 'RGB',
@@ -236,6 +264,7 @@ const BaseItems: BaseItem[] = [
     id: 'rgb',
     level: 22,
     buyable: false,
+    animated: true,
   },
   {
     name: 'Omega',
@@ -244,21 +273,49 @@ const BaseItems: BaseItem[] = [
     id: 'omega',
     level: 23,
     buyable: false,
+    animated: true,
+  },
+  {
+    name: 'Rare Lootbox',
+    type: ItemTypes.LOOTBOX,
+    emojiId: '851512188967190558',
+    id: 'rare',
+    level: 0,
+    buyable: false,
+    animated: false,
+  },
+  {
+    name: 'Epic Lootbox',
+    type: ItemTypes.LOOTBOX,
+    emojiId: '851512185665749066',
+    id: 'epic',
+    level: 0,
+    buyable: false,
+    animated: false,
+  },
+  {
+    name: 'Legendary Lootbox',
+    type: ItemTypes.LOOTBOX,
+    emojiId: '851512656019324938',
+    id: 'legendary',
+    level: 0,
+    buyable: false,
+    animated: false,
   },
 ];
 
 export interface Item extends BaseItem {
   emoji: string;
   url: string;
-  price: number;
-  gph: number;
+  price?: number;
+  gph?: number;
 }
 
 export const Items: Item[] = BaseItems.map((item: BaseItem) => ({
   ...item,
   gph: item.level / 2,
   price: item.level ** 3,
-  emoji: `<a:${item.id}:${item.emojiId}>`,
+  emoji: item.animated ? `<a:${item.id}:${item.emojiId}>` : `<:${item.id}:${item.emojiId}>`,
   url: `https://cdn.discordapp.com/emojis/${item.emojiId}.gif`,
 }));
 

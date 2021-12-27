@@ -76,8 +76,6 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   updated: {type: Date, default: new Date()},
 });
 
-UserSchema.virtual('level');
-
 UserSchema.statics = statics;
 UserSchema.methods = methods;
 

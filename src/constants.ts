@@ -20,6 +20,18 @@ export const CommandNames = {
   GROUP: 'group',
   SORT: 'sort',
   LEADERBOARD: 'leaderboard',
+  GAMES: 'games',
+  ADMIN: 'admin',
+};
+
+export const AdminSubCommandNames = {
+  RELOAD: 'reload',
+  GIVE: 'give',
+};
+
+export const GameSubCommandNames = {
+  ROLL: 'roll',
+  SPIN: 'spin',
 };
 
 export const GroupSubCommandNames = {
@@ -62,6 +74,8 @@ export const CommandDescriptions = {
   [CommandNames.GROUP]: '🌏 Kingdom commands',
   [CommandNames.SORT]: '🧵 Sort your inventory',
   [CommandNames.LEADERBOARD]: '🌏 View the rankings',
+  [CommandNames.GAMES]: '🎮 Play a game',
+  [CommandNames.ADMIN]: '🖥️ Admin-only commands',
 };
 
 export const CommandOptions = {
@@ -221,6 +235,92 @@ export const CommandOptions = {
       name: LeaderbordSubCommands.GLOBAL,
       description: '🌏 View the global leadboard',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+  ],
+  [CommandNames.ADMIN]: [
+    {
+      name: AdminSubCommandNames.RELOAD,
+      description: 'Reload application commands',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: AdminSubCommandNames.GIVE,
+      description: 'Give a user an item',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'user',
+          description: 'Select a user to give to',
+          type: ApplicationCommandOptionTypes.USER,
+          required: true,
+        },
+        {
+          name: 'item',
+          description: 'Select an item to give',
+          type: ApplicationCommandOptionTypes.STRING,
+          required: true,
+        },
+        {
+          name: 'amount',
+          description: 'How many?',
+          min_value: 1,
+          type: ApplicationCommandOptionTypes.NUMBER,
+          required: true,
+        },
+      ],
+    },
+  ],
+  [CommandNames.GAMES]: [
+    {
+      name: GameSubCommandNames.SPIN,
+      description: '🤞 Spin the wheel',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: GameSubCommandNames.ROLL,
+      description: '🤞 Roll a dice',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'wager',
+          description: 'How many gems do you wish to wager?',
+          type: ApplicationCommandOptionTypes.INTEGER,
+          required: true,
+          min_value: 1,
+        },
+        {
+          name: 'side',
+          description: 'Choose the side of die',
+          type: ApplicationCommandOptionTypes.INTEGER,
+          required: true,
+          choices: [
+            {
+              name: 'One',
+              value: 1,
+            },
+            {
+              name: 'Two',
+              value: 2,
+            },
+            {
+              name: 'Three',
+              value: 3,
+            },
+            {
+              name: 'Four',
+              value: 4,
+            },
+            {
+              name: 'Five',
+              value: 5,
+            },
+            {
+              name: 'Six',
+              value: 6,
+            },
+          ],
+        },
+      ],
     },
   ],
 };

@@ -63,7 +63,7 @@ export default {
   },
 
   gph(): number {
-    return this.fetchAll().reduce((a: number, {gph}) => a + gph, 0);
+    return this.fetchAll().reduce((a: number, {gph}) => a + (gph || 0), 0);
   },
 
   fetchAll(): Item[] {
