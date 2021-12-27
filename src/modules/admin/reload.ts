@@ -15,5 +15,3 @@ export default async function reload(interaction: CommandInteraction) {
     Sentry.captureException(err);
   }
 }
-
-commands.on(CommandNames.PING, reload);
