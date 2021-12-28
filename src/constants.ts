@@ -21,7 +21,6 @@ export const CommandNames = {
   LEADERBOARD: 'leaderboard',
   GAMES: 'games',
   ADMIN: 'admin',
-  GIFTS: 'gifts',
 };
 
 export const AdminSubCommandNames = {
@@ -75,7 +74,6 @@ export const CommandDescriptions = {
   [CommandNames.LEADERBOARD]: '🌏 View the rankings',
   [CommandNames.GAMES]: '🎮 Play a game',
   [CommandNames.ADMIN]: '🖥️ Admin-only commands',
-  [CommandNames.GIFTS]: '🎁 View your gifts',
 };
 
 export const CommandOptions = {
