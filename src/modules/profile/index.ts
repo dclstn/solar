@@ -68,6 +68,11 @@ class Profile {
       const user = await UserModel.get(discordUser);
       const embed = await createEmbed(user, inventory);
 
+      const hasRare = user.has(RARE);
+      const hasEpic = user.has(EPIC);
+      const hasLegendary = user.has(LEGENDARY);
+      const hasAny = hasRare || hasEpic || hasLegendary;
+
       interaction.reply({
         ephemeral: true,
         embeds: [embed],
@@ -78,11 +83,15 @@ class Profile {
                   SHOP_BUTTON,
                   inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
                 ),
-                new MessageActionRow().addComponents(
-                  ...(user.has(RARE) ? [createItemButton(RARE)] : []),
-                  ...(user.has(EPIC) ? [createItemButton(EPIC)] : []),
-                  ...(user.has(LEGENDARY) ? [createItemButton(LEGENDARY)] : [])
-                ),
+                ...(hasAny
+                  ? [
+                      new MessageActionRow().addComponents(
+                        ...(hasRare ? [createItemButton(RARE)] : []),
+                        ...(hasEpic ? [createItemButton(EPIC)] : []),
+                        ...(hasLegendary ? [createItemButton(LEGENDARY)] : [])
+                      ),
+                    ]
+                  : []),
               ],
             }
           : {}),
