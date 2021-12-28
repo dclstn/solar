@@ -15,10 +15,14 @@ import UserModel from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
 import components from '../../components.js';
 import Sentry from '../../sentry.js';
-import {findById} from '../../items.js';
+import {findById, ItemIds} from '../../items.js';
 import {InventoryType} from '../../utils/enums.js';
 import {emoteStrings} from '../../utils/emotes.js';
-import {STORAGE_BUTTON, PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
+import {STORAGE_BUTTON, PROFILE_BUTTON, SHOP_BUTTON, createItemButton} from '../../utils/buttons.js';
+
+const RARE = findById(ItemIds.RARE);
+const EPIC = findById(ItemIds.EPIC);
+const LEGENDARY = findById(ItemIds.LEGENDARY);
 
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
@@ -28,8 +32,7 @@ ${emoteStrings.gem} Gems: **${numberWithCommas(user.money)}**
 ${grid}
 `;
 
-async function createEmbed(interactionUser: User, inventoryType: number): Promise<MessageEmbed> {
-  const user = await UserModel.get(interactionUser);
+async function createEmbed(user: UserInterface, inventoryType: number): Promise<MessageEmbed> {
   const inventory = user.getInventory(inventoryType);
 
   const grid = chunk(new Array(Defaults.MAX_SLOTS).fill(emoteStrings.blank), Math.sqrt(Defaults.MAX_SLOTS));
@@ -58,19 +61,31 @@ class Profile {
 
   async handleCommand(interaction: CommandInteraction) {
     try {
-      const user = interaction.options.getUser('user') || interaction.user;
+      const discordUser = interaction.options.getUser('user') || interaction.user;
+      const isPersonal = discordUser === interaction.user;
       const inventory = interaction.options.getInteger('inventory') || InventoryType.Main;
-      const embed = await createEmbed(user, inventory);
 
-      const actionRow = new MessageActionRow().addComponents(
-        SHOP_BUTTON,
-        inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
-      );
+      const user = await UserModel.get(discordUser);
+      const embed = await createEmbed(user, inventory);
 
       interaction.reply({
         ephemeral: true,
         embeds: [embed],
-        components: [actionRow],
+        ...(isPersonal
+          ? {
+              components: [
+                new MessageActionRow().addComponents(
+                  SHOP_BUTTON,
+                  inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
+                ),
+                new MessageActionRow().addComponents(
+                  ...(user.has(RARE) ? [createItemButton(RARE)] : []),
+                  ...(user.has(EPIC) ? [createItemButton(EPIC)] : []),
+                  ...(user.has(LEGENDARY) ? [createItemButton(LEGENDARY)] : [])
+                ),
+              ],
+            }
+          : {}),
       });
     } catch (err) {
       Sentry.captureException(err);
@@ -79,19 +94,12 @@ class Profile {
 
   async handleButton(interaction: ButtonInteraction, inventoryType: InventoryType) {
     try {
-      const {user} = interaction;
+      const {user: discordUser} = interaction;
+
+      const user = await UserModel.get(discordUser);
       const embed = await createEmbed(user, inventoryType);
 
-      const actionRow = new MessageActionRow().addComponents(
-        SHOP_BUTTON,
-        inventoryType === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
-      );
-
-      interaction.reply({
-        ephemeral: true,
-        embeds: [embed],
-        components: [actionRow],
-      });
+      interaction.reply({ephemeral: true, embeds: [embed]});
     } catch (err) {
       Sentry.captureException(err);
     }

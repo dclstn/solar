@@ -13,5 +13,5 @@ export enum ItemTypes {
   GENERATOR,
   TOTEM,
   MISC,
-  LOOTBOX,
+  GIFT,
 }

@@ -15,7 +15,7 @@ mongooseLong(Mongoose);
 
 const ItemSchema: Mongoose.Schema = new Mongoose.Schema<ItemInterface>(
   {
-    id: {type: String, enum: Items.map(({id}) => id), required: true},
+    id: {type: String, enum: Object.values(Items).map(({id}) => id), required: true},
     purchased: {type: Date, required: true, default: new Date()},
     cords: {
       x: {type: Number, required: true, max, min: 0},

@@ -36,11 +36,22 @@ export function buy(item: Item, amount: number) {
   this.money -= totalCost;
 }
 
-export function sell(item: Item, amount: number) {
-  if (item == null) {
-    throw new ResponseError(`Item does not exist`);
+export function has(item: Item) {
+  const inventories = this.inventories[Symbol.iterator]();
+  let inventory = inventories.next();
+
+  while (!inventory.value.has(item)) {
+    inventory = inventories.next();
+
+    if (inventory.value == null) {
+      return false;
+    }
   }
 
+  return true;
+}
+
+export function rem(item: Item, amount: number) {
   const inventories = this.inventories[Symbol.iterator]();
   let inventory = inventories.next();
 
@@ -55,7 +66,14 @@ export function sell(item: Item, amount: number) {
 
     inventory.value.rem(item);
   }
+}
 
+export function sell(item: Item, amount: number) {
+  if (item == null) {
+    throw new ResponseError(`Item does not exist`);
+  }
+
+  this.remove(item, amount);
   this.money += (item.price * amount) / 2;
 }
 

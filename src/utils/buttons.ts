@@ -1,6 +1,8 @@
 import {MessageButton} from 'discord.js';
+import {Item} from '../items.js';
 import {MessageComponentIds} from '../constants.js';
 import {emoteIds} from './emotes.js';
+import {ItemTypes} from './enums.js';
 
 export const PROFILE_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.PROFILE)
@@ -16,7 +18,7 @@ export const STORAGE_BUTTON = new MessageButton()
 
 export const SHOP_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.SHOP)
-  .setStyle('SUCCESS')
+  .setStyle('PRIMARY')
   .setLabel('Shop')
   .setEmoji(emoteIds.shopping);
 
@@ -41,3 +43,10 @@ export const GLOBAL_LEADERBOARD_BUTTON = new MessageButton()
   .setStyle('PRIMARY')
   .setEmoji(emoteIds.earth)
   .setLabel('Global');
+
+export const createItemButton = (item: Item) =>
+  new MessageButton()
+    .setCustomId(item.id)
+    .setLabel('')
+    .setEmoji(item.emojiId)
+    .setStyle(item.type === ItemTypes.GIFT ? 'SUCCESS' : 'PRIMARY');

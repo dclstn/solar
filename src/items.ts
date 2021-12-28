@@ -9,13 +9,49 @@ interface BaseItem {
   level: number;
   buyable: boolean;
   animated?: boolean;
+  maxLevelDroprate?: number;
 }
 
 const month = moment(new Date(), 'YYYY/MM/DD').format('M');
 
-const BaseItems: BaseItem[] = [
-  {
-    id: 'basic',
+export enum ItemIds {
+  BASIC = 'basic',
+  BRONZE = 'bronze',
+  GOLD = 'gold',
+  RUBY = 'ruby',
+  DIAMOND = 'diamond',
+  EMERALD = 'emerald',
+  ACID = 'acid',
+  SEASIDE = 'seaside',
+  FADE = 'fade',
+  MOON = 'moon',
+  SUN = 'sun',
+  RAINBOW = 'rainbow',
+  DISCO = 'disco',
+  KING = 'king',
+  MYTHIC = 'mythic',
+  PEPE = 'pepe',
+  PUMPKIN = 'pumpkin',
+  SKELETON = 'skeleton',
+  PRESENT = 'present',
+  SNOWMAN = 'snowman',
+  MINECRAFT = 'minecraft',
+  MYSTIC = 'mystic',
+  BLUE_DIAMOND = 'bluediamond',
+  RED_DIAMOND = 'reddiamond',
+  TORTOISE = 'tortoise',
+  BURNING = 'burning',
+  SCORCHING = 'scorching',
+  RGB = 'rgb',
+  OMEGA = 'omega',
+  RARE = 'rare',
+  EPIC = 'epic',
+  LEGENDARY = 'legendary',
+}
+
+const BaseItems = {
+  [ItemIds.BASIC]: {
+    id: ItemIds.BASIC,
     name: 'Basic',
     type: ItemTypes.GENERATOR,
     emojiId: '757396142962245752',
@@ -23,8 +59,8 @@ const BaseItems: BaseItem[] = [
     buyable: true,
     animated: true,
   },
-  {
-    id: 'bronze',
+  [ItemIds.BRONZE]: {
+    id: ItemIds.BRONZE,
     name: 'Bronze',
     type: ItemTypes.GENERATOR,
     emojiId: '757395337685237771',
@@ -32,8 +68,8 @@ const BaseItems: BaseItem[] = [
     buyable: true,
     animated: true,
   },
-  {
-    id: 'gold',
+  [ItemIds.GOLD]: {
+    id: ItemIds.GOLD,
     name: 'Gold',
     type: ItemTypes.GENERATOR,
     emojiId: '757394237623894118',
@@ -41,268 +77,268 @@ const BaseItems: BaseItem[] = [
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.RUBY]: {
     name: 'Ruby',
     type: ItemTypes.GENERATOR,
     emojiId: '757333439782453359',
-    id: 'ruby',
+    id: ItemIds.RUBY,
     level: 4,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.DIAMOND]: {
     name: 'Diamond',
     type: ItemTypes.GENERATOR,
     emojiId: '757333439631589486',
-    id: 'diamond',
+    id: ItemIds.DIAMOND,
     level: 5,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.EMERALD]: {
     name: 'Emerald',
     type: ItemTypes.GENERATOR,
     emojiId: '757333439648366642',
-    id: 'emerald',
+    id: ItemIds.EMERALD,
     level: 6,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.ACID]: {
     name: 'Acid',
     type: ItemTypes.GENERATOR,
     emojiId: '761298415149121578',
-    id: 'acid',
+    id: ItemIds.ACID,
     level: 7,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.SEASIDE]: {
     name: 'Seaside',
     type: ItemTypes.GENERATOR,
     emojiId: '766695960817827861',
-    id: 'seaside',
+    id: ItemIds.SEASIDE,
     level: 8,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.FADE]: {
     name: 'Fade',
     type: ItemTypes.GENERATOR,
     emojiId: '757611084101451846',
-    id: 'fade',
+    id: ItemIds.FADE,
     level: 9,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.MOON]: {
     name: 'Moon',
     type: ItemTypes.GENERATOR,
     emojiId: '757615307811586048',
-    id: 'moon',
+    id: ItemIds.MOON,
     level: 10,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.SUN]: {
     name: 'Sun',
     type: ItemTypes.GENERATOR,
     emojiId: '757628531264978944',
-    id: 'sun',
+    id: ItemIds.SUN,
     level: 11,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.RAINBOW]: {
     name: 'Rainbow',
     type: ItemTypes.GENERATOR,
     emojiId: '761280663017881640',
-    id: 'rainbow',
+    id: ItemIds.RAINBOW,
     level: 12,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.DISCO]: {
     name: 'Disco',
     type: ItemTypes.GENERATOR,
     emojiId: '761289756692185098',
-    id: 'disco',
+    id: ItemIds.DISCO,
     level: 13,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.KING]: {
     name: 'King',
     type: ItemTypes.GENERATOR,
     emojiId: '765942419518521366',
-    id: 'king',
+    id: ItemIds.KING,
     level: 14,
     buyable: false,
     animated: true,
   },
-  {
+  [ItemIds.MYTHIC]: {
     name: 'Mythic',
     type: ItemTypes.GENERATOR,
     emojiId: '775214117719769140',
-    id: 'mythic',
+    id: ItemIds.MYTHIC,
     level: 15,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.PEPE]: {
     name: 'Pepe',
     type: ItemTypes.GENERATOR,
     emojiId: '772493391082553354',
-    id: 'pepe',
+    id: ItemIds.PEPE,
     level: 15,
     buyable: false,
     animated: true,
   },
-  {
+  [ItemIds.PUMPKIN]: {
     name: 'Pumpkin',
     type: ItemTypes.GENERATOR,
     emojiId: '766678940970123296',
-    id: 'pumpkin',
+    id: ItemIds.PUMPKIN,
     level: 15,
     buyable: month === '10',
     animated: true,
   },
-  {
+  [ItemIds.SKELETON]: {
     name: 'Skeleton',
     type: ItemTypes.GENERATOR,
     emojiId: '766680624504635443',
-    id: 'skeleton',
+    id: ItemIds.SKELETON,
     level: 15,
     buyable: month === '10',
     animated: true,
   },
-  {
+  [ItemIds.PRESENT]: {
     name: 'Present',
     type: ItemTypes.GENERATOR,
     emojiId: '780028217092341780',
-    id: 'present',
+    id: ItemIds.PRESENT,
     level: 15,
     buyable: month === '12',
     animated: true,
   },
-  {
+  [ItemIds.SNOWMAN]: {
     name: 'Snowman',
     type: ItemTypes.GENERATOR,
     emojiId: '791567451422851082',
-    id: 'snowman',
+    id: ItemIds.SNOWMAN,
     level: 15,
     buyable: month === '12',
     animated: true,
   },
-  {
+  [ItemIds.MINECRAFT]: {
     name: 'Minecraft',
     type: ItemTypes.GENERATOR,
     emojiId: '797932521999564821',
-    id: 'minecraft',
+    id: ItemIds.MINECRAFT,
     level: 15,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.MYSTIC]: {
     name: 'Mystic',
     type: ItemTypes.GENERATOR,
     emojiId: '768521388754862110',
-    id: 'mystic',
+    id: ItemIds.MYSTIC,
     level: 16,
-    buyable: false,
+    buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.BLUE_DIAMOND]: {
     name: 'BlueDiamond',
     type: ItemTypes.GENERATOR,
     emojiId: '771335875220602900',
-    id: 'bluediamond',
+    id: ItemIds.BLUE_DIAMOND,
     level: 17,
-    buyable: false,
+    buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.RED_DIAMOND]: {
     name: 'RedDiamond',
     type: ItemTypes.GENERATOR,
     emojiId: '775288572595929099',
-    id: 'reddiamond',
+    id: ItemIds.RED_DIAMOND,
     level: 18,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.TORTOISE]: {
     name: 'Tortoise',
     type: ItemTypes.GENERATOR,
     emojiId: '772311731556843570',
-    id: 'tortoise',
+    id: ItemIds.TORTOISE,
     level: 19,
-    buyable: false,
+    buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.BURNING]: {
     name: 'Burning',
     type: ItemTypes.GENERATOR,
     emojiId: '779853678021836830',
-    id: 'burning',
+    id: ItemIds.BURNING,
     level: 20,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.SCORCHING]: {
     name: 'Scorching',
     type: ItemTypes.GENERATOR,
     emojiId: '779853678295121930',
-    id: 'scorching',
+    id: ItemIds.SCORCHING,
     level: 21,
     buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.RGB]: {
     name: 'RGB',
     type: ItemTypes.GENERATOR,
     emojiId: '778186833557323786',
-    id: 'rgb',
+    id: ItemIds.RGB,
     level: 22,
-    buyable: false,
+    buyable: true,
     animated: true,
   },
-  {
+  [ItemIds.OMEGA]: {
     name: 'Omega',
     type: ItemTypes.GENERATOR,
     emojiId: '802954138702053416',
-    id: 'omega',
+    id: ItemIds.OMEGA,
     level: 23,
-    buyable: false,
+    buyable: true,
     animated: true,
   },
-  {
-    name: 'Rare Lootbox',
-    type: ItemTypes.LOOTBOX,
+  [ItemIds.RARE]: {
+    name: 'Rare Gift',
+    type: ItemTypes.GIFT,
     emojiId: '851512188967190558',
-    id: 'rare',
+    id: ItemIds.RARE,
     level: 0,
     buyable: false,
     animated: false,
   },
-  {
-    name: 'Epic Lootbox',
-    type: ItemTypes.LOOTBOX,
+  [ItemIds.EPIC]: {
+    name: 'Epic Gift',
+    type: ItemTypes.GIFT,
     emojiId: '851512185665749066',
-    id: 'epic',
+    id: ItemIds.EPIC,
     level: 0,
     buyable: false,
     animated: false,
   },
-  {
-    name: 'Legendary Lootbox',
-    type: ItemTypes.LOOTBOX,
+  [ItemIds.LEGENDARY]: {
+    name: 'Legendary Gift',
+    type: ItemTypes.GIFT,
     emojiId: '851512656019324938',
-    id: 'legendary',
+    id: ItemIds.LEGENDARY,
     level: 0,
     buyable: false,
     animated: false,
   },
-];
+};
 
 export interface Item extends BaseItem {
   emoji: string;
@@ -311,16 +347,21 @@ export interface Item extends BaseItem {
   gph?: number;
 }
 
-export const Items: Item[] = BaseItems.map((item: BaseItem) => ({
-  ...item,
-  gph: item.level / 2,
-  price: item.level ** 3,
-  emoji: item.animated ? `<a:${item.id}:${item.emojiId}>` : `<:${item.id}:${item.emojiId}>`,
-  url: `https://cdn.discordapp.com/emojis/${item.emojiId}.gif`,
-}));
+export const Items = Object.fromEntries(
+  Object.entries(BaseItems).map(([key, item]) => [
+    key,
+    {
+      ...item,
+      gph: item.level / 2,
+      price: item.level ** 3,
+      emoji: item.animated ? `<a:${item.id}:${item.emojiId}>` : `<:${item.id}:${item.emojiId}>`,
+      url: `https://cdn.discordapp.com/emojis/${item.emojiId}.${item.animated ? 'gif' : 'png'}`,
+    },
+  ])
+);
 
-export const BuyableItems = Items.filter((item) => item.buyable);
+export const BuyableItems = Object.values(Items).filter((item) => item.buyable);
 
 export function findById(itemId: string): Item {
-  return Items.find(({id}) => id === itemId);
+  return Items[itemId];
 }

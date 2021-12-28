@@ -18,6 +18,7 @@ export default async function giveItem(interaction: CommandInteraction) {
     const item = findById(itemId);
     user.add(item, amount);
     await user.save();
+
     interaction.reply({
       ephemeral: true,
       embeds: [success(`Successfully added ${amount}x **${item.name}** to **${user.username}**`)],

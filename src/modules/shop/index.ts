@@ -6,6 +6,7 @@ import commands from '../../commands.js';
 import {BuyableItems, Item} from '../../items.js';
 import components from '../../components.js';
 import {emoteStrings} from '../../utils/emotes.js';
+import {createItemButton} from '../../utils/buttons.js';
 
 const PAGES: Item[][] = chunk(BuyableItems, Defaults.STORE_PAGE_SIZE);
 
@@ -32,13 +33,7 @@ const EMBED = new MessageEmbed()
   .setFooter('The shop was last updated:')
   .setTimestamp(new Date());
 
-const ACTION_ROWS = PAGES.map((page) =>
-  new MessageActionRow().addComponents(
-    ...page.map((item) =>
-      new MessageButton().setCustomId(item.id).setEmoji(item.emojiId).setStyle('PRIMARY').setLabel('')
-    )
-  )
-);
+const ACTION_ROWS = PAGES.map((page) => new MessageActionRow().addComponents(...page.map(createItemButton)));
 
 class Shop {
   constructor() {

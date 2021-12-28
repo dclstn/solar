@@ -21,6 +21,7 @@ export const CommandNames = {
   LEADERBOARD: 'leaderboard',
   GAMES: 'games',
   ADMIN: 'admin',
+  GIFTS: 'gifts',
 };
 
 export const AdminSubCommandNames = {
@@ -74,6 +75,7 @@ export const CommandDescriptions = {
   [CommandNames.LEADERBOARD]: '🌏 View the rankings',
   [CommandNames.GAMES]: '🎮 Play a game',
   [CommandNames.ADMIN]: '🖥️ Admin-only commands',
+  [CommandNames.GIFTS]: '🎁 View your gifts',
 };
 
 export const CommandOptions = {
@@ -143,7 +145,9 @@ export const CommandOptions = {
       description: 'Select an item to inspect',
       type: ApplicationCommandOptionTypes.STRING,
       required: true,
-      choices: Items.slice(0, 25).map(({id, name}) => ({name, value: id})),
+      choices: Object.values(Items)
+        .slice(0, 25)
+        .map(({id, name}) => ({name, value: id})),
     },
   ],
   [CommandNames.RAID]: [
@@ -337,4 +341,5 @@ export const MessageComponentIds = {
   DECLINE_INVITE: 'decline-invite',
   GLOBAL_LB_USER_MONEY: 'global-lb-user-money',
   LOCAL_LB_USER_MONEY: 'local-lb-user-money',
+  UNBOX: 'unbox',
 };
