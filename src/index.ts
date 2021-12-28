@@ -1,7 +1,6 @@
 import glob from 'glob';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import commands from './commands.js';
 
 dotenv.config();
 

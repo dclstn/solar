@@ -31,7 +31,7 @@ export function buy(item: Item, amount: number) {
     throw new ResponseError(`You do not have enough gems for this purchase`);
   }
 
-  add(item, amount);
+  this.add(item, amount);
 
   this.money -= totalCost;
 }
