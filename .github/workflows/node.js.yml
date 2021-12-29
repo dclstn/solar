@@ -28,6 +28,7 @@ jobs:
         echo GUILD_ID=${{ secrets.GUILD_ID }} >> .env
         echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> .env
         echo PUBLIC_KEY=${{ secrets.PUBLIC_KEY }} >> .env
+        echo ENVIROMENT=${{ secrets.ENVIROMENT }} >> .env
         cat .env
     - name: PM2 Restart
       run: pm2 restart castlemania-beta
