@@ -1,7 +1,7 @@
 import moment from 'moment';
 import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
-import {Item} from '../../items.js';
+import {Item, ItemIds, Items} from '../../items.js';
 import type {InventoryInterface} from '../../types/user.js';
 import type {ItemInterface} from '../../types/item.js';
 import type {GroupInterface} from '../../types/group.js';
@@ -51,6 +51,12 @@ export function has(item: Item) {
   return true;
 }
 
+// TODO: build this out
+export function unbox(item: Item) {
+  this.rem(item, 1);
+  this.add(Items[ItemIds.SCORCHING]);
+}
+
 export function rem(item: Item, amount: number) {
   const inventories = this.inventories[Symbol.iterator]();
   let inventory = inventories.next();
@@ -73,7 +79,7 @@ export function sell(item: Item, amount: number) {
     throw new ResponseError(`Item does not exist`);
   }
 
-  this.remove(item, amount);
+  this.rem(item, amount);
   this.money += (item.price * amount) / 2;
 }
 

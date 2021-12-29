@@ -34,6 +34,7 @@ export interface UserInterface extends Mongoose.Document {
   sell(item: Item, amount: number): void;
   rem(item: Item, amount: number): void;
   has(item: Item): boolean;
+  unbox(item: Item): void;
   getInventory(type: InventoryType): InventoryInterface;
   sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;
   deposit(group: GroupInterface, amount: number): void;

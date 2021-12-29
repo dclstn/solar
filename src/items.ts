@@ -10,6 +10,7 @@ interface BaseItem {
   buyable: boolean;
   animated?: boolean;
   maxLevelDroprate?: number;
+  description?: string;
 }
 
 const month = moment(new Date(), 'YYYY/MM/DD').format('M');
@@ -319,6 +320,7 @@ const BaseItems = {
     level: 0,
     buyable: false,
     animated: false,
+    description: 'Unbox this to recieve a random gift!',
   },
   [ItemIds.EPIC]: {
     name: 'Epic Gift',
@@ -328,6 +330,7 @@ const BaseItems = {
     level: 0,
     buyable: false,
     animated: false,
+    description: 'Unbox this to recieve a random gift!',
   },
   [ItemIds.LEGENDARY]: {
     name: 'Legendary Gift',
@@ -337,6 +340,7 @@ const BaseItems = {
     level: 0,
     buyable: false,
     animated: false,
+    description: 'Unbox this to recieve a random gift!',
   },
 };
 

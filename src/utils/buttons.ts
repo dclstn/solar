@@ -3,6 +3,7 @@ import {Item} from '../items.js';
 import {MessageComponentIds} from '../constants.js';
 import {emoteIds} from './emotes.js';
 import {ItemTypes} from './enums.js';
+import type {UserInterface} from '../types/user.js';
 
 export const PROFILE_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.PROFILE)
@@ -50,3 +51,11 @@ export const createItemButton = (item: Item) =>
     .setLabel('')
     .setEmoji(item.emojiId)
     .setStyle(item.type === ItemTypes.GIFT ? 'SUCCESS' : 'PRIMARY');
+
+export const createUnboxButton = (user: UserInterface, item: Item) =>
+  new MessageButton()
+    .setCustomId(`${MessageComponentIds.UNBOX}.${item.id}`)
+    .setLabel('Unbox')
+    .setStyle('SUCCESS')
+    .setEmoji(item.emojiId)
+    .setDisabled(!user.has(item));

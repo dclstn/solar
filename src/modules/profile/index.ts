@@ -51,6 +51,43 @@ async function createEmbed(user: UserInterface, inventoryType: number): Promise<
     .setFooter(`Lvl ${user.level} • ${InventoryType[inventoryType]}`);
 }
 
+function handleReply(
+  user: UserInterface,
+  interaction: CommandInteraction | ButtonInteraction,
+  isPersonal: boolean,
+  embed: MessageEmbed,
+  inventory: InventoryType
+) {
+  const hasRare = user.has(RARE);
+  const hasEpic = user.has(EPIC);
+  const hasLegendary = user.has(LEGENDARY);
+  const hasAny = hasRare || hasEpic || hasLegendary;
+
+  interaction.reply({
+    ephemeral: true,
+    embeds: [embed],
+    ...(isPersonal
+      ? {
+          components: [
+            new MessageActionRow().addComponents(
+              SHOP_BUTTON,
+              inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
+            ),
+            ...(hasAny
+              ? [
+                  new MessageActionRow().addComponents(
+                    ...(hasRare ? [createItemButton(RARE)] : []),
+                    ...(hasEpic ? [createItemButton(EPIC)] : []),
+                    ...(hasLegendary ? [createItemButton(LEGENDARY)] : [])
+                  ),
+                ]
+              : []),
+          ],
+        }
+      : {}),
+  });
+}
+
 class Profile {
   constructor() {
     commands.on(CommandNames.PROFILE, this.handleCommand);
@@ -64,38 +101,9 @@ class Profile {
       const discordUser = interaction.options.getUser('user') || interaction.user;
       const isPersonal = discordUser === interaction.user;
       const inventory = interaction.options.getInteger('inventory') || InventoryType.Main;
-
       const user = await UserModel.get(discordUser);
       const embed = await createEmbed(user, inventory);
-
-      const hasRare = user.has(RARE);
-      const hasEpic = user.has(EPIC);
-      const hasLegendary = user.has(LEGENDARY);
-      const hasAny = hasRare || hasEpic || hasLegendary;
-
-      interaction.reply({
-        ephemeral: true,
-        embeds: [embed],
-        ...(isPersonal
-          ? {
-              components: [
-                new MessageActionRow().addComponents(
-                  SHOP_BUTTON,
-                  inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
-                ),
-                ...(hasAny
-                  ? [
-                      new MessageActionRow().addComponents(
-                        ...(hasRare ? [createItemButton(RARE)] : []),
-                        ...(hasEpic ? [createItemButton(EPIC)] : []),
-                        ...(hasLegendary ? [createItemButton(LEGENDARY)] : [])
-                      ),
-                    ]
-                  : []),
-              ],
-            }
-          : {}),
-      });
+      handleReply(user, interaction, isPersonal, embed, inventory);
     } catch (err) {
       Sentry.captureException(err);
     }
@@ -104,11 +112,9 @@ class Profile {
   async handleButton(interaction: ButtonInteraction, inventoryType: InventoryType) {
     try {
       const {user: discordUser} = interaction;
-
       const user = await UserModel.get(discordUser);
       const embed = await createEmbed(user, inventoryType);
-
-      interaction.reply({ephemeral: true, embeds: [embed]});
+      handleReply(user, interaction, true, embed, inventoryType);
     } catch (err) {
       Sentry.captureException(err);
     }
