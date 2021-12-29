@@ -6,7 +6,7 @@ import Sentry from '../../sentry.js';
 import {createUnboxButton} from '../../utils/buttons.js';
 
 const generatorDescription = (item: Item): string => `
-*${item.description}*
+*${item.name}*
 `;
 
 export default async function handleGift(interaction: CommandInteraction | ButtonInteraction, item: Item) {
@@ -19,7 +19,6 @@ export default async function handleGift(interaction: CommandInteraction | Butto
       .setTitle(item.name)
       .setDescription(generatorDescription(item))
       .setThumbnail(item.url)
-      .setFooter('Some items may leave or join the shop at any time!')
       .setColor('GOLD');
 
     const actionRow = new MessageActionRow().addComponents(createUnboxButton(user, item));

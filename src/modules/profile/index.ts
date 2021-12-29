@@ -1,5 +1,5 @@
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed, User} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import chunk from 'lodash.chunk';
 import {numberWithCommas} from '../../utils/embed.js';
 import {
@@ -20,9 +20,7 @@ import {InventoryType} from '../../utils/enums.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {STORAGE_BUTTON, PROFILE_BUTTON, SHOP_BUTTON, createItemButton} from '../../utils/buttons.js';
 
-const RARE = Items[ItemIds.RARE];
-const EPIC = Items[ItemIds.EPIC];
-const LEGENDARY = Items[ItemIds.LEGENDARY];
+const GIFT = Items[ItemIds.GIFT];
 
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
@@ -58,11 +56,7 @@ function handleReply(
   embed: MessageEmbed,
   inventory: InventoryType
 ) {
-  const hasRare = user.has(RARE);
-  const hasEpic = user.has(EPIC);
-  const hasLegendary = user.has(LEGENDARY);
-  const hasAny = hasRare || hasEpic || hasLegendary;
-
+  const hasGift = user.has(GIFT);
   interaction.reply({
     ephemeral: true,
     embeds: [embed],
@@ -70,18 +64,10 @@ function handleReply(
       ? {
           components: [
             new MessageActionRow().addComponents(
+              inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON,
               SHOP_BUTTON,
-              inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON
+              ...(hasGift ? [createItemButton(GIFT)] : [])
             ),
-            ...(hasAny
-              ? [
-                  new MessageActionRow().addComponents(
-                    ...(hasRare ? [createItemButton(RARE)] : []),
-                    ...(hasEpic ? [createItemButton(EPIC)] : []),
-                    ...(hasLegendary ? [createItemButton(LEGENDARY)] : [])
-                  ),
-                ]
-              : []),
           ],
         }
       : {}),

@@ -1,17 +1,6 @@
+import {MessageEmbed} from 'discord.js';
 import moment from 'moment';
 import {ItemTypes} from './utils/enums.js';
-
-interface BaseItem {
-  id: string;
-  name: string;
-  type: ItemTypes;
-  emojiId: string;
-  level: number;
-  buyable: boolean;
-  animated?: boolean;
-  maxLevelDroprate?: number;
-  description?: string;
-}
 
 const month = moment(new Date(), 'YYYY/MM/DD').format('M');
 
@@ -45,9 +34,26 @@ export enum ItemIds {
   SCORCHING = 'scorching',
   RGB = 'rgb',
   OMEGA = 'omega',
-  RARE = 'rare',
-  EPIC = 'epic',
-  LEGENDARY = 'legendary',
+  GIFT = 'gift',
+}
+
+export enum ItemRarities {
+  COMMON,
+  UNCOMMON,
+  RARE,
+  EPIC,
+  LEGENDARY,
+}
+
+interface BaseItem {
+  id: ItemIds;
+  name: string;
+  type: ItemTypes;
+  emojiId: string;
+  level: number;
+  buyable: boolean;
+  rarity: ItemRarities;
+  animated?: boolean;
 }
 
 const BaseItems = {
@@ -55,6 +61,7 @@ const BaseItems = {
     id: ItemIds.BASIC,
     name: 'Basic',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.COMMON,
     emojiId: '757396142962245752',
     level: 1,
     buyable: true,
@@ -64,6 +71,7 @@ const BaseItems = {
     id: ItemIds.BRONZE,
     name: 'Bronze',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.COMMON,
     emojiId: '757395337685237771',
     level: 2,
     buyable: true,
@@ -73,6 +81,7 @@ const BaseItems = {
     id: ItemIds.GOLD,
     name: 'Gold',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.COMMON,
     emojiId: '757394237623894118',
     level: 3,
     buyable: true,
@@ -81,6 +90,7 @@ const BaseItems = {
   [ItemIds.RUBY]: {
     name: 'Ruby',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.COMMON,
     emojiId: '757333439782453359',
     id: ItemIds.RUBY,
     level: 4,
@@ -90,6 +100,7 @@ const BaseItems = {
   [ItemIds.DIAMOND]: {
     name: 'Diamond',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.COMMON,
     emojiId: '757333439631589486',
     id: ItemIds.DIAMOND,
     level: 5,
@@ -99,6 +110,7 @@ const BaseItems = {
   [ItemIds.EMERALD]: {
     name: 'Emerald',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.COMMON,
     emojiId: '757333439648366642',
     id: ItemIds.EMERALD,
     level: 6,
@@ -108,6 +120,7 @@ const BaseItems = {
   [ItemIds.ACID]: {
     name: 'Acid',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.UNCOMMON,
     emojiId: '761298415149121578',
     id: ItemIds.ACID,
     level: 7,
@@ -117,6 +130,7 @@ const BaseItems = {
   [ItemIds.SEASIDE]: {
     name: 'Seaside',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.UNCOMMON,
     emojiId: '766695960817827861',
     id: ItemIds.SEASIDE,
     level: 8,
@@ -126,6 +140,7 @@ const BaseItems = {
   [ItemIds.FADE]: {
     name: 'Fade',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.UNCOMMON,
     emojiId: '757611084101451846',
     id: ItemIds.FADE,
     level: 9,
@@ -135,6 +150,7 @@ const BaseItems = {
   [ItemIds.MOON]: {
     name: 'Moon',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.RARE,
     emojiId: '757615307811586048',
     id: ItemIds.MOON,
     level: 10,
@@ -144,6 +160,7 @@ const BaseItems = {
   [ItemIds.SUN]: {
     name: 'Sun',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.RARE,
     emojiId: '757628531264978944',
     id: ItemIds.SUN,
     level: 11,
@@ -153,6 +170,7 @@ const BaseItems = {
   [ItemIds.RAINBOW]: {
     name: 'Rainbow',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.RARE,
     emojiId: '761280663017881640',
     id: ItemIds.RAINBOW,
     level: 12,
@@ -162,6 +180,7 @@ const BaseItems = {
   [ItemIds.DISCO]: {
     name: 'Disco',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.RARE,
     emojiId: '761289756692185098',
     id: ItemIds.DISCO,
     level: 13,
@@ -171,6 +190,7 @@ const BaseItems = {
   [ItemIds.KING]: {
     name: 'King',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.RARE,
     emojiId: '765942419518521366',
     id: ItemIds.KING,
     level: 14,
@@ -180,6 +200,7 @@ const BaseItems = {
   [ItemIds.MYTHIC]: {
     name: 'Mythic',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '775214117719769140',
     id: ItemIds.MYTHIC,
     level: 15,
@@ -189,6 +210,7 @@ const BaseItems = {
   [ItemIds.PEPE]: {
     name: 'Pepe',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '772493391082553354',
     id: ItemIds.PEPE,
     level: 15,
@@ -198,6 +220,7 @@ const BaseItems = {
   [ItemIds.PUMPKIN]: {
     name: 'Pumpkin',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '766678940970123296',
     id: ItemIds.PUMPKIN,
     level: 15,
@@ -207,6 +230,7 @@ const BaseItems = {
   [ItemIds.SKELETON]: {
     name: 'Skeleton',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '766680624504635443',
     id: ItemIds.SKELETON,
     level: 15,
@@ -216,6 +240,7 @@ const BaseItems = {
   [ItemIds.PRESENT]: {
     name: 'Present',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '780028217092341780',
     id: ItemIds.PRESENT,
     level: 15,
@@ -225,6 +250,7 @@ const BaseItems = {
   [ItemIds.SNOWMAN]: {
     name: 'Snowman',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '791567451422851082',
     id: ItemIds.SNOWMAN,
     level: 15,
@@ -234,6 +260,7 @@ const BaseItems = {
   [ItemIds.MINECRAFT]: {
     name: 'Minecraft',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '797932521999564821',
     id: ItemIds.MINECRAFT,
     level: 15,
@@ -243,6 +270,7 @@ const BaseItems = {
   [ItemIds.MYSTIC]: {
     name: 'Mystic',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '768521388754862110',
     id: ItemIds.MYSTIC,
     level: 16,
@@ -252,6 +280,7 @@ const BaseItems = {
   [ItemIds.BLUE_DIAMOND]: {
     name: 'BlueDiamond',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '771335875220602900',
     id: ItemIds.BLUE_DIAMOND,
     level: 17,
@@ -261,6 +290,7 @@ const BaseItems = {
   [ItemIds.RED_DIAMOND]: {
     name: 'RedDiamond',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '775288572595929099',
     id: ItemIds.RED_DIAMOND,
     level: 18,
@@ -270,6 +300,7 @@ const BaseItems = {
   [ItemIds.TORTOISE]: {
     name: 'Tortoise',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.EPIC,
     emojiId: '772311731556843570',
     id: ItemIds.TORTOISE,
     level: 19,
@@ -279,6 +310,7 @@ const BaseItems = {
   [ItemIds.BURNING]: {
     name: 'Burning',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '779853678021836830',
     id: ItemIds.BURNING,
     level: 20,
@@ -288,6 +320,7 @@ const BaseItems = {
   [ItemIds.SCORCHING]: {
     name: 'Scorching',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '779853678295121930',
     id: ItemIds.SCORCHING,
     level: 21,
@@ -297,6 +330,7 @@ const BaseItems = {
   [ItemIds.RGB]: {
     name: 'RGB',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '778186833557323786',
     id: ItemIds.RGB,
     level: 22,
@@ -306,42 +340,31 @@ const BaseItems = {
   [ItemIds.OMEGA]: {
     name: 'Omega',
     type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '802954138702053416',
     id: ItemIds.OMEGA,
     level: 23,
     buyable: true,
     animated: true,
   },
-  [ItemIds.RARE]: {
-    name: 'Rare Gift',
+  [ItemIds.GIFT]: {
+    name: 'Gift',
     type: ItemTypes.GIFT,
-    emojiId: '851512188967190558',
-    id: ItemIds.RARE,
-    level: 0,
-    buyable: false,
-    animated: false,
-    description: 'Unbox this to recieve a random gift!',
-  },
-  [ItemIds.EPIC]: {
-    name: 'Epic Gift',
-    type: ItemTypes.GIFT,
-    emojiId: '851512185665749066',
-    id: ItemIds.EPIC,
-    level: 0,
-    buyable: false,
-    animated: false,
-    description: 'Unbox this to recieve a random gift!',
-  },
-  [ItemIds.LEGENDARY]: {
-    name: 'Legendary Gift',
-    type: ItemTypes.GIFT,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '851512656019324938',
-    id: ItemIds.LEGENDARY,
+    id: ItemIds.GIFT,
     level: 0,
     buyable: false,
     animated: false,
-    description: 'Unbox this to recieve a random gift!',
   },
+};
+
+export const Chances = {
+  [ItemRarities.COMMON]: 1,
+  [ItemRarities.UNCOMMON]: 0.5,
+  [ItemRarities.RARE]: 0.2,
+  [ItemRarities.EPIC]: 0.05,
+  [ItemRarities.LEGENDARY]: 0.01,
 };
 
 export interface Item extends BaseItem {

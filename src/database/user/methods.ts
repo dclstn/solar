@@ -1,11 +1,12 @@
 import moment from 'moment';
 import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
-import {Item, ItemIds, Items} from '../../items.js';
+import {Chances, Item, ItemRarities, Items} from '../../items.js';
 import type {InventoryInterface} from '../../types/user.js';
 import type {ItemInterface} from '../../types/item.js';
 import type {GroupInterface} from '../../types/group.js';
 import {InventoryType} from '../../utils/enums.js';
+import {secureMathRandom} from '../../utils/misc.js';
 
 export function add(item: Item, amount: number) {
   if (amount > this.totalFree()) {
@@ -36,7 +37,7 @@ export function buy(item: Item, amount: number) {
   this.money -= totalCost;
 }
 
-export function has(item: Item) {
+export function has(item: Item): boolean {
   const inventories = this.inventories[Symbol.iterator]();
   let inventory = inventories.next();
 
@@ -52,9 +53,21 @@ export function has(item: Item) {
 }
 
 // TODO: build this out
-export function unbox(item: Item) {
+export function unbox(item: Item): Item {
   this.rem(item, 1);
-  this.add(Items[ItemIds.SCORCHING]);
+
+  const rand = secureMathRandom();
+  const lowestKey = Object.entries(Chances).reduce(
+    (lowest, [key, chance]) => (rand < chance ? key : lowest),
+    ItemRarities.COMMON
+  );
+  // eslint-disable-next-line eqeqeq
+  const pool = Object.values(Items).filter(({rarity}) => rarity == lowestKey);
+  const unboxed = pool[Math.floor(secureMathRandom() * pool.length)];
+
+  this.add(unboxed, 1);
+
+  return unboxed;
 }
 
 export function rem(item: Item, amount: number) {

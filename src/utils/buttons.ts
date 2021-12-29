@@ -19,7 +19,7 @@ export const STORAGE_BUTTON = new MessageButton()
 
 export const SHOP_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.SHOP)
-  .setStyle('PRIMARY')
+  .setStyle('SUCCESS')
   .setLabel('Shop')
   .setEmoji(emoteIds.shopping);
 
@@ -52,10 +52,10 @@ export const createItemButton = (item: Item) =>
     .setEmoji(item.emojiId)
     .setStyle(item.type === ItemTypes.GIFT ? 'SUCCESS' : 'PRIMARY');
 
-export const createUnboxButton = (user: UserInterface, item: Item) =>
+export const createUnboxButton = (user: UserInterface, item: Item, another = false) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.UNBOX}.${item.id}`)
-    .setLabel('Unbox')
-    .setStyle('SUCCESS')
+    .setLabel(another ? 'Unwrap another' : 'Unwrap')
+    .setStyle('PRIMARY')
     .setEmoji(item.emojiId)
     .setDisabled(!user.has(item));
