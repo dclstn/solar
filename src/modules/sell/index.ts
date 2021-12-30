@@ -3,7 +3,7 @@ import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import redlock, {userLock} from '../../redis/locks.js';
 import components from '../../components.js';
 import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../constants.js';
-import {findById} from '../../items.js';
+import {findById, Item, Items} from '../../items.js';
 import commands from '../../commands.js';
 import User from '../../database/user/index.js';
 import {sale, warning} from '../../utils/embed.js';
@@ -13,12 +13,8 @@ import {PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
 
 const NAV_ROW = new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON);
 
-async function processSale(interaction: ButtonInteraction | CommandInteraction, itemId: string, amount: number) {
-  const transaction = Sentry.startTransaction({
-    op: 'sell-transaction',
-    name: 'Item Sale Transaction',
-  });
-
+async function processSale(interaction: ButtonInteraction | CommandInteraction, item: Item, amount: number) {
+  const transaction = Sentry.startTransaction({op: 'sell-transaction', name: 'Item Sale Transaction'});
   const lockSpan = transaction.startChild({op: 'acquire-lock'});
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
   lockSpan.finish();
@@ -29,10 +25,7 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
     const userSpan = transaction.startChild({op: 'acquire-user'});
     user = await User.get(interaction.user);
     userSpan.finish();
-
-    const item = findById(itemId);
     user.sell(item, amount);
-
     const saveSpan = transaction.startChild({op: 'save-doc'});
     await user.save();
     saveSpan.finish();
@@ -53,28 +46,22 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
     const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();
     releaseSpan.finish();
-
     transaction.finish();
   }
 }
 
-class Sell {
-  constructor() {
-    commands.on(CommandNames.SELL, this.handleCommand);
-    components.on(MessageComponentIds.SELL, this.handleComponent);
-  }
+commands.on(CommandNames.SELL, (interaction: CommandInteraction) => {
+  const itemId = interaction.options.getString('item');
+  const amount = interaction.options.getNumber('amount') || 1;
+  const item = findById(itemId);
+  processSale(interaction, item, amount);
+});
 
-  handleComponent(interaction: ButtonInteraction) {
-    const itemId = interaction.message.embeds[0].title.toLowerCase();
-    processSale(interaction, itemId, 1);
-  }
-
-  handleCommand(interaction: CommandInteraction) {
-    const itemId = interaction.options.getString('item');
-    const amount = interaction.options.getNumber('amount') || 1;
-    processSale(interaction, itemId, amount);
-  }
-}
+Object.values(Items).forEach((item) =>
+  components.on(`${MessageComponentIds.SELL}.${item.id}`, (interaction: ButtonInteraction) => {
+    processSale(interaction, item, 1);
+  })
+);
 
 commands.registerCommand({
   type: ApplicationCommandTypes.CHAT_INPUT,
@@ -82,5 +69,3 @@ commands.registerCommand({
   description: CommandDescriptions[CommandNames.SELL],
   options: CommandOptions[CommandNames.SELL],
 });
-
-export default new Sell();

@@ -36,6 +36,7 @@
     "max-classes-per-file": "off",
     "no-underscore-dangle": "off",
     "no-bitwise": "off",
-    "@typescript-eslint/ban-ts-comment": "off"
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-throw-literal": 2
   }
 }

@@ -4,6 +4,7 @@ import {MessageComponentIds} from '../constants.js';
 import {emoteIds} from './emotes.js';
 import {ItemTypes} from './enums.js';
 import type {UserInterface} from '../types/user.js';
+import {numberWithCommas} from './embed.js';
 
 export const PROFILE_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.PROFILE)
@@ -59,3 +60,19 @@ export const createUnboxButton = (user: UserInterface, item: Item, another = fal
     .setStyle('PRIMARY')
     .setEmoji(item.emojiId)
     .setDisabled(!user.has(item));
+
+export const createSellButton = (user: UserInterface, item: Item) =>
+  new MessageButton()
+    .setCustomId(`${MessageComponentIds.SELL}.${item.id}`)
+    .setLabel(`Sell for ${numberWithCommas(item.price / 2)}`)
+    .setEmoji(emoteIds.gem)
+    .setStyle('DANGER')
+    .setDisabled(!user.has(item));
+
+export const createBuyButton = (user: UserInterface, item: Item) =>
+  new MessageButton()
+    .setCustomId(`${MessageComponentIds.BUY}.${item.id}`)
+    .setLabel(`Buy for ${numberWithCommas(item.price)}`)
+    .setStyle('SUCCESS')
+    .setEmoji(emoteIds.gem)
+    .setDisabled(!item.buyable || item.price > user.money);
