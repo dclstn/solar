@@ -57,7 +57,7 @@ export const createUnboxButton = (user: UserInterface, item: Item, another = fal
   new MessageButton()
     .setCustomId(`${MessageComponentIds.UNBOX}.${item.id}`)
     .setLabel(another ? 'Unwrap another' : 'Unwrap')
-    .setStyle('PRIMARY')
+    .setStyle('SUCCESS')
     .setEmoji(item.emojiId)
     .setDisabled(!user.has(item));
 

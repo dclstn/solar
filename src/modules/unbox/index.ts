@@ -1,6 +1,6 @@
-import {ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed} from 'discord.js';
-import {emoteIds, emoteStrings} from '../../utils/emotes.js';
-import {createUnboxButton, PROFILE_BUTTON} from '../../utils/buttons.js';
+import {ButtonInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
+import {emoteStrings} from '../../utils/emotes.js';
+import {createSellButton, createUnboxButton} from '../../utils/buttons.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import {Item, Items} from '../../items.js';
 import {ItemTypes} from '../../utils/enums.js';
@@ -17,7 +17,6 @@ Level: **${item.level}**
 Gems per hour: **${item.gph}/h**
 `;
 
-const VOWELS = ['a', 'e', 'i', 'o', 'u'];
 const GIFTS = Object.values(Items).filter(({type}) => type === ItemTypes.GIFT);
 
 async function unboxGift(interaction: ButtonInteraction, gift: Item) {
@@ -29,21 +28,15 @@ async function unboxGift(interaction: ButtonInteraction, gift: Item) {
     await user.save();
 
     const embed = new MessageEmbed()
-      .setTitle(`🎊 You unboxed ${VOWELS.includes(item.name.charAt(0)) ? 'an' : 'a'} ${item.name}!`)
+      .setTitle(`🎊 Congratulations! 🎊`)
       .setDescription(generatorDescription(item))
-      .setThumbnail(item.url)
-      .setFooter('Some items may leave or join the shop at any time!')
-      .setColor('GREEN');
+      .setImage(item.url)
+      .setFooter('This item has been added to your profile!')
+      .setColor('GOLD');
 
     const actionRow = new MessageActionRow().addComponents(
-      PROFILE_BUTTON,
       createUnboxButton(user, gift, true),
-      new MessageButton()
-        .setCustomId(MessageComponentIds.SELL)
-        .setLabel(`Sell for ${numberWithCommas(item.price / 2)}`)
-        .setEmoji(emoteIds.gem)
-        .setStyle('DANGER')
-        .setDisabled(!user.has(item))
+      createSellButton(user, item)
     );
 
     interaction.reply({embeds: [embed], components: [actionRow], ephemeral: true});

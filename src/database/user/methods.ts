@@ -66,6 +66,7 @@ export function unbox(item: Item): Item {
   const unboxed = pool[Math.floor(secureMathRandom() * pool.length)];
 
   this.add(unboxed, 1);
+  this.set('exp', this.exp + 10);
 
   return unboxed;
 }
@@ -116,7 +117,6 @@ export function updateDoc() {
   const diffMinutes = moment(new Date()).diff(moment(this.updated), 'minutes');
   const earned = (this.getInventory(InventoryType.Main).gph() / 60) * diffMinutes;
 
-  this.set('exp', this.exp + 1);
   this.set('money', this.money + earned);
   this.set('updated', new Date());
 }
