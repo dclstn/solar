@@ -28,7 +28,7 @@ async function unboxGift(interaction: ButtonInteraction, gift: Item) {
     await user.save();
 
     const embed = new MessageEmbed()
-      .setTitle(`🎊 Congratulations! 🎊`)
+      .setTitle('Congratulations!')
       .setDescription(generatorDescription(item))
       .setImage(item.url)
       .setFooter('This item has been added to your profile!')

@@ -1,4 +1,3 @@
-import {MessageEmbed} from 'discord.js';
 import moment from 'moment';
 import {ItemTypes} from './utils/enums.js';
 

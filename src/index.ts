@@ -25,3 +25,5 @@ glob('./dist/modules/**/index.js', async (err: Error, files: [string]) => {
     process.exit(1);
   }
 });
+
+import('./server.js');

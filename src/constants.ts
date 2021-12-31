@@ -341,3 +341,9 @@ export const MessageComponentIds = {
   LOCAL_LB_USER_MONEY: 'local-lb-user-money',
   UNBOX: 'unbox',
 };
+
+export const PaymentIds = {
+  GIFTS: {
+    FIVE: 'price_1KCXF9BLF5bK8rcnkKuXuMRt',
+  },
+};
