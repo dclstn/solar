@@ -7,7 +7,6 @@ dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_KEY, {apiVersion: '2020-08-27'});
 
-// @ts-ignore
 App.get('/create-checkout-session', {preValidation: [App.authenticate]}, async (request, response) => {
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -26,13 +25,8 @@ App.get('/create-checkout-session', {preValidation: [App.authenticate]}, async (
 
 App.register((fastify, opts, done) => {
   fastify.addContentTypeParser('application/json', {parseAs: 'buffer'}, (req, body, next) => {
-    try {
-      const newBody = {raw: body};
-      next(null, newBody);
-    } catch (error) {
-      error.statusCode = 400;
-      next(error, undefined);
-    }
+    const newBody = {raw: body};
+    next(null, newBody);
   });
 
   fastify.post('/webhook', (request, response) => {

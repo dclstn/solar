@@ -21,7 +21,6 @@ App.register(oauth2, {
 });
 
 App.get('/auth/discord/callback', async (request, response) => {
-  // @ts-ignore
   const token = await App.discordOAuth2.getAccessTokenFromAuthorizationCodeFlow(request);
 
   const res = await axios.get('https://discord.com/api/users/@me', {
@@ -34,9 +33,7 @@ App.get('/auth/discord/callback', async (request, response) => {
   const {id} = res.data;
   const jwtToken = App.jwt.sign({id});
 
-  response.send({
-    token: jwtToken,
-  });
+  response.send({token: jwtToken});
 });
 
 App.register(fastifyJWT, {secret: process.env.JWT_SECRET});
