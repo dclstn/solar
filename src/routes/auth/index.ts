@@ -1,43 +1,42 @@
 import oauth2 from 'fastify-oauth2';
 import dotenv from 'dotenv';
 import axios from 'axios';
-import fastifyJWT from 'fastify-jwt';
-import App from '../../server.js';
+import User from '../../database/user/index.js';
 
 dotenv.config();
 
-App.register(oauth2, {
-  name: 'discordOAuth2',
-  credentials: {
-    client: {
-      id: process.env.CLIENT_ID,
-      secret: process.env.CLIENT_SECRET,
+export default (fastify, opts, done) => {
+  fastify.register(oauth2, {
+    name: 'discordOAuth2',
+    credentials: {
+      client: {
+        id: process.env.CLIENT_ID,
+        secret: process.env.CLIENT_SECRET,
+      },
+      auth: oauth2.DISCORD_CONFIGURATION,
     },
-    auth: oauth2.DISCORD_CONFIGURATION,
-  },
-  scope: ['identify'],
-  startRedirectPath: '/auth/discord',
-  callbackUri: 'http://localhost:3000/discord/callback',
-});
-
-App.get('/auth/discord/callback', async (request, response) => {
-  const token = await App.discordOAuth2.getAccessTokenFromAuthorizationCodeFlow(request);
-
-  const res = await axios.get('https://discord.com/api/users/@me', {
-    responseType: 'json',
-    headers: {
-      authorization: `${token.token_type} ${token.access_token}`,
-    },
+    scope: ['identify'],
+    startRedirectPath: '/auth/discord',
+    callbackUri: 'http://localhost:3000/discord/callback',
   });
 
-  const {id} = res.data;
-  const jwtToken = App.jwt.sign({id});
+  fastify.get('/auth/discord/callback', async (request, response) => {
+    const token = await fastify.discordOAuth2.getAccessTokenFromAuthorizationCodeFlow(request);
 
-  response.send({token: jwtToken});
-});
+    const {data} = await axios.get('https://discord.com/api/users/@me', {
+      responseType: 'json',
+      headers: {
+        authorization: `${token.token_type} ${token.access_token}`,
+      },
+    });
 
-App.register(fastifyJWT, {secret: process.env.JWT_SECRET});
+    await User.getById(data.id);
 
-App.decorate('authenticate', async (request) => {
-  await request.jwtVerify();
-});
+    const {id, username, locale} = data;
+    const jwtToken = fastify.jwt.sign({id, username, locale});
+
+    response.send({token: jwtToken});
+  });
+
+  done();
+};

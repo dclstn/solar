@@ -1,30 +1,29 @@
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
-import App from '../../server.js';
 import {PaymentIds} from '../../constants.js';
 
 dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_KEY, {apiVersion: '2020-08-27'});
 
-App.get('/create-checkout-session', {preValidation: [App.authenticate]}, async (request, response) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        price: PaymentIds.GIFTS.FIVE,
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    success_url: 'http://localhost:8000/success',
-    cancel_url: 'http://localhost:8000/cancel',
+export default (fastify, opts, done) => {
+  fastify.get('/create-checkout-session', {preValidation: [fastify.authenticate]}, async (request, response) => {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: PaymentIds.GIFTS.FIVE,
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: 'http://localhost:8000/success',
+      cancel_url: 'http://localhost:8000/cancel',
+    });
+
+    response.redirect(303, session.url);
   });
 
-  response.redirect(303, session.url);
-});
-
-App.register((fastify, opts, done) => {
-  fastify.addContentTypeParser('application/json', {parseAs: 'buffer'}, (req, body, next) => {
+  fastify.addContentTypeParser('fastifylication/json', {parseAs: 'buffer'}, (req, body, next) => {
     const newBody = {raw: body};
     next(null, newBody);
   });
@@ -56,4 +55,4 @@ App.register((fastify, opts, done) => {
   });
 
   done();
-});
+};

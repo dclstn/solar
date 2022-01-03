@@ -1,6 +1,19 @@
 import type {FastifyRequest, FastifyReply} from 'fastify';
-import App from '../../server.js';
+import Mongoose from 'mongoose';
+import type jwtTokenInterface from '../../types/jwt.js';
+import User from '../../database/user/index.js';
 
-App.get('/api/users', {preValidation: [App.authenticate]}, (request: FastifyRequest, response: FastifyReply) => {
-  console.log(response);
-});
+export default (fastify, opts, done) => {
+  fastify.get(
+    '/api/users',
+    {preValidation: [fastify.authenticate]},
+    async (request: FastifyRequest, response: FastifyReply) => {
+      const user = request.user as jwtTokenInterface;
+      const id = user.id as unknown as Mongoose.Schema.Types.Long;
+      const dbUser = await User.findOne({discordId: id}).select('username avatar').lean();
+      response.send({user: dbUser});
+    }
+  );
+
+  done();
+};
