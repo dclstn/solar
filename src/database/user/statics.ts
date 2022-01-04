@@ -1,7 +1,7 @@
 import {User} from 'discord.js';
 import client from '../../client.js';
 
-export async function get(user: User) {
+export async function get(user: User, email: string, locale: string) {
   return this.findOneAndUpdate(
     {
       discordId: user.id,
@@ -10,6 +10,8 @@ export async function get(user: User) {
       username: user.username,
       discriminator: user.discriminator,
       avatar: user.avatarURL(),
+      email,
+      locale,
     },
     {
       new: true,
@@ -20,6 +22,6 @@ export async function get(user: User) {
   );
 }
 
-export async function getById(id: string) {
-  return this.get(await client.users.fetch(id));
+export async function getById(id: string, email: string, locale: string) {
+  return this.get(await client.users.fetch(id), email, locale);
 }

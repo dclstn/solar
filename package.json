@@ -39,6 +39,7 @@
     "fastify-sentry": "^1.4.0",
     "glob": "^7.2.0",
     "ioredis": "^4.28.2",
+    "lodash": "^4.17.21",
     "lodash.chunk": "^4.2.0",
     "long": "^5.2.0",
     "moment": "^2.29.1",

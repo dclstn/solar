@@ -15,7 +15,7 @@ export default (fastify, opts, done) => {
       },
       auth: oauth2.DISCORD_CONFIGURATION,
     },
-    scope: ['identify'],
+    scope: ['identify', 'email'],
     startRedirectPath: '/auth/discord',
     callbackUri: 'http://localhost:3000/discord/callback',
   });
@@ -30,7 +30,7 @@ export default (fastify, opts, done) => {
       },
     });
 
-    await User.getById(data.id);
+    await User.getById(data.id, data.email, data.locale);
 
     const {id, username, locale} = data;
     const jwtToken = fastify.jwt.sign({id, username, locale});
