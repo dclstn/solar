@@ -8,7 +8,6 @@ export async function get(user: User, email: string, locale: string) {
     },
     {
       username: user.username,
-      discriminator: user.discriminator,
       avatar: user.avatarURL(),
       email,
       locale,

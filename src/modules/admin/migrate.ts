@@ -9,6 +9,8 @@ import {Roles} from '../../utils/enums.js';
 
 export default async function migrate(interaction: CommandInteraction) {
   try {
+    interaction.reply('Migrated');
+
     const userObj = {};
     _.uniqBy(users, 'discordId')
       .filter((user) => user.lastKnownUsername != null)
@@ -16,6 +18,7 @@ export default async function migrate(interaction: CommandInteraction) {
         userObj[user._id.$oid] = {
           username: user.lastKnownUsername,
           discordId: user.discordId,
+          money: 1000,
         };
       });
 
@@ -33,7 +36,7 @@ export default async function migrate(interaction: CommandInteraction) {
         name: kingdom.name,
         users: kingdomUsers.map((user) => ({
           user: user._id,
-          role: userObj[kingdom.king.$oid].discordId === user.discordId ? Roles.OWNER : Roles.USER,
+          role: userObj[kingdom.king.$oid].discordId === String(user.discordId) ? Roles.OWNER : Roles.USER,
         })),
       });
 

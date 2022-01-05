@@ -6,7 +6,6 @@ import Guild from '../../database/guild/index.js';
 import User from '../../database/user/index.js';
 
 client.on('interactionCreate', async (interaction: Interaction) => {
-  return;
   try {
     const [guild, user] = await Promise.all([
       Guild.findOneAndUpdate(

@@ -15,7 +15,7 @@ export default async function localLeaderboard(interaction: CommandInteraction) 
 
     const id: Mongoose.Schema.Types.Long = interaction.guild.id as unknown as Mongoose.Schema.Types.Long;
     const guild = await Guilds.findOne({id}).populate('users');
-    const users = guild.users.sort((a: UserInterface, b: UserInterface) => b.money - a.money);
+    const users = guild.users.sort((a: UserInterface, b: UserInterface) => b.money - a.money).slice(0, 10);
 
     // TODO: add a formatter for usernames/guild names
     const embed = createLeaderboardEmbed(

@@ -20,7 +20,6 @@ export interface InventoryInterface extends Mongoose.Types.Subdocument {
 export interface UserInterface extends Mongoose.Document {
   discordId: Mongoose.Schema.Types.Long;
   username: string;
-  discriminator: string;
   flags: number;
   level: number;
   exp: number;
