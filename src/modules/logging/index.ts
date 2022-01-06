@@ -8,7 +8,7 @@ import type {UserInterface} from '../../types/user.js';
 
 const WELCOME_EMBED = (user: UserInterface) =>
   new MessageEmbed()
-    .setTitle(`Hi ${user.username}, we've made some changed...`)
+    .setTitle(`Hi ${user.username}, we've made some changes...`)
     .setColor('GREEN')
     .setTimestamp(new Date()).setDescription(`
 
