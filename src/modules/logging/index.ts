@@ -15,11 +15,11 @@ const WELCOME_EMBED = (user: UserInterface) =>
 **CastleMania has now been updated to V2**
 
 The Changes:
-• The economy has been reset, legacy users will start with a suprise in their inventory...
-• Groups (previously named Kingdoms) will remain the same but with limited features
-• Pets have been removed due to lack of interest (Could see a comeback in another bot)
+• The economy has been reset, legacy users will start with a suprise.
 • Gifts (previously named Lootboxes) are now located within your inventory
+• Groups (Kingdoms) will remain the same but with limited features
 • The removal of text command support, but do not fret we now have buttons!
+• Pets have been removed, could see a revival in the future!
 
 We apoligize for any innconvience this has caused, but we feel it was a nessecary change to bring life to the game.
 `);
