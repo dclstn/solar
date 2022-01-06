@@ -1,9 +1,28 @@
-import {Interaction} from 'discord.js';
+import {Interaction, MessageEmbed} from 'discord.js';
 import Mongoose from 'mongoose';
 import Sentry from '../../sentry.js';
 import client from '../../client.js';
 import Guild from '../../database/guild/index.js';
-import User from '../../database/user/index.js';
+import UserModel from '../../database/user/index.js';
+import type {UserInterface} from '../../types/user.js';
+
+const WELCOME_EMBED = (user: UserInterface) =>
+  new MessageEmbed()
+    .setTitle(`Hi ${user.username}, we've made some changed...`)
+    .setColor('GREEN')
+    .setTimestamp(new Date()).setDescription(`
+
+**CastleMania has now been updated to V2**
+
+The Changes:
+• The economy has been reset, legacy users will start with a suprise in their inventory...
+• Groups (previously named Kingdoms) will remain the same but with limited features
+• Pets have been removed due to lack of interest (Could see a comeback in another bot)
+• Gifts (previously named Lootboxes) are now located within your inventory
+• The removal of text command support, but do not fret we now have buttons!
+
+We apoligize for any innconvience this has caused, but we feel it was a nessecary change to bring life to the game.
+`);
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
@@ -25,11 +44,17 @@ client.on('interactionCreate', async (interaction: Interaction) => {
           setDefaultsOnInsert: true,
         }
       ),
-      User.get(interaction.user),
+      UserModel.get(interaction.user),
     ]);
 
     if (!guild.users.find((serverUser) => serverUser._id.equals(user._id))) {
       guild.users.push(user._id);
+
+      // Remove this at a later date
+      try {
+        interaction.user.send({embeds: [WELCOME_EMBED(user)]});
+        // eslint-disable-next-line no-empty
+      } catch (_) {}
 
       if (interaction.guild.ownerId === interaction.user.id) {
         guild.set('owner', user._id);

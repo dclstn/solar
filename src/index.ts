@@ -55,6 +55,8 @@ const PORT = 8000;
     reply.status(500).send({error: 'Something went wrong'});
   });
 
+  return; // remove when website is up
+
   App.listen(PORT, (error) => {
     if (error) {
       // eslint-disable-next-line no-console
