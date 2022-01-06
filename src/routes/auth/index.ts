@@ -10,7 +10,7 @@ export default (fastify, opts, done) => {
     name: 'discordOAuth2',
     credentials: {
       client: {
-        id: process.env.CLIENT_ID,
+        id: '757120026867138580',
         secret: process.env.CLIENT_SECRET,
       },
       auth: oauth2.DISCORD_CONFIGURATION,
