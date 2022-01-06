@@ -26,6 +26,7 @@ export const CommandNames = {
 export const AdminSubCommandNames = {
   RELOAD: 'reload',
   GIVE: 'give',
+  MIGRATE: 'migrate',
 };
 
 export const GameSubCommandNames = {
@@ -244,6 +245,11 @@ export const CommandOptions = {
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
     {
+      name: AdminSubCommandNames.MIGRATE,
+      description: 'Migrate the old db',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
       name: AdminSubCommandNames.GIVE,
       description: 'Give a user an item',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
@@ -340,4 +346,10 @@ export const MessageComponentIds = {
   GLOBAL_LB_USER_MONEY: 'global-lb-user-money',
   LOCAL_LB_USER_MONEY: 'local-lb-user-money',
   UNBOX: 'unbox',
+};
+
+export const PaymentIds = {
+  GIFTS: {
+    FIVE: 'price_1KCX64BLF5bK8rcnfwhOTRGy',
+  },
 };

@@ -8,8 +8,8 @@ class Ping {
     commands.on(CommandNames.PING, this.run);
   }
 
-  run(interaction: CommandInteraction): void {
-    interaction.reply(`Pong 🏓!`);
+  async run(interaction: CommandInteraction): Promise<void> {
+    interaction.reply('🏓 Pong!');
   }
 }
 

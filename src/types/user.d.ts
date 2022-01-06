@@ -20,8 +20,6 @@ export interface InventoryInterface extends Mongoose.Types.Subdocument {
 export interface UserInterface extends Mongoose.Document {
   discordId: Mongoose.Schema.Types.Long;
   username: string;
-  discriminator: string;
-  avatar?: string;
   flags: number;
   level: number;
   exp: number;
@@ -29,6 +27,10 @@ export interface UserInterface extends Mongoose.Document {
   group: GroupInterface;
   inventories: InventoryInterface[];
   updated: Date;
+  email?: string;
+  locale?: string;
+  avatar?: string;
+  colour?: string;
   buy(item: Item, amount: number): void;
   add(item: Item, amount: number): void;
   sell(item: Item, amount: number): void;
@@ -49,6 +51,6 @@ export interface TopGemsUserInterface extends Mongoose.Document {
 }
 
 export interface UserModelInterface extends Mongoose.Model<UserInterface> {
-  get(user: User): Promise<UserInterface>;
-  getById(discordId: string): Promise<UserInterface>;
+  get(user: User, email?: string, locale?: string): Promise<UserInterface>;
+  getById(discordId: string, email?: string, locale?: string): Promise<UserInterface>;
 }

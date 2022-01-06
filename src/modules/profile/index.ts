@@ -1,6 +1,7 @@
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import chunk from 'lodash.chunk';
+import type {GroupInterface} from '../../types/group.js';
 import {numberWithCommas} from '../../utils/embed.js';
 import {
   CommandNames,
@@ -26,13 +27,13 @@ const createProfileDescription = (user: UserInterface, grid: string) => `
 
 ${emoteStrings.gem} Gems: **${numberWithCommas(user.money)}**
 💰 Gems Per Hour: **${numberWithCommas(user.getInventory(InventoryType.Main).gph())}**
-
+${user.group != null ? `🏰 Group: **${user.group.name}**\n` : ''}
 ${grid}
 `;
 
 async function createEmbed(user: UserInterface, inventoryType: number): Promise<MessageEmbed> {
   const inventory = user.getInventory(inventoryType);
-
+  await user.populate('group');
   const grid = chunk(new Array(Defaults.MAX_SLOTS).fill(emoteStrings.blank), Math.sqrt(Defaults.MAX_SLOTS));
 
   inventory.items.forEach(({cords, id}) => {
