@@ -123,7 +123,7 @@ export function updateDoc() {
 
 export function deposit(group: GroupInterface, amount: number) {
   if (this == null || this.group == null) {
-    throw new ResponseError('You do not belong to a kingdom');
+    throw new ResponseError('You do not belong to a group');
   }
 
   if (this.money < amount) {

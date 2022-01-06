@@ -11,7 +11,7 @@ import type {GroupInterface} from '../../types/group.js';
 const actionRow = new MessageActionRow().addComponents(ACCEPT_INVITE_BUTTON, DECLINE_INVITE_BUTTON);
 
 const inviteEmbed = (group: GroupInterface) =>
-  new MessageEmbed().setColor('GREEN').setTitle(group.name).setDescription('Has invited you to their kingdom!');
+  new MessageEmbed().setColor('GREEN').setTitle(group.name).setDescription('Has invited you to their group!');
 
 export default async function invite(interaction: CommandInteraction) {
   try {
@@ -21,7 +21,7 @@ export default async function invite(interaction: CommandInteraction) {
     const invitee = await User.get(discordInvitee);
 
     if (inviter == null || inviter.group == null) {
-      throw new ResponseError('You do not belong to a kingdom');
+      throw new ResponseError('You do not belong to a group');
     }
 
     // TODO: make func for this
@@ -32,11 +32,11 @@ export default async function invite(interaction: CommandInteraction) {
     }
 
     if (invitee.group != null) {
-      throw new ResponseError("The user you're trying to invite belongs to a kingdom");
+      throw new ResponseError("The user you're trying to invite belongs to a group");
     }
 
     if (inviter.group.users.find(({user}) => user._id.equals(invitee._id))) {
-      throw new ResponseError('This user is in your kingdom');
+      throw new ResponseError('This user is in your group');
     }
 
     try {

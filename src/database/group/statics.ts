@@ -22,7 +22,7 @@ export function validGroupName(name: string): boolean {
 
 export async function createGroup(user: UserInterface, name: string) {
   if (user.money < Defaults.GROUP_COST) {
-    throw new ResponseError(`You need ${numberWithCommas(Defaults.GROUP_COST)} gems to create a kingdom`);
+    throw new ResponseError(`You need ${numberWithCommas(Defaults.GROUP_COST)} gems to create a group`);
   }
 
   if (!validGroupName(name)) {
@@ -30,7 +30,7 @@ export async function createGroup(user: UserInterface, name: string) {
   }
 
   if (user.group != null) {
-    throw new ResponseError('You must disband/leave your current kingdom before creating one');
+    throw new ResponseError('You must disband/leave your current group before creating one');
   }
 
   if (await this.exists({name})) {

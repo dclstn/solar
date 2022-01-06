@@ -58,7 +58,7 @@ export const SortCommandNames = {
 
 export const UserCommandNames = {
   PROFILE: 'View Profile',
-  GROUP: 'View Kingdom',
+  GROUP: 'View Group',
   RAID: 'Start Raid',
 };
 
@@ -70,7 +70,7 @@ export const CommandDescriptions = {
   [CommandNames.SHOP]: '🛍️ Browse the buyable items',
   [CommandNames.ITEM]: '🔎 Inspect an item',
   [CommandNames.RAID]: '🛡️ Raid another user for their gems',
-  [CommandNames.GROUP]: '🌏 Kingdom commands',
+  [CommandNames.GROUP]: '🌏 Group commands',
   [CommandNames.SORT]: '🧵 Sort your inventory',
   [CommandNames.LEADERBOARD]: '🌏 View the rankings',
   [CommandNames.GAMES]: '🎮 Play a game',
@@ -158,11 +158,6 @@ export const CommandOptions = {
     },
   ],
   [CommandNames.GROUP]: [
-    // {
-    //   name: GroupSubCommandNames.ADD,
-    //   description: '📬 Invite a user to your kingdom',
-    //   type: ApplicationCommandOptionTypes.SUB_COMMAND,
-    // },
     {
       name: GroupSubCommandNames.INVITE,
       description: '📬 Invite a user to your group',
@@ -178,12 +173,12 @@ export const CommandOptions = {
     },
     {
       name: GroupSubCommandNames.CREATE,
-      description: '🌍 Create a new kingdom',
+      description: '🌍 Create a new group',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
       options: [
         {
           name: 'name',
-          description: 'The name of your kingdom',
+          description: 'The name of your group',
           type: ApplicationCommandOptionTypes.STRING,
           required: true,
         },
@@ -191,7 +186,7 @@ export const CommandOptions = {
     },
     {
       name: GroupSubCommandNames.DEPOSIT,
-      description: '💰 Deposit gems into your kingdom',
+      description: '💰 Deposit gems into your group',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
       options: [
         {
