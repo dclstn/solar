@@ -1,8 +1,8 @@
-import {ButtonInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
+import {ButtonInteraction, ColorResolvable, MessageActionRow, MessageEmbed} from 'discord.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {createSellButton, createUnboxButton} from '../../utils/buttons.js';
 import redlock, {userLock} from '../../redis/locks.js';
-import {Item, Items} from '../../items.js';
+import {Item, Items, RarityColours} from '../../items.js';
 import {ItemTypes} from '../../utils/enums.js';
 import components from '../../components.js';
 import {MessageComponentIds} from '../../constants.js';
@@ -32,7 +32,7 @@ async function unboxGift(interaction: ButtonInteraction, gift: Item) {
       .setDescription(generatorDescription(item))
       .setImage(item.url)
       .setFooter('This item has been added to your profile!')
-      .setColor('GOLD');
+      .setColor(RarityColours[item.rarity] as ColorResolvable);
 
     const actionRow = new MessageActionRow().addComponents(
       createUnboxButton(user, gift, true),

@@ -39,7 +39,6 @@ export enum ItemIds {
 export enum ItemRarities {
   COMMON,
   UNCOMMON,
-  RARE,
   EPIC,
   LEGENDARY,
 }
@@ -89,7 +88,7 @@ const BaseItems = {
   [ItemIds.RUBY]: {
     name: 'Ruby',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.COMMON,
+    rarity: ItemRarities.UNCOMMON,
     emojiId: '757333439782453359',
     id: ItemIds.RUBY,
     level: 4,
@@ -99,7 +98,7 @@ const BaseItems = {
   [ItemIds.DIAMOND]: {
     name: 'Diamond',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.COMMON,
+    rarity: ItemRarities.UNCOMMON,
     emojiId: '757333439631589486',
     id: ItemIds.DIAMOND,
     level: 5,
@@ -109,7 +108,7 @@ const BaseItems = {
   [ItemIds.EMERALD]: {
     name: 'Emerald',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.COMMON,
+    rarity: ItemRarities.UNCOMMON,
     emojiId: '757333439648366642',
     id: ItemIds.EMERALD,
     level: 6,
@@ -139,7 +138,7 @@ const BaseItems = {
   [ItemIds.FADE]: {
     name: 'Fade',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.UNCOMMON,
+    rarity: ItemRarities.EPIC,
     emojiId: '757611084101451846',
     id: ItemIds.FADE,
     level: 9,
@@ -149,7 +148,7 @@ const BaseItems = {
   [ItemIds.MOON]: {
     name: 'Moon',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.RARE,
+    rarity: ItemRarities.EPIC,
     emojiId: '757615307811586048',
     id: ItemIds.MOON,
     level: 10,
@@ -159,7 +158,7 @@ const BaseItems = {
   [ItemIds.SUN]: {
     name: 'Sun',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.RARE,
+    rarity: ItemRarities.EPIC,
     emojiId: '757628531264978944',
     id: ItemIds.SUN,
     level: 11,
@@ -169,7 +168,7 @@ const BaseItems = {
   [ItemIds.RAINBOW]: {
     name: 'Rainbow',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.RARE,
+    rarity: ItemRarities.EPIC,
     emojiId: '761280663017881640',
     id: ItemIds.RAINBOW,
     level: 12,
@@ -179,7 +178,7 @@ const BaseItems = {
   [ItemIds.DISCO]: {
     name: 'Disco',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.RARE,
+    rarity: ItemRarities.EPIC,
     emojiId: '761289756692185098',
     id: ItemIds.DISCO,
     level: 13,
@@ -189,7 +188,7 @@ const BaseItems = {
   [ItemIds.KING]: {
     name: 'King',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.RARE,
+    rarity: ItemRarities.EPIC,
     emojiId: '765942419518521366',
     id: ItemIds.KING,
     level: 14,
@@ -269,7 +268,7 @@ const BaseItems = {
   [ItemIds.MYSTIC]: {
     name: 'Mystic',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.EPIC,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '768521388754862110',
     id: ItemIds.MYSTIC,
     level: 16,
@@ -279,7 +278,7 @@ const BaseItems = {
   [ItemIds.BLUE_DIAMOND]: {
     name: 'BlueDiamond',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.EPIC,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '771335875220602900',
     id: ItemIds.BLUE_DIAMOND,
     level: 17,
@@ -289,7 +288,7 @@ const BaseItems = {
   [ItemIds.RED_DIAMOND]: {
     name: 'RedDiamond',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.EPIC,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '775288572595929099',
     id: ItemIds.RED_DIAMOND,
     level: 18,
@@ -299,7 +298,7 @@ const BaseItems = {
   [ItemIds.TORTOISE]: {
     name: 'Tortoise',
     type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.EPIC,
+    rarity: ItemRarities.LEGENDARY,
     emojiId: '772311731556843570',
     id: ItemIds.TORTOISE,
     level: 19,
@@ -360,10 +359,16 @@ const BaseItems = {
 
 export const Chances = {
   [ItemRarities.COMMON]: 1,
-  [ItemRarities.UNCOMMON]: 0.5,
-  [ItemRarities.RARE]: 0.2,
+  [ItemRarities.UNCOMMON]: 0.4,
   [ItemRarities.EPIC]: 0.05,
   [ItemRarities.LEGENDARY]: 0.01,
+};
+
+export const RarityColours = {
+  [ItemRarities.COMMON]: 'BLURPLE',
+  [ItemRarities.UNCOMMON]: 'GREEN',
+  [ItemRarities.EPIC]: 'PURPLE',
+  [ItemRarities.LEGENDARY]: 'GOLD',
 };
 
 export interface Item extends BaseItem {

@@ -1,7 +1,6 @@
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import chunk from 'lodash.chunk';
-import type {GroupInterface} from '../../types/group.js';
 import {numberWithCommas} from '../../utils/embed.js';
 import {
   CommandNames,

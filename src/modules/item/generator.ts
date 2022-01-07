@@ -1,6 +1,6 @@
-import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
+import {ButtonInteraction, ColorResolvable, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import {numberWithCommas} from '../../utils/embed.js';
-import {Item} from '../../items.js';
+import {Item, RarityColours} from '../../items.js';
 import User from '../../database/user/index.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import type {UserInterface} from '../../types/user.js';
@@ -24,7 +24,7 @@ export default async function handleGenerator(interaction: CommandInteraction | 
       .setDescription(generatorDescription(item))
       .setThumbnail(item.url)
       .setFooter('Some items may leave or join the shop at any time!')
-      .setColor('GREEN');
+      .setColor(RarityColours[item.rarity] as ColorResolvable);
 
     const actionRow = new MessageActionRow().addComponents(createBuyButton(user, item), createSellButton(user, item));
 
