@@ -5,6 +5,7 @@ import {emoteIds} from './emotes.js';
 import {ItemTypes} from './enums.js';
 import type {UserInterface} from '../types/user.js';
 import {numberWithCommas} from './embed.js';
+import type {GroupInterface} from '../types/group.js';
 
 export const PROFILE_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.PROFILE)
@@ -20,19 +21,15 @@ export const STORAGE_BUTTON = new MessageButton()
 
 export const SHOP_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.SHOP)
-  .setStyle('SUCCESS')
+  .setStyle('PRIMARY')
   .setLabel('Shop')
   .setEmoji(emoteIds.shopping);
 
-export const ACCEPT_INVITE_BUTTON = new MessageButton()
-  .setCustomId(MessageComponentIds.ACCEPT_INVITE)
-  .setStyle('SUCCESS')
-  .setLabel('Accept');
-
-export const DECLINE_INVITE_BUTTON = new MessageButton()
-  .setCustomId(MessageComponentIds.DECLINE_INVITE)
-  .setStyle('DANGER')
-  .setLabel('Decline');
+export const createAcceptButton = (group: GroupInterface) =>
+  new MessageButton()
+    .setCustomId(`${MessageComponentIds.ACCEPT_INVITE}.${group._id}`)
+    .setStyle('SUCCESS')
+    .setLabel('Accept');
 
 export const LOCAL_LEADERBOARD_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.LOCAL_LB_USER_MONEY)

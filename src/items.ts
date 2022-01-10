@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Fuse from 'fuse.js';
 import {ItemTypes} from './utils/enums.js';
 
 const month = moment(new Date(), 'YYYY/MM/DD').format('M');
@@ -396,3 +397,8 @@ export const BuyableItems = Object.values(Items).filter((item) => item.buyable);
 export function findById(itemId: string): Item {
   return Items[itemId];
 }
+
+export const fuzzy = new Fuse(Object.values(Items), {
+  shouldSort: true,
+  keys: ['name', 'type'],
+});

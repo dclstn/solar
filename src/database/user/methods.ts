@@ -1,4 +1,7 @@
 import moment from 'moment';
+import Fuse from 'fuse.js';
+import flatten from 'lodash.flatten';
+import uniqby from 'lodash.uniqby';
 import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
 import {Chances, Item, ItemRarities, Items} from '../../items.js';
@@ -26,6 +29,10 @@ export function add(item: Item, amount: number) {
 }
 
 export function buy(item: Item, amount: number) {
+  if (item == null) {
+    throw new ResponseError('Could not find item you specified');
+  }
+
   const totalCost = item.price * amount;
 
   if (totalCost > this.money) {
@@ -90,7 +97,7 @@ export function rem(item: Item, amount: number) {
 
 export function sell(item: Item, amount: number) {
   if (item == null) {
-    throw new ResponseError(`Item does not exist`);
+    throw new ResponseError('Could not find item you specified');
   }
 
   this.rem(item, amount);
@@ -134,4 +141,10 @@ export function deposit(group: GroupInterface, amount: number) {
   this.set('money', this.money - amount);
 
   return this;
+}
+
+export function search(term: string) {
+  const lib = uniqby(flatten(this.inventories.map((inventory) => inventory.fetchAll())), 'id');
+  const fuzzy = new Fuse(lib, {shouldSort: true, keys: ['name', 'type']});
+  return fuzzy.search(term);
 }

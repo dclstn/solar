@@ -1,15 +1,15 @@
-import {ButtonInteraction} from 'discord.js';
+import {AutocompleteInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Context} from '@sentry/types';
 import Sentry from './sentry.js';
 import client from './client.js';
 
-class Components extends EventEmitter {
+class Autocomplete extends EventEmitter {
   constructor() {
     super();
 
-    client.on('interactionCreate', (interaction: ButtonInteraction) => {
-      if (!interaction.isMessageComponent()) return;
+    client.on('interactionCreate', (interaction: AutocompleteInteraction) => {
+      if (!interaction.isAutocomplete()) return;
 
       Sentry.configureScope((scope) => {
         scope.setUser({
@@ -17,14 +17,13 @@ class Components extends EventEmitter {
           username: interaction.user.username,
         });
 
-        scope.setTag('interaction_type', 'button');
+        scope.setTag('interaction_type', 'autocomplete');
         scope.setContext('interaction', interaction.toJSON() as Context);
 
-        const [customId, ...args] = interaction.customId.split('.');
-        this.emit(customId, interaction, ...args);
+        this.emit(interaction.commandName, interaction);
       });
     });
   }
 }
 
-export default new Components();
+export default new Autocomplete();

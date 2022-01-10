@@ -1,15 +1,16 @@
-import {ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
+import {AutocompleteInteraction, ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import redlock, {userLock} from '../../redis/locks.js';
 import components from '../../components.js';
 import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../constants.js';
-import {findById, Item, Items} from '../../items.js';
+import {fuzzy, Item, Items} from '../../items.js';
 import commands from '../../commands.js';
 import User from '../../database/user/index.js';
 import {sale, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
 import {PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
+import autocomplete from '../../autocomplete.js';
 
 const NAV_ROW = new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON);
 
@@ -53,15 +54,27 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
 commands.on(CommandNames.SELL, (interaction: CommandInteraction) => {
   const itemId = interaction.options.getString('item');
   const amount = interaction.options.getNumber('amount') || 1;
-  const item = findById(itemId);
+  const item = Items[itemId];
   processSale(interaction, item, amount);
 });
 
-Object.values(Items).forEach((item) =>
-  components.on(`${MessageComponentIds.SELL}.${item.id}`, (interaction: ButtonInteraction) => {
-    processSale(interaction, item, 1);
-  })
-);
+components.on(MessageComponentIds.SELL, (interaction: ButtonInteraction, itemId: string) => {
+  const item = Items[itemId];
+  processSale(interaction, item, 1);
+});
+
+autocomplete.on(CommandNames.SELL, async (interaction: AutocompleteInteraction) => {
+  const user = await User.get(interaction.user);
+  const search = interaction.options.getString('item');
+  const results = user.search(search).splice(0, 25);
+
+  interaction.respond(
+    results.map((result) => ({
+      name: result.item.name,
+      value: result.item.id,
+    }))
+  );
+});
 
 commands.registerCommand({
   type: ApplicationCommandTypes.CHAT_INPUT,

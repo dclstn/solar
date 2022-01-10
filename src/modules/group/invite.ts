@@ -1,23 +1,33 @@
-import {CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import Mongoose from 'mongoose';
-import {ACCEPT_INVITE_BUTTON, DECLINE_INVITE_BUTTON} from '../../utils/buttons.js';
+import {createAcceptButton} from '../../utils/buttons.js';
 import {Roles} from '../../utils/enums.js';
 import {success, warning} from '../../utils/embed.js';
 import User from '../../database/user/index.js';
 import Sentry from '../../sentry.js';
 import ResponseError from '../../utils/error.js';
 import type {GroupInterface} from '../../types/group.js';
-
-const actionRow = new MessageActionRow().addComponents(ACCEPT_INVITE_BUTTON, DECLINE_INVITE_BUTTON);
+import components from '../../components.js';
+import {MessageComponentIds} from '../../constants.js';
+import Group from '../../database/group/index.js';
+import redlock, {userLock, groupLock} from '../../redis/locks.js';
 
 const inviteEmbed = (group: GroupInterface) =>
-  new MessageEmbed().setColor('GREEN').setTitle(group.name).setDescription('Has invited you to their group!');
+  new MessageEmbed().setColor('GOLD').setTitle(group.name).setDescription('Has invited you to their group!');
+
+const acceptEmbed = (group: GroupInterface) =>
+  new MessageEmbed().setColor('GREEN').setTitle(group.name).setDescription('You have joined!');
 
 export default async function invite(interaction: CommandInteraction) {
   try {
-    const id = interaction.user.id as unknown as Mongoose.Schema.Types.Long;
-    const inviter = await User.findOne({id}).populate('group');
     const discordInvitee = interaction.options.getUser('user');
+
+    if (discordInvitee.id === interaction.user.id) {
+      throw new ResponseError('You cannot invite yourself!');
+    }
+
+    const id = interaction.user.id as unknown as Mongoose.Schema.Types.Long;
+    const inviter = await User.findOne({discordId: id}).populate('group');
     const invitee = await User.get(discordInvitee);
 
     if (inviter == null || inviter.group == null) {
@@ -25,9 +35,7 @@ export default async function invite(interaction: CommandInteraction) {
     }
 
     // TODO: make func for this
-    if (
-      ![Roles.MODERATOR, Roles.OWNER].includes(inviter.group.users.find(({user}) => user._id.equals(inviter._id)).role)
-    ) {
+    if (![Roles.MODERATOR, Roles.OWNER].includes(inviter.group.users.find(({user}) => user.equals(inviter._id)).role)) {
       throw new ResponseError('Invalid permissions in group to perform this action');
     }
 
@@ -39,11 +47,10 @@ export default async function invite(interaction: CommandInteraction) {
       throw new ResponseError('This user is in your group');
     }
 
+    const actionRow = new MessageActionRow().addComponents(createAcceptButton(inviter.group));
+
     try {
-      await discordInvitee.send({
-        embeds: [inviteEmbed(inviter.group)],
-        components: [actionRow],
-      });
+      await discordInvitee.send({embeds: [inviteEmbed(inviter.group)], components: [actionRow]});
     } catch (err) {
       throw new ResponseError('Unable to send DM to user');
     }
@@ -61,3 +68,35 @@ export default async function invite(interaction: CommandInteraction) {
     Sentry.captureException(err);
   }
 }
+
+components.on(MessageComponentIds.ACCEPT_INVITE, async (interaction: ButtonInteraction, groupId: string) => {
+  const lock = await redlock.acquire([userLock(interaction.user)], 1000);
+  const lockGroup = await redlock.acquire([groupLock(groupId)], 1000);
+
+  try {
+    const [group, user] = await Promise.all([Group.findById(groupId), User.get(interaction.user)]);
+
+    if (group == null) {
+      throw new ResponseError('Group couldnt be found');
+    }
+
+    group.add(user);
+
+    await interaction.update({
+      embeds: [acceptEmbed(group)],
+      components: [],
+    });
+
+    await Promise.all([group.save(), user.save()]);
+  } catch (err) {
+    if (err instanceof ResponseError) {
+      interaction.reply({embeds: [warning(err.message)], ephemeral: true});
+      return;
+    }
+
+    Sentry.captureException(err);
+  } finally {
+    lock.release();
+    lockGroup.release();
+  }
+});

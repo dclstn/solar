@@ -5,14 +5,22 @@ import commands from '../../commands.js';
 import deposit from './deposit.js';
 import create from './create.js';
 import invite from './invite.js';
+import kick from './kick.js';
+import home from './home.js';
 
 commands.on(CommandNames.GROUP, (interaction: CommandInteraction) => {
   switch (interaction.options.getSubcommand()) {
+    case GroupSubCommandNames.HOME:
+      home(interaction);
+      break;
     case GroupSubCommandNames.DEPOSIT:
       deposit(interaction);
       break;
     case GroupSubCommandNames.INVITE:
       invite(interaction);
+      break;
+    case GroupSubCommandNames.KICK:
+      kick(interaction);
       break;
     case GroupSubCommandNames.CREATE:
     default:

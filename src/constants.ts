@@ -21,6 +21,7 @@ export const CommandNames = {
   LEADERBOARD: 'leaderboard',
   GAMES: 'games',
   ADMIN: 'admin',
+  MOVE: 'move',
 };
 
 export const AdminSubCommandNames = {
@@ -40,6 +41,8 @@ export const GroupSubCommandNames = {
   CREATE: 'create',
   DEPOSIT: 'deposit',
   INVITE: 'invite',
+  KICK: 'kick',
+  HOME: 'home',
 };
 
 export const LeaderbordSubCommands = {
@@ -75,6 +78,7 @@ export const CommandDescriptions = {
   [CommandNames.LEADERBOARD]: '🌏 View the rankings',
   [CommandNames.GAMES]: '🎮 Play a game',
   [CommandNames.ADMIN]: '🖥️ Admin-only commands',
+  [CommandNames.MOVE]: '📪 Move an item',
 };
 
 export const CommandOptions = {
@@ -84,7 +88,8 @@ export const CommandOptions = {
       description: 'Select the item you wish to buy',
       type: ApplicationCommandOptionTypes.STRING,
       required: true,
-      choices: BuyableItems.map(({id, name}) => ({name, value: id})),
+      autocomplete: true,
+      // choices: BuyableItems.map(({id, name}) => ({name, value: id})),
     },
     {
       name: 'amount',
@@ -121,6 +126,7 @@ export const CommandOptions = {
       description: 'Select the item you wish to buy',
       type: ApplicationCommandOptionTypes.STRING,
       required: true,
+      autocomplete: true,
     },
     {
       name: 'amount',
@@ -159,6 +165,11 @@ export const CommandOptions = {
   ],
   [CommandNames.GROUP]: [
     {
+      name: GroupSubCommandNames.HOME,
+      description: '🌎 View group',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
       name: GroupSubCommandNames.INVITE,
       description: '📬 Invite a user to your group',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
@@ -166,6 +177,19 @@ export const CommandOptions = {
         {
           name: 'user',
           description: 'Select the user you wish to invite',
+          type: ApplicationCommandOptionTypes.USER,
+          required: true,
+        },
+      ],
+    },
+    {
+      name: GroupSubCommandNames.KICK,
+      description: '🏈 Kick a user from the group',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'user',
+          description: 'Select the user you wish to kick',
           type: ApplicationCommandOptionTypes.USER,
           required: true,
         },

@@ -40,6 +40,7 @@ export interface UserInterface extends Mongoose.Document {
   getInventory(type: InventoryType): InventoryInterface;
   sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;
   deposit(group: GroupInterface, amount: number): void;
+  search(term): Fuse.default.FuseResult<Item>[];
   updateDoc(): void;
 }
 

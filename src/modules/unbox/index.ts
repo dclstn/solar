@@ -3,7 +3,6 @@ import {emoteStrings} from '../../utils/emotes.js';
 import {createSellButton, createUnboxButton} from '../../utils/buttons.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import {Item, Items, RarityColours} from '../../items.js';
-import {ItemTypes} from '../../utils/enums.js';
 import components from '../../components.js';
 import {MessageComponentIds} from '../../constants.js';
 import User from '../../database/user/index.js';
@@ -16,8 +15,6 @@ Price: ${emoteStrings.gem} **${numberWithCommas(item.price)}**
 Level: **${item.level}**
 Gems per hour: **${item.gph}/h**
 `;
-
-const GIFTS = Object.values(Items).filter(({type}) => type === ItemTypes.GIFT);
 
 async function unboxGift(interaction: ButtonInteraction, gift: Item) {
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
@@ -52,8 +49,7 @@ async function unboxGift(interaction: ButtonInteraction, gift: Item) {
   }
 }
 
-GIFTS.forEach((gift) =>
-  components.on(`${MessageComponentIds.UNBOX}.${gift.id}`, (interaction: ButtonInteraction) => {
-    unboxGift(interaction, gift);
-  })
-);
+components.on(MessageComponentIds.UNBOX, (interaction: ButtonInteraction, itemId: string) => {
+  const item = Items[itemId];
+  unboxGift(interaction, item);
+});

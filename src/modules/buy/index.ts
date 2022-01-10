@@ -1,7 +1,7 @@
-import {ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
+import {AutocompleteInteraction, ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
-import {findById, Item, Items} from '../../items.js';
+import {fuzzy, Item, Items} from '../../items.js';
 import commands from '../../commands.js';
 import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
 import User from '../../database/user/index.js';
@@ -10,6 +10,7 @@ import components from '../../components.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
+import autocomplete from '../../autocomplete.js';
 
 const NAV_ROW = new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON);
 
@@ -49,15 +50,26 @@ async function processPurchase(interaction: ButtonInteraction | CommandInteracti
 commands.on(CommandNames.BUY, (interaction: CommandInteraction) => {
   const itemId = interaction.options.getString('item');
   const amount = interaction.options.getNumber('amount') || 1;
-  const item = findById(itemId);
+  const item = Items[itemId];
   processPurchase(interaction, item, amount);
 });
 
-Object.values(Items).forEach((item) =>
-  components.on(`${MessageComponentIds.BUY}.${item.id}`, (interaction: ButtonInteraction) => {
-    processPurchase(interaction, item, 1);
-  })
-);
+components.on(MessageComponentIds.BUY, (interaction: ButtonInteraction, itemId: string) => {
+  const item = Items[itemId];
+  processPurchase(interaction, item, 1);
+});
+
+autocomplete.on(CommandNames.BUY, (interaction: AutocompleteInteraction) => {
+  const search = interaction.options.getString('item');
+  const results = fuzzy.search(search).splice(0, 25);
+
+  interaction.respond(
+    results.map((result) => ({
+      name: result.item.name,
+      value: result.item.id,
+    }))
+  );
+});
 
 commands.registerCommand({
   type: ApplicationCommandTypes.CHAT_INPUT,
