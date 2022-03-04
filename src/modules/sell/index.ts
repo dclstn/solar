@@ -63,10 +63,9 @@ components.on(MessageComponentIds.SELL, (interaction: ButtonInteraction, itemId:
   processSale(interaction, item, 1);
 });
 
-autocomplete.on(CommandNames.SELL, async (interaction: AutocompleteInteraction) => {
-  const user = await User.get(interaction.user);
+autocomplete.on(CommandNames.SELL, (interaction: AutocompleteInteraction) => {
   const search = interaction.options.getString('item');
-  const results = user.search(search).splice(0, 25);
+  const results = fuzzy.search(search).splice(0, 24);
 
   interaction.respond(
     results.map((result) => ({

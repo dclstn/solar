@@ -20,8 +20,6 @@ import {InventoryType} from '../../utils/enums.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {STORAGE_BUTTON, PROFILE_BUTTON, SHOP_BUTTON, createItemButton} from '../../utils/buttons.js';
 
-const GIFT = Items[ItemIds.GIFT];
-
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
 ${emoteStrings.gem} Gems: **${numberWithCommas(user.money)}**
@@ -56,7 +54,7 @@ function handleReply(
   embed: MessageEmbed,
   inventory: InventoryType
 ) {
-  const hasGift = user.has(GIFT);
+  const hasGift = user.has(Items[ItemIds.GIFT]);
   interaction.reply({
     ephemeral: true,
     embeds: [embed],
@@ -66,7 +64,7 @@ function handleReply(
             new MessageActionRow().addComponents(
               inventory === InventoryType.Main ? STORAGE_BUTTON : PROFILE_BUTTON,
               SHOP_BUTTON,
-              ...(hasGift ? [createItemButton(GIFT)] : [])
+              ...(hasGift ? [createItemButton(Items[ItemIds.GIFT])] : [])
             ),
           ],
         }
@@ -74,38 +72,37 @@ function handleReply(
   });
 }
 
-class Profile {
-  constructor() {
-    commands.on(CommandNames.PROFILE, this.handleCommand);
-    commands.on(UserCommandNames.PROFILE, this.handleCommand);
-    components.on(MessageComponentIds.PROFILE, (interaction) => this.handleButton(interaction, InventoryType.Main));
-    components.on(MessageComponentIds.STORAGE, (interaction) => this.handleButton(interaction, InventoryType.Storage));
-  }
-
-  async handleCommand(interaction: CommandInteraction) {
-    try {
-      const discordUser = interaction.options.getUser('user') || interaction.user;
-      const isPersonal = discordUser === interaction.user;
-      const inventory = interaction.options.getInteger('inventory') || InventoryType.Main;
-      const user = await UserModel.get(discordUser);
-      const embed = await createEmbed(user, inventory);
-      handleReply(user, interaction, isPersonal, embed, inventory);
-    } catch (err) {
-      Sentry.captureException(err);
-    }
-  }
-
-  async handleButton(interaction: ButtonInteraction, inventoryType: InventoryType) {
-    try {
-      const {user: discordUser} = interaction;
-      const user = await UserModel.get(discordUser);
-      const embed = await createEmbed(user, inventoryType);
-      handleReply(user, interaction, true, embed, inventoryType);
-    } catch (err) {
-      Sentry.captureException(err);
-    }
+async function handleCommand(interaction: CommandInteraction, inventoryType = InventoryType.Main) {
+  try {
+    const discordUser = interaction.options.getUser('user') || interaction.user;
+    const isPersonal = discordUser === interaction.user;
+    const inventory = interaction.options.getInteger('inventory') || inventoryType;
+    const user = await UserModel.get(discordUser);
+    const embed = await createEmbed(user, inventory);
+    handleReply(user, interaction, isPersonal, embed, inventory);
+  } catch (err) {
+    Sentry.captureException(err);
   }
 }
+
+async function handleButton(interaction: ButtonInteraction, inventoryType: InventoryType) {
+  try {
+    const {user: discordUser} = interaction;
+    const user = await UserModel.get(discordUser);
+    const embed = await createEmbed(user, inventoryType);
+    handleReply(user, interaction, true, embed, inventoryType);
+  } catch (err) {
+    Sentry.captureException(err);
+  }
+}
+
+commands.on(CommandNames.PROFILE, handleCommand);
+commands.on(UserCommandNames.PROFILE, handleCommand);
+components.on(MessageComponentIds.PROFILE, (interaction) => handleButton(interaction, InventoryType.Main));
+
+commands.on(CommandNames.STORAGE, (interaction) => handleCommand(interaction, InventoryType.Storage));
+commands.on(UserCommandNames.STORAGE, (interaction) => handleCommand(interaction, InventoryType.Storage));
+components.on(MessageComponentIds.STORAGE, (interaction) => handleButton(interaction, InventoryType.Storage));
 
 commands.registerCommand({
   type: ApplicationCommandTypes.CHAT_INPUT,
@@ -115,8 +112,18 @@ commands.registerCommand({
 });
 
 commands.registerCommand({
+  type: ApplicationCommandTypes.CHAT_INPUT,
+  name: CommandNames.STORAGE,
+  description: CommandDescriptions[CommandNames.STORAGE],
+  options: CommandOptions[CommandNames.STORAGE],
+});
+
+commands.registerCommand({
   type: ApplicationCommandTypes.USER,
   name: UserCommandNames.PROFILE,
 });
 
-export default new Profile();
+commands.registerCommand({
+  type: ApplicationCommandTypes.USER,
+  name: UserCommandNames.STORAGE,
+});

@@ -38,6 +38,7 @@
     "no-bitwise": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "no-throw-literal": 2,
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-restricted-syntax": "off"
   }
 }

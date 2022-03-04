@@ -1,10 +1,14 @@
-import {Interaction, MessageEmbed} from 'discord.js';
+/* eslint-disable no-console */
+import {Client, Interaction, MessageEmbed} from 'discord.js';
 import Mongoose from 'mongoose';
+import chalk from 'chalk';
+import commands, {Command} from '../../commands.js';
 import Sentry from '../../sentry.js';
 import client from '../../client.js';
 import Guild from '../../database/guild/index.js';
 import UserModel from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
+import App from '../../server.js';
 
 const WELCOME_EMBED = (user: UserInterface) =>
   new MessageEmbed()
@@ -66,3 +70,8 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     Sentry.captureException(err);
   }
 });
+
+commands.on('register', (command: Command) => console.log(`${chalk.green('[Commands]')} Registered ${command.name}`));
+
+// discord logging
+client.on('ready', (c: Client) => console.log(`${chalk.blue('[Discord]')} Connected on ${c.user.username}`));

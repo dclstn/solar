@@ -61,7 +61,7 @@ components.on(MessageComponentIds.BUY, (interaction: ButtonInteraction, itemId: 
 
 autocomplete.on(CommandNames.BUY, (interaction: AutocompleteInteraction) => {
   const search = interaction.options.getString('item');
-  const results = fuzzy.search(search).splice(0, 25);
+  const results = fuzzy.search(search).splice(0, 24);
 
   interaction.respond(
     results.map((result) => ({

@@ -22,6 +22,7 @@ export const CommandNames = {
   GAMES: 'games',
   ADMIN: 'admin',
   MOVE: 'move',
+  STORAGE: 'storage',
 };
 
 export const AdminSubCommandNames = {
@@ -61,6 +62,7 @@ export const SortCommandNames = {
 
 export const UserCommandNames = {
   PROFILE: 'View Profile',
+  STORAGE: 'View Storage',
   GROUP: 'View Group',
   RAID: 'Start Raid',
 };
@@ -69,6 +71,7 @@ export const CommandDescriptions = {
   [CommandNames.BUY]: '🛍️ Buy an item for your inventory',
   [CommandNames.PING]: '🏓 Replies with pong',
   [CommandNames.PROFILE]: "🔎 Return a user's profile",
+  [CommandNames.STORAGE]: "🔎 Return a user's storage",
   [CommandNames.SELL]: '🛍️ Sell an item from your inventory',
   [CommandNames.SHOP]: '🛍️ Browse the buyable items',
   [CommandNames.ITEM]: '🔎 Inspect an item',
@@ -99,6 +102,28 @@ export const CommandOptions = {
     },
   ],
   [CommandNames.PROFILE]: [
+    {
+      name: 'user',
+      description: "Inspect a selected user's profile",
+      type: ApplicationCommandOptionTypes.USER,
+    },
+    {
+      name: 'inventory',
+      description: "Select which inventory you'd like to inspect",
+      type: ApplicationCommandOptionTypes.INTEGER,
+      choices: [
+        {
+          name: 'Main',
+          value: InventoryType.Main,
+        },
+        {
+          name: 'Storage',
+          value: InventoryType.Storage,
+        },
+      ],
+    },
+  ],
+  [CommandNames.STORAGE]: [
     {
       name: 'user',
       description: "Inspect a selected user's profile",
@@ -284,6 +309,7 @@ export const CommandOptions = {
           description: 'Select an item to give',
           type: ApplicationCommandOptionTypes.STRING,
           required: true,
+          autocomplete: true,
         },
         {
           name: 'amount',

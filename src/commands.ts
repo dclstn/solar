@@ -6,7 +6,7 @@ import Sentry from './sentry.js';
 import rest from './rest.js';
 import client from './client.js';
 
-interface Command {
+export interface Command {
   type: number;
   name: string;
   description?: string;
@@ -45,6 +45,8 @@ class Commands extends EventEmitter {
     if (this.commands.has(command.name)) {
       throw new Error(`Command name '${command.name}' is already registered.`);
     }
+
+    this.emit('register', command);
 
     this.commands.set(command.name, command);
   }

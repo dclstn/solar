@@ -1,10 +1,26 @@
-import {CommandInteraction} from 'discord.js';
-import {findById} from '../../items.js';
+import {AutocompleteInteraction, CommandInteraction} from 'discord.js';
+import {findById, fuzzy} from '../../items.js';
 import ResponseError from '../../utils/error.js';
 import {success, warning} from '../../utils/embed.js';
 import Sentry from '../../sentry.js';
 import User from '../../database/user/index.js';
 import redlock, {userLock} from '../../redis/locks.js';
+import autocomplete from '../../autocomplete.js';
+import {CommandNames, AdminSubCommandNames} from '../../constants.js';
+
+autocomplete.on(CommandNames.ADMIN, (interaction: AutocompleteInteraction) => {
+  if (interaction.options.getSubcommand() !== AdminSubCommandNames.GIVE) return;
+
+  const search = interaction.options.getString('item');
+  const results = fuzzy.search(search).splice(0, 24);
+
+  interaction.respond(
+    results.map((result) => ({
+      name: result.item.name,
+      value: result.item.id,
+    }))
+  );
+});
 
 export default async function giveItem(interaction: CommandInteraction) {
   const discordUser = interaction.options.getUser('user');

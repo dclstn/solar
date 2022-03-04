@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import glob from 'glob';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import fastifyJwt from 'fastify-jwt';
 import {FastifyReply} from 'fastify';
+import chalk from 'chalk';
 import App from './server.js';
 import Sentry from './sentry.js';
 
@@ -17,7 +19,6 @@ const PORT = 8000;
   try {
     await mongoose.connect(process.env.MONGO_URI);
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(err);
     process.exit(1);
   }
@@ -27,12 +28,12 @@ const PORT = 8000;
       process.exit(1);
     }
 
-    try {
-      await Promise.all(files.map((file: string) => import(`../${file}`)));
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      process.exit(1);
+    for await (const file of files) {
+      try {
+        await import(`../${file}`);
+      } catch (moduleErr) {
+        Sentry.captureException(moduleErr);
+      }
     }
   });
 
@@ -55,14 +56,13 @@ const PORT = 8000;
     reply.status(500).send({error: 'Something went wrong'});
   });
 
-  return; // remove when website is up
-
   App.listen(PORT, (error) => {
     if (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
       process.exit(1);
     }
+
+    console.log(`${chalk.grey('[Fastify]')} Listening on port ${PORT}`);
 
     Sentry.addBreadcrumb({
       category: 'server',
