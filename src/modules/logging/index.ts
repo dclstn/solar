@@ -8,7 +8,6 @@ import client from '../../client.js';
 import Guild from '../../database/guild/index.js';
 import UserModel from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
-import App from '../../server.js';
 
 const WELCOME_EMBED = (user: UserInterface) =>
   new MessageEmbed()
