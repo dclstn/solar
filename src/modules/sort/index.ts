@@ -3,7 +3,7 @@ import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import Sentry from '../../sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import {CommandNames, CommandDescriptions, CommandOptions, SortCommandNames} from '../../constants.js';
-import commands from '../../commands.js';
+import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
 import {findById} from '../../items.js';
 import {success} from '../../utils/embed.js';

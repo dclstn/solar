@@ -5,7 +5,7 @@ import {success, warning} from '../../utils/embed.js';
 import Sentry from '../../sentry.js';
 import User from '../../database/user/index.js';
 import redlock, {userLock} from '../../redis/locks.js';
-import autocomplete from '../../autocomplete.js';
+import autocomplete from '../../interactions/autocomplete.js';
 import {CommandNames, AdminSubCommandNames} from '../../constants.js';
 
 autocomplete.on(CommandNames.ADMIN, (interaction: AutocompleteInteraction) => {

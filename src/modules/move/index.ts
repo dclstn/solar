@@ -1,7 +1,7 @@
 import {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
-import commands from '../../commands.js';
+import commands from '../../interactions/commands.js';
 
 commands.on(CommandNames.MOVE, (interaction: CommandInteraction) => {
   interaction.reply('WIP');

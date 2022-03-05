@@ -7,7 +7,7 @@ import User from '../../database/user/index.js';
 import Sentry from '../../sentry.js';
 import ResponseError from '../../utils/error.js';
 import type {GroupInterface} from '../../types/group.js';
-import components from '../../components.js';
+import components from '../../interactions/components.js';
 import {MessageComponentIds} from '../../constants.js';
 import Group from '../../database/group/index.js';
 import redlock, {userLock, groupLock} from '../../redis/locks.js';

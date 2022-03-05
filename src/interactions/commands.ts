@@ -2,9 +2,9 @@ import type {CommandInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Routes} from 'discord-api-types/v9';
 import {Context} from '@sentry/types';
-import Sentry from './sentry.js';
-import rest from './rest.js';
-import client from './client.js';
+import Sentry from '../sentry.js';
+import rest from '../rest.js';
+import client from '../client.js';
 
 export interface Command {
   type: number;

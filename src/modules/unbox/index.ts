@@ -3,7 +3,7 @@ import {emoteStrings} from '../../utils/emotes.js';
 import {createSellButton, createUnboxButton} from '../../utils/buttons.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import {Item, Items, RarityColours} from '../../items.js';
-import components from '../../components.js';
+import components from '../../interactions/components.js';
 import {MessageComponentIds} from '../../constants.js';
 import User from '../../database/user/index.js';
 import ResponseError from '../../utils/error.js';

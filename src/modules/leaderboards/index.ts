@@ -1,5 +1,5 @@
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import commands from '../../commands.js';
+import commands from '../../interactions/commands.js';
 import {
   CommandDescriptions,
   CommandNames,
@@ -9,7 +9,7 @@ import {
 } from '../../constants.js';
 import localLeaderboard from './local.js';
 import globalLeaderboard from './global.js';
-import components from '../../components.js';
+import components from '../../interactions/components.js';
 
 commands.on(CommandNames.LEADERBOARD, (interaction) => {
   switch (interaction.options.getSubcommand()) {

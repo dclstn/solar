@@ -10,10 +10,10 @@ import {
   MessageComponentIds,
   Defaults,
 } from '../../constants.js';
-import commands from '../../commands.js';
+import commands from '../../interactions/commands.js';
 import UserModel from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
-import components from '../../components.js';
+import components from '../../interactions/components.js';
 import Sentry from '../../sentry.js';
 import {findById, ItemIds, Items} from '../../items.js';
 import {InventoryType} from '../../utils/enums.js';

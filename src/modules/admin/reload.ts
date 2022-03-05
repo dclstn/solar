@@ -1,6 +1,6 @@
 import type {CommandInteraction} from 'discord.js';
 import {success} from '../../utils/embed.js';
-import commands from '../../commands.js';
+import commands from '../../interactions/commands.js';
 import Sentry from '../../sentry.js';
 
 export default async function reload(interaction: CommandInteraction) {

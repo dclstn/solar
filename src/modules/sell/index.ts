@@ -1,16 +1,16 @@
 import {AutocompleteInteraction, ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import redlock, {userLock} from '../../redis/locks.js';
-import components from '../../components.js';
+import components from '../../interactions/components.js';
 import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../constants.js';
 import {fuzzy, Item, Items} from '../../items.js';
-import commands from '../../commands.js';
+import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
 import {sale, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
 import {PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
-import autocomplete from '../../autocomplete.js';
+import autocomplete from '../../interactions/autocomplete.js';
 
 const NAV_ROW = new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON);
 

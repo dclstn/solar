@@ -1,6 +1,6 @@
 import {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import commands from '../../commands.js';
+import commands from '../../interactions/commands.js';
 import {CommandNames, CommandDescriptions, CommandOptions, GameSubCommandNames} from '../../constants.js';
 import rollDice from './roll.js';
 
