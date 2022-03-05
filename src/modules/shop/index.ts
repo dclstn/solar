@@ -1,4 +1,4 @@
-import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageButton, MessageEmbed} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import chunk from 'lodash.chunk';
 import {CommandNames, CommandDescriptions, CommandOptions, Defaults, MessageComponentIds} from '../../constants.js';
