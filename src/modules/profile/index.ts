@@ -56,7 +56,7 @@ function handleReply(
 ) {
   const hasGift = user.has(Items[ItemIds.GIFT]);
   interaction.reply({
-    ephemeral: true,
+    ephemeral: false,
     embeds: [embed],
     ...(isPersonal
       ? {
