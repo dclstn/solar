@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import glob from 'glob';
+import Discord from 'discord.js';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import fastifyJwt from 'fastify-jwt';
@@ -15,27 +15,25 @@ import userRoute from './routes/user/index.js';
 dotenv.config();
 const PORT = 8000;
 
+const manager = new Discord.ShardingManager('./dist/app.js', {
+  totalShards: 'auto',
+  token: process.env.DISCORD_TOKEN,
+});
+
+manager.on('shardCreate', (shard) => {
+  console.log(`${chalk.cyan(`[Shards]`)} Launched shard ${shard.id}`);
+});
+
 (async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
+    console.log(`${chalk.green('[MongoDB]')} Connected`);
   } catch (err) {
     console.error(err);
     process.exit(1);
   }
 
-  glob('./dist/modules/**/index.js', async (err: Error, files: [string]) => {
-    if (err) {
-      process.exit(1);
-    }
-
-    for await (const file of files) {
-      try {
-        await import(`../${file}`);
-      } catch (moduleErr) {
-        Sentry.captureException(moduleErr);
-      }
-    }
-  });
+  manager.spawn();
 
   App.register(fastifyJwt, {secret: process.env.JWT_SECRET});
 
