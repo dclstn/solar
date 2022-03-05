@@ -1,7 +1,7 @@
 import {MessageEmbed} from 'discord.js';
 import table from 'text-table';
 import client from '../client.js';
-import {Item} from '../items.js';
+import {Item} from './items.js';
 import {emoteStrings} from './emotes.js';
 
 export function numberWithCommas(x: number): string {

@@ -1,6 +1,6 @@
 import {ButtonInteraction, ColorResolvable, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import {numberWithCommas} from '../../utils/embed.js';
-import {Item, RarityColours} from '../../items.js';
+import {Item, RarityColours} from '../../utils/items.js';
 import User from '../../database/user/index.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import type {UserInterface} from '../../types/user.js';

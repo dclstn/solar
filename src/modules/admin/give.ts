@@ -1,5 +1,5 @@
 import {AutocompleteInteraction, CommandInteraction} from 'discord.js';
-import {findById, fuzzy} from '../../items.js';
+import {findById, fuzzy} from '../../utils/items.js';
 import ResponseError from '../../utils/error.js';
 import {success, warning} from '../../utils/embed.js';
 import Sentry from '../../sentry.js';

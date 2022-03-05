@@ -2,7 +2,7 @@ import {ButtonInteraction, CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
 import commands from '../../interactions/commands.js';
-import {findById, Item, Items} from '../../items.js';
+import {findById, Item, Items} from '../../utils/items.js';
 import {ItemTypes} from '../../utils/enums.js';
 import components from '../../interactions/components.js';
 import handleGenerator from './generator.js';

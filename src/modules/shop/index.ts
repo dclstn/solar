@@ -3,7 +3,7 @@ import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import chunk from 'lodash.chunk';
 import {CommandNames, CommandDescriptions, CommandOptions, Defaults, MessageComponentIds} from '../../constants.js';
 import commands from '../../interactions/commands.js';
-import {BuyableItems, Item} from '../../items.js';
+import {BuyableItems, Item} from '../../utils/items.js';
 import components from '../../interactions/components.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {createItemButton} from '../../utils/buttons.js';

@@ -1,6 +1,6 @@
 import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
 import {InventoryType} from './utils/enums.js';
-import {BuyableItems, Items} from './items.js';
+import {BuyableItems, Items} from './utils/items.js';
 
 export const Defaults = {
   MAX_SLOTS: 36,

@@ -4,7 +4,7 @@ import flatten from 'lodash.flatten';
 import uniqby from 'lodash.uniqby';
 import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
-import {Chances, Item, ItemRarities, Items} from '../../items.js';
+import {Chances, Item, ItemRarities, Items} from '../../utils/items.js';
 import type {InventoryInterface} from '../../types/user.js';
 import type {ItemInterface} from '../../types/item.js';
 import type {GroupInterface} from '../../types/group.js';

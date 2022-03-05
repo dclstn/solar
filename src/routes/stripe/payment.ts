@@ -1,5 +1,5 @@
 import {PaymentIds} from '../../constants.js';
-import {Items, ItemIds} from '../../items.js';
+import {Items, ItemIds} from '../../utils/items.js';
 import User from '../../database/user/index.js';
 import client from '../../client.js';
 import {success} from '../../utils/embed.js';

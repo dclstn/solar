@@ -3,7 +3,7 @@ import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import redlock, {userLock} from '../../redis/locks.js';
 import components from '../../interactions/components.js';
 import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../constants.js';
-import {fuzzy, Item, Items} from '../../items.js';
+import {fuzzy, Item, Items} from '../../utils/items.js';
 import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
 import {sale, warning} from '../../utils/embed.js';

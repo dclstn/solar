@@ -1,5 +1,5 @@
 import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
-import {Chances, Item} from '../../items.js';
+import {Chances, Item} from '../../utils/items.js';
 import User from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
 import Sentry from '../../sentry.js';

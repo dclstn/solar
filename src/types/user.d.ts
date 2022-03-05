@@ -1,7 +1,7 @@
 import {User} from 'discord.js';
 import Mongoose from 'mongoose';
 import {InventoryType} from '../utils/enums.js';
-import {Item} from '../items.js';
+import {Item} from '../utils/items.js';
 import type {GroupInterface} from './group.js';
 import type {ItemInterface, Cords} from './item.js';
 

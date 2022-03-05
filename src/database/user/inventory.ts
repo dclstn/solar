@@ -1,5 +1,5 @@
 import {Defaults} from '../../constants.js';
-import {findById, Item} from '../../items.js';
+import {findById, Item} from '../../utils/items.js';
 import type {Cords, ItemInterface} from '../../types/item.js';
 
 const o = Math.sqrt(Defaults.MAX_SLOTS);

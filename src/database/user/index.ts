@@ -8,7 +8,7 @@ import inventory from './inventory.js';
 import type {InventoryInterface, UserInterface, UserModelInterface} from '../../types/user.js';
 import {InventoryType} from '../../utils/enums.js';
 import {Defaults} from '../../constants.js';
-import {Items} from '../../items.js';
+import {Items} from '../../utils/items.js';
 
 const max = Math.sqrt(Defaults.MAX_SLOTS);
 

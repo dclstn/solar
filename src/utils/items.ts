@@ -1,6 +1,6 @@
 import moment from 'moment';
 import Fuse from 'fuse.js';
-import {ItemTypes} from './utils/enums.js';
+import {ItemTypes} from './enums.js';
 
 const month = moment(new Date(), 'YYYY/MM/DD').format('M');
 

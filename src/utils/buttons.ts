@@ -1,5 +1,5 @@
 import {MessageButton} from 'discord.js';
-import {Item} from '../items.js';
+import {Item} from './items.js';
 import {MessageComponentIds} from '../constants.js';
 import {emoteIds} from './emotes.js';
 import {ItemTypes} from './enums.js';

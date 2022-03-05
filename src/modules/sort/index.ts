@@ -5,7 +5,7 @@ import redlock, {userLock} from '../../redis/locks.js';
 import {CommandNames, CommandDescriptions, CommandOptions, SortCommandNames} from '../../constants.js';
 import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
-import {findById} from '../../items.js';
+import {findById} from '../../utils/items.js';
 import {success} from '../../utils/embed.js';
 
 class Sort {
