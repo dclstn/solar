@@ -1,5 +1,6 @@
 import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
+import connection from '../connection.js';
 import type {ItemInterface} from '../../types/item.js';
 import * as statics from './statics.js';
 import * as methods from './methods.js';
@@ -97,4 +98,4 @@ UserSchema.post('aggregate', function postCallback(docs, next) {
   next();
 });
 
-export default Mongoose.model<UserInterface, UserModelInterface>('User', UserSchema);
+export default connection.model<UserInterface, UserModelInterface>('User', UserSchema);

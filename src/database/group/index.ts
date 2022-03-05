@@ -1,4 +1,5 @@
 import Mongoose from 'mongoose';
+import connection from '../connection.js';
 import type {GroupInterface, GroupModelInterface} from '../../types/group.js';
 import {Roles} from '../../utils/enums.js';
 import * as methods from './methods.js';
@@ -26,4 +27,4 @@ const GroupSchema: Mongoose.Schema = new Mongoose.Schema<GroupInterface>({
 GroupSchema.methods = methods;
 GroupSchema.statics = statics;
 
-export default Mongoose.model<GroupInterface, GroupModelInterface>('Group', GroupSchema);
+export default connection.model<GroupInterface, GroupModelInterface>('Group', GroupSchema);

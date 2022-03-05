@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import Discord from 'discord.js';
 import * as dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import fastifyJwt from 'fastify-jwt';
 import {FastifyReply} from 'fastify';
 import chalk from 'chalk';
@@ -25,15 +24,7 @@ manager.on('shardCreate', (shard) => {
 });
 
 (async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log(`${chalk.green('[MongoDB]')} Connected`);
-  } catch (err) {
-    console.error(err);
-    process.exit(1);
-  }
-
-  manager.spawn();
+  await manager.spawn(); // affirm the bot comes online
 
   App.register(fastifyJwt, {secret: process.env.JWT_SECRET});
 

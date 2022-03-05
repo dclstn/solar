@@ -1,5 +1,6 @@
 import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
+import connection from '../connection.js';
 import type {GuildInterface} from '../../types/guild';
 
 mongooseLong(Mongoose);
@@ -14,4 +15,4 @@ const GuildSchema: Mongoose.Schema = new Mongoose.Schema<GuildInterface>({
   users: [{type: Mongoose.Schema.Types.ObjectId, ref: 'User'}],
 });
 
-export default Mongoose.model<GuildInterface>('Guild', GuildSchema);
+export default connection.model<GuildInterface>('Guild', GuildSchema);
