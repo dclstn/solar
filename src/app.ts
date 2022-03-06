@@ -2,7 +2,7 @@ import glob from 'glob';
 import client from './client.js';
 import Sentry from './sentry.js';
 
-client.on('ready', () => {
+client.once('ready', () => {
   glob('./dist/modules/**/index.js', async (err: Error, files: [string]) => {
     if (err) {
       process.exit(1);
