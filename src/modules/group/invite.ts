@@ -20,6 +20,13 @@ const acceptEmbed = (group: GroupInterface) =>
 
 export default async function invite(interaction: CommandInteraction) {
   try {
+    interaction.reply({
+      embeds: [success(`Inviting to groups is currently disabled, stay tuned`)],
+      ephemeral: true,
+    });
+
+    return;
+
     const discordInvitee = interaction.options.getUser('user');
 
     if (discordInvitee.id === interaction.user.id) {
