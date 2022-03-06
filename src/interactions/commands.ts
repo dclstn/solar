@@ -46,12 +46,10 @@ class Commands extends EventEmitter {
       throw new Error(`Command name '${command.name}' is already registered.`);
     }
 
-    this.emit('register', command);
-
     this.commands.set(command.name, command);
   }
 
-  async reloadApplicationCommands(): Promise<void> {
+  async reloadApplicationCommands(global = false): Promise<void> {
     const commands = Array.from(this.commands.values()).map((command: Command) => ({
       type: command.type,
       name: command.name,
@@ -59,7 +57,11 @@ class Commands extends EventEmitter {
       options: command.options,
     }));
 
-    await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID), {body: commands});
+    if (global) {
+      await rest.put(Routes.applicationCommands(client.user.id), {body: commands});
+    } else {
+      await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID), {body: commands});
+    }
 
     Sentry.addBreadcrumb({
       category: 'commands',

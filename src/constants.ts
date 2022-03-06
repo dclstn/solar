@@ -287,6 +287,14 @@ export const CommandOptions = {
       name: AdminSubCommandNames.RELOAD,
       description: 'Reload application commands',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'global',
+          description: 'Set global application commands',
+          type: ApplicationCommandOptionTypes.BOOLEAN,
+          required: true,
+        },
+      ],
     },
     {
       name: AdminSubCommandNames.MIGRATE,

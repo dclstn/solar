@@ -1,13 +1,8 @@
-/* eslint-disable no-console */
-import chalk from 'chalk';
 import glob from 'glob';
 import client from './client.js';
 import Sentry from './sentry.js';
 
-client.on('ready', (c) => {
-  // eslint-disable-next-line no-console
-  console.log(`${chalk.blue('[Discord]')} Connected on ${c.user.username}`);
-
+client.on('ready', () => {
   glob('./dist/modules/**/index.js', async (err: Error, files: [string]) => {
     if (err) {
       process.exit(1);

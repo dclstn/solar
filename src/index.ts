@@ -20,6 +20,10 @@ const manager = new Discord.ShardingManager('./dist/app.js', {
 });
 
 manager.on('shardCreate', (shard) => {
+  shard.on('error', (error: Error) => {
+    Sentry.captureException(error);
+  });
+
   console.log(`${chalk.cyan(`[Shards]`)} Launched shard ${shard.id}`);
 });
 
