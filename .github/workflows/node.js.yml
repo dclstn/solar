@@ -35,4 +35,4 @@ jobs:
           echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
           cat .env
       - name: PM2 Restart
-        run: pm2 restart castlemania
+        run: pm2 restart castle-mania
