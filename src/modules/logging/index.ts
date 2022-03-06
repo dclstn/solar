@@ -23,6 +23,10 @@ We apoligize for any innconvience this has caused, but we feel it was a nessecar
 
 client.on('interactionCreate', async (interaction: Interaction) => {
   try {
+    if (interaction.guild == null) {
+      return;
+    }
+
     const [guild, user] = await Promise.all([
       Guild.findOneAndUpdate(
         {
