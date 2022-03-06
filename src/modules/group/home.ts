@@ -17,6 +17,11 @@ export default async function home(interaction: CommandInteraction) {
   try {
     const id = interaction.user.id as unknown as Mongoose.Schema.Types.Long;
     const user = await User.findOne({discordId: id}).populate('group');
+
+    if (user == null) {
+      throw new ResponseError('Invalid user');
+    }
+
     await user.group.populate('users.user');
 
     const embed = new MessageEmbed()
