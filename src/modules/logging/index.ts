@@ -49,7 +49,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
       // Remove this at a later date
       try {
-        interaction.user.send({embeds: [WELCOME_EMBED(user)]});
+        await interaction.user.send({embeds: [WELCOME_EMBED(user)]});
         // eslint-disable-next-line no-empty
       } catch (_) {}
 
