@@ -20,6 +20,10 @@ class Commands extends EventEmitter {
     super();
     this.commands = new Map();
 
+    setTimeout(() => {
+      this.reloadApplicationCommands();
+    }, 10000);
+
     client.on('interactionCreate', (interaction: CommandInteraction) => {
       if (!interaction.isApplicationCommand()) return;
 
