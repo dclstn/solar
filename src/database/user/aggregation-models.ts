@@ -7,7 +7,7 @@ const TopUserMoneySchema = new Mongoose.Schema<TopGemsUserInterface>({
   discordId: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
   username: {type: String, required: true},
   avatar: {type: String, required: false},
-  money: {type: Number, default: 10000, min: 0},
+  money: {type: Number, default: 3, min: 0},
 });
 
 export const TopUserMoneyModel = connection.model<TopGemsUserInterface>(

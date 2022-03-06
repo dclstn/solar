@@ -57,7 +57,7 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
   avatar: {type: String, default: null},
   flags: {type: Number, required: false, default: 0},
   exp: {type: Number, default: 0, min: 0},
-  money: {type: Number, default: 10000, min: 0},
+  money: {type: Number, default: 3, min: 0},
   email: {type: String},
   locale: {type: String, default: 'en-GB'},
   colour: {type: String},
