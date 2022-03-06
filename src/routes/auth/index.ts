@@ -1,6 +1,7 @@
 import oauth2 from 'fastify-oauth2';
 import dotenv from 'dotenv';
 import axios from 'axios';
+import isProd from '../../utils/enviroment.js';
 import User from '../../database/user/index.js';
 
 dotenv.config();
@@ -17,7 +18,7 @@ export default (fastify, opts, done) => {
     },
     scope: ['identify', 'email'],
     startRedirectPath: '/auth/discord',
-    callbackUri: 'http://localhost:3000/discord/callback',
+    callbackUri: isProd() ? 'https://castlemania.bot/discord/callback' : 'http://localhost:3000/discord/callback',
   });
 
   fastify.get('/auth/discord/callback', async (request, response) => {
