@@ -15,7 +15,7 @@ export default (fastify, opts, done) => {
     }
   );
 
-  fastify.get('hello', (req, rep: FastifyReply) => {
+  fastify.get('/api/hello', (req, rep: FastifyReply) => {
     rep.send('Hello!');
   });
 
