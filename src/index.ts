@@ -46,7 +46,7 @@ manager.on('shardCreate', (shard) => {
 
   App.setErrorHandler(async (error, request, reply) => {
     Sentry.captureException(error);
-    reply.status(500).send(error.message);
+    reply.status(500).send({message: 'something went wrong'});
   });
 
   App.listen(PORT, (error) => {

@@ -121,7 +121,12 @@ export function totalFree() {
 }
 
 export function updateDoc() {
-  const diffMinutes = moment(new Date()).diff(moment(this.updated), 'minutes');
+  let diffMinutes = moment(new Date()).diff(moment(this.updated), 'minutes');
+
+  if (diffMinutes >= 1440) {
+    diffMinutes = 1440;
+  }
+
   const earned = (this.getInventory(InventoryType.Main).gph() / 60) * diffMinutes;
 
   this.set('money', this.money + earned);
