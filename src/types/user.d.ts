@@ -54,4 +54,5 @@ export interface TopGemsUserInterface extends Mongoose.Document {
 export interface UserModelInterface extends Mongoose.Model<UserInterface> {
   get(user: User, email?: string, locale?: string): Promise<UserInterface>;
   getById(discordId: string, email?: string, locale?: string): Promise<UserInterface>;
+  upsert(id: string, email?: string, locale?: string): void;
 }

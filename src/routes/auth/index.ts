@@ -31,7 +31,7 @@ export default (fastify, opts, done) => {
       },
     });
 
-    await User.getById(data.id, data.email, data.locale);
+    await User.upsert(data.id, data.email, data.locale);
 
     const {id, username, locale} = data;
     const jwtToken = fastify.jwt.sign({id, username, locale});
