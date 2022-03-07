@@ -66,10 +66,10 @@ export const createSellButton = (user: UserInterface, item: Item) =>
     .setStyle('DANGER')
     .setDisabled(!user.has(item));
 
-export const createBuyButton = (user: UserInterface, item: Item) =>
+export const createBuyButton = (user: UserInterface, item: Item, text?: string) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.BUY}.${item.id}`)
-    .setLabel(`Buy for ${numberWithCommas(item.price)}`)
+    .setLabel(text != null ? text : `Buy for ${numberWithCommas(item.price)}`)
     .setStyle('SUCCESS')
     .setEmoji(emoteIds.gem)
     .setDisabled(!item.buyable || item.price > user.money);

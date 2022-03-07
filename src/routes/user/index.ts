@@ -10,7 +10,7 @@ export default (fastify, opts, done) => {
     async (request: FastifyRequest, response: FastifyReply) => {
       const user = request.user as jwtTokenInterface;
       const id = user.id as unknown as Mongoose.Schema.Types.Long;
-      const dbUser = await User.findOne({discordId: id}).select('username avatar').lean();
+      const dbUser = await User.findOne({discordId: id}).select('username avatar money').lean();
       response.send({user: dbUser});
     }
   );
