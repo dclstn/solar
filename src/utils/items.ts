@@ -273,7 +273,7 @@ const BaseItems = {
     emojiId: '768521388754862110',
     id: ItemIds.MYSTIC,
     level: 16,
-    buyable: true,
+    buyable: false,
     animated: true,
   },
   [ItemIds.BLUE_DIAMOND]: {
@@ -283,7 +283,7 @@ const BaseItems = {
     emojiId: '771335875220602900',
     id: ItemIds.BLUE_DIAMOND,
     level: 17,
-    buyable: true,
+    buyable: false,
     animated: true,
   },
   [ItemIds.RED_DIAMOND]: {
@@ -293,7 +293,7 @@ const BaseItems = {
     emojiId: '775288572595929099',
     id: ItemIds.RED_DIAMOND,
     level: 18,
-    buyable: true,
+    buyable: false,
     animated: true,
   },
   [ItemIds.TORTOISE]: {
@@ -303,7 +303,7 @@ const BaseItems = {
     emojiId: '772311731556843570',
     id: ItemIds.TORTOISE,
     level: 19,
-    buyable: true,
+    buyable: false,
     animated: true,
   },
   [ItemIds.BURNING]: {
@@ -313,7 +313,7 @@ const BaseItems = {
     emojiId: '779853678021836830',
     id: ItemIds.BURNING,
     level: 20,
-    buyable: true,
+    buyable: false,
     animated: true,
   },
   [ItemIds.SCORCHING]: {
@@ -323,7 +323,7 @@ const BaseItems = {
     emojiId: '779853678295121930',
     id: ItemIds.SCORCHING,
     level: 21,
-    buyable: true,
+    buyable: false,
     animated: true,
   },
   [ItemIds.RGB]: {
@@ -333,7 +333,7 @@ const BaseItems = {
     emojiId: '778186833557323786',
     id: ItemIds.RGB,
     level: 22,
-    buyable: true,
+    buyable: false,
     animated: true,
   },
   [ItemIds.OMEGA]: {
@@ -343,7 +343,7 @@ const BaseItems = {
     emojiId: '802954138702053416',
     id: ItemIds.OMEGA,
     level: 23,
-    buyable: true,
+    buyable: false,
     animated: true,
   },
   [ItemIds.GIFT]: {
