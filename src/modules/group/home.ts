@@ -18,7 +18,7 @@ export default async function home(interaction: CommandInteraction) {
     const id = interaction.user.id as unknown as Mongoose.Schema.Types.Long;
     const user = await User.findOne({discordId: id}).populate('group');
 
-    if (user == null) {
+    if (user?.group == null) {
       throw new ResponseError('Invalid user');
     }
 
