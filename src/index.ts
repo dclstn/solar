@@ -40,7 +40,7 @@ manager.on('shardCreate', (shard) => {
     try {
       await request.jwtVerify();
     } catch (err) {
-      response.send(err);
+      response.status(401).send('Unauthorized');
     }
   });
 
