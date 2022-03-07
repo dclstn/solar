@@ -403,6 +403,6 @@ export const MessageComponentIds = {
 
 export const PaymentIds = {
   GIFTS: {
-    FIVE: 'price_1KCX64BLF5bK8rcnfwhOTRGy',
+    FIVE: 'price_1KCXF9BLF5bK8rcnkKuXuMRt',
   },
 };

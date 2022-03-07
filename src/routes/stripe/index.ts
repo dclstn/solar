@@ -9,26 +9,26 @@ dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_KEY, {apiVersion: '2020-08-27'});
 
 export default (fastify, opts, done) => {
-  fastify.post(
-    '/api/create-checkout-session',
-    {preValidation: [fastify.authenticate]},
-    async (request, response: FastifyReply) => {
-      const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price: PaymentIds.GIFTS.FIVE,
-            quantity: 1,
-          },
-        ],
-        client_reference_id: request.user.id,
-        mode: 'payment',
-        success_url: 'http://localhost:3000/payment/success',
-        cancel_url: 'http://localhost:3000/payment/cancel',
-      });
+  // fastify.post(
+  //   '/api/create-checkout-session',
+  //   {preValidation: [fastify.authenticate]},
+  //   async (request, response: FastifyReply) => {
+  //     const session = await stripe.checkout.sessions.create({
+  //       line_items: [
+  //         {
+  //           price: PaymentIds.GIFTS.FIVE,
+  //           quantity: 1,
+  //         },
+  //       ],
+  //       client_reference_id: request.user.id,
+  //       mode: 'payment',
+  //       success_url: 'http://localhost:3000/payment/success',
+  //       cancel_url: 'http://localhost:3000/payment/cancel',
+  //     });
 
-      response.send({url: session.url});
-    }
-  );
+  //     response.send({url: session.url});
+  //   }
+  // );
 
   fastify.addContentTypeParser('application/json', {parseAs: 'buffer'}, (_req, body, next) => {
     try {
