@@ -188,6 +188,49 @@ export const CommandOptions = {
       type: ApplicationCommandOptionTypes.NUMBER,
     },
   ],
+  [CommandNames.MOVE]: [
+    {
+      name: 'item',
+      description: 'Select an item to move',
+      type: ApplicationCommandOptionTypes.STRING,
+      required: true,
+      choices: Object.values(Items)
+        .slice(0, 25)
+        .map(({id, name}) => ({name, value: id})),
+    },
+    {
+      name: 'from',
+      description: "Select which inventory you'd like to move from",
+      type: ApplicationCommandOptionTypes.INTEGER,
+      choices: [
+        {
+          name: 'Main',
+          value: InventoryType.Main,
+        },
+        {
+          name: 'Storage',
+          value: InventoryType.Storage,
+        },
+      ],
+      required: true,
+    },
+    {
+      name: 'to',
+      description: "Select which inventory you'd like to move to",
+      type: ApplicationCommandOptionTypes.INTEGER,
+      choices: [
+        {
+          name: 'Main',
+          value: InventoryType.Main,
+        },
+        {
+          name: 'Storage',
+          value: InventoryType.Storage,
+        },
+      ],
+      required: true,
+    },
+  ],
   [CommandNames.GROUP]: [
     {
       name: GroupSubCommandNames.HOME,

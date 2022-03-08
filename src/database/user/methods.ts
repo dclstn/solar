@@ -59,6 +59,18 @@ export function has(item: Item): boolean {
   return true;
 }
 
+export function move(inventoryTypeFrom: InventoryType, inventoryTypeTo: InventoryType, item: Item) {
+  if (inventoryTypeTo === inventoryTypeFrom) {
+    throw new ResponseError('You cannot move to the same inventory!');
+  }
+
+  const fromInventory: InventoryInterface = this.getInventory(inventoryTypeFrom);
+  const toInventory: InventoryInterface = this.getInventory(inventoryTypeTo);
+
+  fromInventory.rem(item);
+  toInventory.add(item);
+}
+
 // TODO: build this out
 export function unbox(item: Item): Item {
   this.rem(item, 1);
@@ -97,7 +109,7 @@ export function rem(item: Item, amount: number) {
 
 export function sell(item: Item, amount: number) {
   if (item == null) {
-    throw new ResponseError('Could not find item you specified');
+    throw new ResponseError('Could not find the item you specified');
   }
 
   this.rem(item, amount);

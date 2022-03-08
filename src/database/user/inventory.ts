@@ -1,11 +1,16 @@
 import {Defaults} from '../../constants.js';
 import {findById, Item} from '../../utils/items.js';
 import type {Cords, ItemInterface} from '../../types/item.js';
+import ResponseError from '../../utils/error.js';
 
 const o = Math.sqrt(Defaults.MAX_SLOTS);
 
 export default {
   add(item: Item, cords?: Cords): void {
+    if (this.items.length >= Defaults.MAX_SLOTS) {
+      throw new ResponseError('You do not have enough slots to perform this action');
+    }
+
     this.items.push({
       id: item.id,
       purchased: Date.now(),
@@ -52,6 +57,10 @@ export default {
   },
 
   rem(item: Item): void {
+    if (!this.has(item)) {
+      throw new ResponseError('Could not find item');
+    }
+
     this.items.splice(
       this.items.findIndex(({id}) => id === item.id),
       1
