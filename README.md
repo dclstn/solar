@@ -17,9 +17,13 @@ How to contribute:
 
    - `echo DISCORD_TOKEN=[YOUR DISCORD TOKEN] >> .env`
 
-5. Setup a redis-server
+5. Get the ID of the server you plan to develop in
+
+   - `echo GUILD_ID=[YOUR DEVELOPMENT GUILD ID] >> .env`
+
+6. Setup a redis-server
 
    - `npm i -g redis-server`
    - `redis-server`
 
-6. Startup the bot `npm run bot`
+7. Startup the bot `npm run bot -- --reloadApplicationCommands`

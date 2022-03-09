@@ -1,6 +1,10 @@
 import glob from 'glob';
+import dotenv from 'dotenv';
+import commands from './interactions/commands.js';
 import client from './client.js';
 import Sentry from './sentry.js';
+
+dotenv.config();
 
 client.once('ready', () => {
   glob('./dist/modules/**/index.js', async (err: Error, files: [string]) => {
@@ -14,6 +18,11 @@ client.once('ready', () => {
       } catch (moduleErr) {
         Sentry.captureException(moduleErr);
       }
+    }
+
+    const shouldReload = process.env.RELOAD_APPLICATION_COMMANDS === 'true';
+    if (shouldReload) {
+      commands.reloadApplicationCommands();
     }
   });
 
