@@ -13,21 +13,12 @@ import Sentry from '../../sentry.js';
 import autocomplete from '../../interactions/autocomplete.js';
 
 async function processPurchase(interaction: ButtonInteraction | CommandInteraction, item: Item, amount: number) {
-  const transaction = Sentry.startTransaction({op: 'buy-transaction', name: 'Item Purchase Transaction'});
-  const lockSpan = transaction.startChild({op: 'acquire-lock'});
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
-  lockSpan.finish();
-
-  let user = null;
 
   try {
-    const userSpan = transaction.startChild({op: 'acquire-user'});
-    user = await User.get(interaction.user);
-    userSpan.finish();
+    const user = await User.get(interaction.user);
     user.buy(item, amount);
-    const saveSpan = transaction.startChild({op: 'save-doc'});
     await user.save();
-    saveSpan.finish();
 
     const NAV_ROW = new MessageActionRow().addComponents(createBuyButton(user, item, 'Buy Another'), PROFILE_BUTTON);
 
@@ -40,10 +31,7 @@ async function processPurchase(interaction: ButtonInteraction | CommandInteracti
 
     Sentry.captureException(err);
   } finally {
-    const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();
-    releaseSpan.finish();
-    transaction.finish();
   }
 }
 

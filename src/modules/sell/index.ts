@@ -15,21 +15,12 @@ import autocomplete from '../../interactions/autocomplete.js';
 const NAV_ROW = new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON);
 
 async function processSale(interaction: ButtonInteraction | CommandInteraction, item: Item, amount: number) {
-  const transaction = Sentry.startTransaction({op: 'sell-transaction', name: 'Item Sale Transaction'});
-  const lockSpan = transaction.startChild({op: 'acquire-lock'});
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
-  lockSpan.finish();
-
-  let user = null;
 
   try {
-    const userSpan = transaction.startChild({op: 'acquire-user'});
-    user = await User.get(interaction.user);
-    userSpan.finish();
+    const user = await User.get(interaction.user);
     user.sell(item, amount);
-    const saveSpan = transaction.startChild({op: 'save-doc'});
     await user.save();
-    saveSpan.finish();
 
     interaction.reply({
       embeds: [sale(item, amount)],
@@ -44,10 +35,7 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
 
     Sentry.captureException(err);
   } finally {
-    const releaseSpan = transaction.startChild({op: 'release-lock'});
     await lock.release();
-    releaseSpan.finish();
-    transaction.finish();
   }
 }
 
