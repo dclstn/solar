@@ -4,7 +4,7 @@
 
 How to contribute:
 
-1. Fork this repository & clone it
+1. Clone this repository
 2. Run `npm install` to install all the dependencies
 3. Setup enviroment variables (you will need to host a local mongodb server)
 
@@ -13,17 +13,18 @@ How to contribute:
    - `echo ENVIROMENT=development >> .env`
    - `echo SENTRY_DSN=https://3af7d4198553496c92cb577bc2f4d6fc@o1095587.ingest.sentry.io/6115320 >> .env`
 
-4. Setup a discord bot for development https://discord.com/developers/applications
+4. Setup a discord bot for development: https://discord.com/developers/applications
 
    - `echo DISCORD_TOKEN=[YOUR DISCORD TOKEN] >> .env`
 
-5. Get the ID of the server you plan to develop in
+5. Get the `GUILD_ID` of the server you plan to develop in
 
    - `echo GUILD_ID=[YOUR DEVELOPMENT GUILD ID] >> .env`
+   - `echo RELOAD_APPLICATION_COMMANDS=true >> .env` On first load you may want to enable this
 
-6. Setup a redis-server
+6. Setup a redis-server (in a seperate terminal)
 
    - `npm i -g redis-server`
    - `redis-server`
 
-7. Startup the bot `npm run bot -- --reloadApplicationCommands`
+7. Startup the bot `npm run bot`
