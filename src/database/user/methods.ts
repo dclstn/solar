@@ -59,16 +59,18 @@ export function has(item: Item): boolean {
   return true;
 }
 
-export function move(inventoryTypeFrom: InventoryType, inventoryTypeTo: InventoryType, item: Item) {
+export function move(inventoryTypeFrom: InventoryType, inventoryTypeTo: InventoryType, item: Item, amount: number) {
   if (inventoryTypeTo === inventoryTypeFrom) {
     throw new ResponseError('You cannot move to the same inventory!');
   }
 
-  const fromInventory: InventoryInterface = this.getInventory(inventoryTypeFrom);
-  const toInventory: InventoryInterface = this.getInventory(inventoryTypeTo);
+  for (let i = 0; i < amount; i += 1) {
+    const fromInventory: InventoryInterface = this.getInventory(inventoryTypeFrom);
+    const toInventory: InventoryInterface = this.getInventory(inventoryTypeTo);
 
-  fromInventory.rem(item);
-  toInventory.add(item);
+    fromInventory.rem(item);
+    toInventory.add(item);
+  }
 }
 
 // TODO: build this out

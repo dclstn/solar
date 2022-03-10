@@ -12,6 +12,7 @@ import {success, warning} from '../../utils/embed.js';
 commands.on(CommandNames.MOVE, async (interaction: CommandInteraction) => {
   const fromInventory = interaction.options.getInteger('from');
   const toInventory = interaction.options.getInteger('to');
+  const amount = interaction.options.getInteger('amount') || 1;
 
   const itemId = interaction.options.getString('item');
   const item = Items[itemId];
@@ -20,10 +21,10 @@ commands.on(CommandNames.MOVE, async (interaction: CommandInteraction) => {
 
   try {
     const user = await User.get(interaction.user);
-    user.move(fromInventory, toInventory, item);
+    user.move(fromInventory, toInventory, item, amount);
     await user.save();
 
-    interaction.reply({embeds: [success(`Successfully moved **${item.name}**!`)], ephemeral: true});
+    interaction.reply({embeds: [success(`Successfully moved **${item.name}** x${amount}!`)], ephemeral: true});
   } catch (err) {
     if (err instanceof ResponseError) {
       interaction.reply({embeds: [warning(err.message)], ephemeral: true});

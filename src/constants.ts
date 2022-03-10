@@ -229,6 +229,13 @@ export const CommandOptions = {
       ],
       required: true,
     },
+    {
+      name: 'amount',
+      description: 'How many?',
+      min_value: 1,
+      type: ApplicationCommandOptionTypes.INTEGER,
+      required: false,
+    },
   ],
   [CommandNames.GROUP]: [
     {
