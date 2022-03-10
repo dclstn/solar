@@ -10,6 +10,7 @@ import type {GroupInterface} from '../../types/group.js';
 import components from '../../interactions/components.js';
 import {MessageComponentIds} from '../../constants.js';
 import Group from '../../database/group/index.js';
+import Invite from '../../database/invite/index.js';
 import redlock, {userLock, groupLock} from '../../redis/locks.js';
 
 const inviteEmbed = (group: GroupInterface) =>
@@ -19,14 +20,9 @@ const acceptEmbed = (group: GroupInterface) =>
   new MessageEmbed().setColor('GREEN').setTitle(group.name).setDescription('You have joined!');
 
 export default async function invite(interaction: CommandInteraction) {
+  let message;
+
   try {
-    interaction.reply({
-      embeds: [success(`Inviting to groups is currently disabled, stay tuned`)],
-      ephemeral: true,
-    });
-
-    return;
-
     const discordInvitee = interaction.options.getUser('user');
 
     if (discordInvitee.id === interaction.user.id) {
@@ -54,22 +50,37 @@ export default async function invite(interaction: CommandInteraction) {
       throw new ResponseError('This user is in your group');
     }
 
-    const actionRow = new MessageActionRow().addComponents(createAcceptButton(inviter.group));
+    const inviteOptions = {
+      group: inviter.group.id,
+      target: invitee.id,
+    };
 
-    try {
-      await discordInvitee.send({embeds: [inviteEmbed(inviter.group)], components: [actionRow]});
-    } catch (err) {
-      throw new ResponseError('Unable to send DM to user');
+    if (await Invite.exists(inviteOptions)) {
+      throw new ResponseError('This user already has a pending invite to this group');
     }
+
+    const actionRow = new MessageActionRow().addComponents(createAcceptButton(inviter.group));
 
     interaction.reply({
       embeds: [success(`Sent invite to **${discordInvitee.username}**!`)],
       ephemeral: true,
     });
+
+    try {
+      message = await discordInvitee.send({embeds: [inviteEmbed(inviter.group)], components: [actionRow]});
+    } catch (err) {
+      throw new ResponseError('Unable to send direct message to user');
+    }
+
+    await Invite.create({referer: invitee.id, ...inviteOptions});
   } catch (err) {
     if (err instanceof ResponseError) {
       interaction.reply({embeds: [warning(err.message)], ephemeral: true});
       return;
+    }
+
+    if (message != null) {
+      await message.delete();
     }
 
     Sentry.captureException(err);
