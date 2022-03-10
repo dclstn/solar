@@ -367,7 +367,7 @@ export const Chances = {
 
 export const RarityColours = {
   [ItemRarities.COMMON]: 'BLURPLE',
-  [ItemRarities.UNCOMMON]: 'GREEN',
+  [ItemRarities.UNCOMMON]: 'DARK_GREEN',
   [ItemRarities.EPIC]: 'PURPLE',
   [ItemRarities.LEGENDARY]: 'GOLD',
 };
