@@ -14,18 +14,34 @@ export default async function migrate(interaction: CommandInteraction) {
     const userObj = {};
     _.uniqBy(users, 'discordId')
       .filter((user) => user.lastKnownUsername != null)
-      .forEach((user) => {
+      .forEach(async (user) => {
         userObj[user._id.$oid] = {
           username: user.lastKnownUsername,
           discordId: user.discordId,
-          money: 1000,
         };
       });
 
-    const usersMap = Object.values(userObj);
-    await User.insertMany(usersMap);
+    const bulkWrite = [];
+    // @ts-ignore
+    for (const {username, discordId} of Object.values(userObj)) {
+      bulkWrite.push({
+        updateOne: {
+          filter: {
+            discordId,
+          },
+          // If you wanted it to be incremented rather than replace the field, then try `$inc` instead of `$set`.
+          update: {$set: {discordId, username}},
+          upsert: true,
+        },
+      });
+    }
+    await User.collection.bulkWrite(bulkWrite);
 
     kingdoms.forEach(async (kingdom) => {
+      if (userObj[kingdom.king.$oid] == null) {
+        return;
+      }
+
       const userIds = [
         ...kingdom.users.map((user) => userObj[user.$oid].discordId),
         userObj[kingdom.king.$oid].discordId,
