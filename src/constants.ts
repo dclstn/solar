@@ -1,4 +1,5 @@
 import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
+import isProd from './utils/enviroment.js';
 import {InventoryType} from './utils/enums.js';
 import {BUYABLE_ITEMS, Items} from './utils/items.js';
 
@@ -456,3 +457,5 @@ export const PaymentIds = {
     FIVE: 'price_1KCXF9BLF5bK8rcnkKuXuMRt',
   },
 };
+
+export const ENDPOINT = isProd() ? 'https://castlemania.bot' : 'http://localhost:3000';
