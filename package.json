@@ -7,6 +7,7 @@
   "scripts": {
     "start": "rm -rf ./dist && tsc && node ./dist/index.js",
     "bot": "tsc-watch --onSuccess 'node ./dist/app.js'",
+    "api": "tsc-watch --onSuccess 'node ./dist/server.js'",
     "dev": "tsc-watch --onSuccess 'node ./dist/index.js'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
