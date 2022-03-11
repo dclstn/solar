@@ -19,6 +19,9 @@ const inviteEmbed = (group: GroupInterface) =>
 const acceptEmbed = (group: GroupInterface) =>
   new MessageEmbed().setColor('GREEN').setTitle(group.name).setDescription('You have joined!');
 
+const denyEmbed = (group: GroupInterface) =>
+  new MessageEmbed().setColor('RED').setTitle(group.name).setDescription('Invalid invite');
+
 export default async function invite(interaction: CommandInteraction) {
   let message;
 
@@ -94,8 +97,18 @@ components.on(MessageComponentIds.ACCEPT_INVITE, async (interaction: ButtonInter
   try {
     const [group, user] = await Promise.all([Group.findById(groupId), User.get(interaction.user)]);
 
-    if (group == null) {
-      throw new ResponseError('Group couldnt be found');
+    const inviteOptions = {
+      group: group?.id,
+      target: user.id,
+    };
+
+    if (group == null || !(await Invite.exists(inviteOptions))) {
+      await interaction.update({
+        embeds: [denyEmbed(group)],
+        components: [],
+      });
+
+      throw new ResponseError('Invalid invite');
     }
 
     group.add(user);
@@ -105,7 +118,7 @@ components.on(MessageComponentIds.ACCEPT_INVITE, async (interaction: ButtonInter
       components: [],
     });
 
-    await Promise.all([group.save(), user.save()]);
+    await Promise.all([group.save(), user.save(), Invite.findOneAndDelete(inviteOptions)]);
   } catch (err) {
     if (err instanceof ResponseError) {
       interaction.reply({embeds: [warning(err.message)], ephemeral: true});

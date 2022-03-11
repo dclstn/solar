@@ -1,4 +1,4 @@
-import type {CommandInteraction} from 'discord.js';
+import {CommandInteraction, MessageActionRow} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import Sentry from '../../sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
@@ -7,6 +7,7 @@ import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
 import {findById} from '../../utils/items.js';
 import {success} from '../../utils/embed.js';
+import {PROFILE_BUTTON, STORAGE_BUTTON} from '../../utils/buttons.js';
 
 class Sort {
   constructor() {
@@ -42,6 +43,7 @@ class Sort {
       await user.save();
 
       interaction.reply({
+        components: [new MessageActionRow().addComponents(PROFILE_BUTTON, STORAGE_BUTTON)],
         embeds: [success(`Successfully sorted your inventories by \`${subCommand}\``)],
         ephemeral: true,
       });
