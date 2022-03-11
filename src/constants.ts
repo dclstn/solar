@@ -1,6 +1,6 @@
 import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
 import {InventoryType} from './utils/enums.js';
-import {BuyableItems, Items} from './utils/items.js';
+import {BUYABLE_ITEMS, Items} from './utils/items.js';
 
 export const Defaults = {
   MAX_SLOTS: 36,
@@ -92,7 +92,7 @@ export const CommandOptions = {
       type: ApplicationCommandOptionTypes.STRING,
       required: true,
       autocomplete: true,
-      // choices: BuyableItems.map(({id, name}) => ({name, value: id})),
+      // choices: BUYABLE_ITEMS.map(({id, name}) => ({name, value: id})),
     },
     {
       name: 'amount',
@@ -166,7 +166,7 @@ export const CommandOptions = {
       description: 'Select the page you wish to view',
       type: ApplicationCommandOptionTypes.INTEGER,
       min_value: 1,
-      max_value: Math.floor(BuyableItems.length / Defaults.STORE_PAGE_SIZE) + 1,
+      max_value: Math.floor(BUYABLE_ITEMS.length / Defaults.STORE_PAGE_SIZE) + 1,
     },
   ],
   [CommandNames.ITEM]: [

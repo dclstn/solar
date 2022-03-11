@@ -392,7 +392,7 @@ export const Items = Object.fromEntries(
   ])
 );
 
-export const BuyableItems = Object.values(Items).filter((item) => item.buyable);
+export const BUYABLE_ITEMS = Object.values(Items).filter((item) => item.buyable);
 
 export function findById(itemId: string): Item {
   return Items[itemId];
