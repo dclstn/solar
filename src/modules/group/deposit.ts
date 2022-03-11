@@ -22,6 +22,10 @@ export default async function deposit(interaction: CommandInteraction) {
     const id = interaction.user.id as unknown as Mongoose.Schema.Types.Long;
     const user = await User.findOne({discordId: id}).populate('group');
 
+    if (user.group == null) {
+      throw new ResponseError('You do not belong to a group');
+    }
+
     acquiredGroupLock = await redlock.acquire([groupLock(user.group.name)], 1000);
 
     user.deposit(user.group, amount);
