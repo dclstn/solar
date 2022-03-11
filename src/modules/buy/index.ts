@@ -1,7 +1,7 @@
 import {AutocompleteInteraction, ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {createBuyButton, PROFILE_BUTTON} from '../../utils/buttons.js';
-import {BUYABLE_ITEMS, DEFAULT_BUYABLE_ITEMS, fuzzy, Item, Items} from '../../utils/items.js';
+import {DEFAULT_BUYABLE_ITEMS, fuzzy, Item, Items} from '../../utils/items.js';
 import commands from '../../interactions/commands.js';
 import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
 import User from '../../database/user/index.js';
