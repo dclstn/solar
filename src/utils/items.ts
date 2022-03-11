@@ -394,6 +394,9 @@ export const Items = Object.fromEntries(
 
 export const BUYABLE_ITEMS = Object.values(Items).filter((item) => item.buyable);
 
+export const DEFAULT_BUYABLE_ITEMS = BUYABLE_ITEMS.splice(0, 24);
+export const DEFAULT_ITEMS = Object.values(Items).splice(0, 24);
+
 export function findById(itemId: string): Item {
   return Items[itemId];
 }

@@ -3,7 +3,7 @@ import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import redlock, {userLock} from '../../redis/locks.js';
 import components from '../../interactions/components.js';
 import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../constants.js';
-import {fuzzy, Item, Items} from '../../utils/items.js';
+import {DEFAULT_ITEMS, fuzzy, Item, Items} from '../../utils/items.js';
 import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
 import {sale, warning} from '../../utils/embed.js';
@@ -53,14 +53,22 @@ components.on(MessageComponentIds.SELL, (interaction: ButtonInteraction, itemId:
 
 autocomplete.on(CommandNames.SELL, (interaction: AutocompleteInteraction) => {
   const search = interaction.options.getString('item');
-  const results = fuzzy.search(search).splice(0, 24);
 
-  interaction.respond(
-    results.map((result) => ({
-      name: result.item.name,
-      value: result.item.id,
-    }))
-  );
+  const results =
+    search.length === 0
+      ? DEFAULT_ITEMS.map((item) => ({
+          name: item.name,
+          value: item.id,
+        }))
+      : fuzzy
+          .search(search)
+          .splice(0, 24)
+          .map((result) => ({
+            name: result.item.name,
+            value: result.item.id,
+          }));
+
+  interaction.respond(results);
 });
 
 commands.registerCommand({

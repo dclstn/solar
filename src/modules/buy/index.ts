@@ -1,7 +1,7 @@
 import {AutocompleteInteraction, ButtonInteraction, CommandInteraction, MessageActionRow} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {createBuyButton, PROFILE_BUTTON} from '../../utils/buttons.js';
-import {fuzzy, Item, Items} from '../../utils/items.js';
+import {BUYABLE_ITEMS, DEFAULT_BUYABLE_ITEMS, fuzzy, Item, Items} from '../../utils/items.js';
 import commands from '../../interactions/commands.js';
 import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
 import User from '../../database/user/index.js';
@@ -49,14 +49,21 @@ components.on(MessageComponentIds.BUY, (interaction: ButtonInteraction, itemId: 
 
 autocomplete.on(CommandNames.BUY, (interaction: AutocompleteInteraction) => {
   const search = interaction.options.getString('item');
-  const results = fuzzy.search(search).splice(0, 24);
+  const results =
+    search.length === 0
+      ? DEFAULT_BUYABLE_ITEMS.map((item) => ({
+          name: item.name,
+          value: item.id,
+        }))
+      : fuzzy
+          .search(search)
+          .splice(0, 24)
+          .map((result) => ({
+            name: result.item.name,
+            value: result.item.id,
+          }));
 
-  interaction.respond(
-    results.map((result) => ({
-      name: result.item.name,
-      value: result.item.id,
-    }))
-  );
+  interaction.respond(results);
 });
 
 commands.registerCommand({
