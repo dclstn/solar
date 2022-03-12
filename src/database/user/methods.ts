@@ -162,6 +162,10 @@ export function deposit(group: GroupInterface, amount: number) {
   return this;
 }
 
+export function addFunds(amount: number) {
+  this.set('funds', this.funds + amount);
+}
+
 export function search(term: string) {
   const lib = uniqby(flatten(this.inventories.map((inventory) => inventory.fetchAll())), 'id');
   const fuzzy = new Fuse(lib, {shouldSort: true, keys: ['name', 'type']});
