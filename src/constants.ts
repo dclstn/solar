@@ -453,9 +453,11 @@ export const MessageComponentIds = {
 };
 
 export const PaymentIds = {
-  GIFTS: {
-    FIVE: 'price_1KCXF9BLF5bK8rcnkKuXuMRt',
-  },
+  BUTTLOAD_OF_GEMS: 'price_1KcGZ4BLF5bK8rcnjZ8xOsgS',
+  CHEST_FULL_OF_GEMS: 'price_1KcGYzBLF5bK8rcnkXXs4TGQ',
+  BAG_OF_GEMS: 'price_1KcGYdBLF5bK8rcnNKYm7dUc',
+  HANDFUL_OF_GEMS: 'price_1KcGQuBLF5bK8rcn6tMxpL3l',
+  TEST_BUTTLOAD_OF_GEMS: 'price_1Kc2oqBLF5bK8rcnUrhi81VB',
 };
 
 export const ENDPOINT = isProd() ? 'https://castlemania.bot' : 'http://localhost:3000';
