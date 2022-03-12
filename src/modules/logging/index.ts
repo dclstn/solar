@@ -18,7 +18,7 @@ The Changes:
 • Groups (Kingdoms) will remain the same but with limited features
 • The removal of text command support, but do not fret we now have buttons!
 • Pets have been removed, could see a revival in the future!
-We apoligize for any innconvience this has caused, but we feel it was a nessecary change.
+We apologize for any inconvenience this has caused, but we feel it was a nessecary change.
 `);
 
 client.on('interactionCreate', async (interaction: Interaction) => {
