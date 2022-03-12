@@ -6,6 +6,7 @@ import Sentry from './sentry.js';
 import authRoute from './routes/auth/index.js';
 import stripeRoute from './routes/stripe/index.js';
 import userRoute from './routes/user/index.js';
+import sessionsRoute from './routes/sessions/index.js';
 
 const App = fastify();
 const PORT = 8000;
@@ -15,6 +16,7 @@ App.register(fastifyJwt, {secret: process.env.JWT_SECRET});
 App.register(authRoute);
 App.register(userRoute);
 App.register(stripeRoute);
+App.register(sessionsRoute);
 
 App.decorate('authenticate', async (request, response: FastifyReply) => {
   try {

@@ -38,6 +38,7 @@ export interface UserInterface extends Mongoose.Document {
   has(item: Item): boolean;
   move(from: InventoryType, to: InventoryType, item: Item, amount?: number): void;
   unbox(item: Item): Item;
+  addFunds(amount: number): void;
   getInventory(type: InventoryType): InventoryInterface;
   sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;
   deposit(group: GroupInterface, amount: number): void;
