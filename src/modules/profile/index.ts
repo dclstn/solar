@@ -40,11 +40,11 @@ async function createEmbed(user: UserInterface, inventoryType: number): Promise<
   const gridString = grid.map((row: Array<string>) => row.join(' ')).join('\n');
 
   return new MessageEmbed()
-    .setAuthor(user.username, user.avatar)
+    .setAuthor({name: user.username, iconURL: user.avatar})
     .setDescription(inventoryType === InventoryType.Main ? createProfileDescription(user, gridString) : gridString)
     .setColor('BLURPLE')
     .setTimestamp(new Date())
-    .setFooter(`Lvl ${user.level} • ${InventoryType[inventoryType]}`);
+    .setFooter({text: `Lvl ${user.level} • ${InventoryType[inventoryType]}`});
 }
 
 function handleReply(

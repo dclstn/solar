@@ -23,7 +23,7 @@ export default async function handleGenerator(interaction: CommandInteraction | 
       .setTitle(item.name)
       .setDescription(generatorDescription(item))
       .setThumbnail(item.url)
-      .setFooter('Some items may leave or join the shop at any time!')
+      .setFooter({text: 'Some items may leave or join the shop at any time!'})
       .setColor(RarityColours[item.rarity] as ColorResolvable);
 
     const actionRow = new MessageActionRow().addComponents(createBuyButton(user, item), createSellButton(user, item));

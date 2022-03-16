@@ -33,19 +33,19 @@ export function warning(content: string): MessageEmbed {
 
 export function purchase(item: Item, amount: number): MessageEmbed {
   return new MessageEmbed()
-    .setAuthor('Your Reciept', client.user.avatarURL())
+    .setAuthor({name: 'Your Reciept', iconURL: client.user.avatarURL()})
     .setColor('GREEN')
     .setDescription(purchaseDescription(item, amount))
-    .setFooter('Thank you for your purchase!')
+    .setFooter({text: 'Thank you for your purchase!'})
     .setTimestamp(new Date());
 }
 
 export function sale(item: Item, amount: number): MessageEmbed {
   return new MessageEmbed()
-    .setAuthor('Your Reciept', client.user.avatarURL())
+    .setAuthor({name: 'Your Reciept', iconURL: client.user.avatarURL()})
     .setColor('GREEN')
     .setDescription(saleDescription(item, amount))
-    .setFooter('Thank you for your sale!')
+    .setFooter({text: 'Thank you for your sale!'})
     .setTimestamp(new Date());
 }
 

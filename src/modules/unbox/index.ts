@@ -28,7 +28,7 @@ async function unboxGift(interaction: ButtonInteraction, gift: Item) {
       .setTitle('Congratulations!')
       .setDescription(generatorDescription(item))
       .setImage(item.url)
-      .setFooter('This item has been added to your profile!')
+      .setFooter({text: 'This item has been added to your profile!'})
       .setColor(RarityColours[item.rarity] as ColorResolvable);
 
     const actionRow = new MessageActionRow().addComponents(

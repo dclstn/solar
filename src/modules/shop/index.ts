@@ -23,7 +23,7 @@ const EMBED = new MessageEmbed()
   .setTitle('Welcome to the Official CastleMania Shop!')
   .setDescription(SHOP_DESCRIPTION)
   .setColor('GREEN')
-  .setFooter('The shop was last updated:')
+  .setFooter({text: 'The shop was last updated:'})
   .setTimestamp(new Date());
 
 const ACTION_ROWS = PAGES.map((page) => new MessageActionRow().addComponents(...page.map(createItemButton)));
