@@ -2,6 +2,8 @@ import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
 import isProd from './utils/enviroment.js';
 import {InventoryType} from './utils/enums.js';
 import {BUYABLE_ITEMS, Items} from './utils/items.js';
+import {RECIPE_NAMES} from './utils/recipes.js';
+import {capitalizeFirstLetter} from './utils/index.js';
 
 export const Defaults = {
   MAX_SLOTS: 36,
@@ -24,12 +26,18 @@ export const CommandNames = {
   ADMIN: 'admin',
   MOVE: 'move',
   STORAGE: 'storage',
+  WORKBENCH: 'workbench',
 };
 
 export const AdminSubCommandNames = {
   RELOAD: 'reload',
   GIVE: 'give',
   MIGRATE: 'migrate',
+};
+
+export const WorkBenchSubCommandNames = {
+  CRAFT: 'craft',
+  HOME: 'home',
 };
 
 export const GameSubCommandNames = {
@@ -83,6 +91,7 @@ export const CommandDescriptions = {
   [CommandNames.GAMES]: '🎮 Play a game',
   [CommandNames.ADMIN]: '🖥️ Admin-only commands',
   [CommandNames.MOVE]: '📪 Move an item',
+  [CommandNames.WORKBENCH]: '🛠️ Your workbench',
 };
 
 export const CommandOptions = {
@@ -93,13 +102,36 @@ export const CommandOptions = {
       type: ApplicationCommandOptionTypes.STRING,
       required: true,
       autocomplete: true,
-      // choices: BUYABLE_ITEMS.map(({id, name}) => ({name, value: id})),
     },
     {
       name: 'amount',
       description: 'How many?',
       min_value: 1,
       type: ApplicationCommandOptionTypes.NUMBER,
+    },
+  ],
+  [CommandNames.WORKBENCH]: [
+    {
+      name: WorkBenchSubCommandNames.HOME,
+      description: '🔨 Show your current workbench status',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: WorkBenchSubCommandNames.CRAFT,
+      description: '🛠️ Craft an item',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'recipe',
+          description: 'Select the recipe you wish to craft',
+          type: ApplicationCommandOptionTypes.STRING,
+          required: true,
+          choices: Object.values(RECIPE_NAMES).map((recipe) => ({
+            name: capitalizeFirstLetter(recipe),
+            value: recipe,
+          })),
+        },
+      ],
     },
   ],
   [CommandNames.PROFILE]: [

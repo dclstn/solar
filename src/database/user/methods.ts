@@ -5,11 +5,13 @@ import uniqby from 'lodash.uniqby';
 import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
 import {Chances, Item, ItemRarities, Items} from '../../utils/items.js';
-import type {InventoryInterface} from '../../types/user.js';
+import type {InventoryInterface, UserInterface} from '../../types/user.js';
 import type {ItemInterface} from '../../types/item.js';
 import type {GroupInterface} from '../../types/group.js';
 import {InventoryType} from '../../utils/enums.js';
 import {secureMathRandom} from '../../utils/misc.js';
+import client from '../../client.js';
+import {success} from '../../utils/embed.js';
 
 export function add(item: Item, amount: number) {
   if (amount > this.totalFree()) {
@@ -170,4 +172,12 @@ export function search(term: string) {
   const lib = uniqby(flatten(this.inventories.map((inventory) => inventory.fetchAll())), 'id');
   const fuzzy = new Fuse(lib, {shouldSort: true, keys: ['name', 'type']});
   return fuzzy.search(term);
+}
+
+export async function notify(this: UserInterface, content: string) {
+  try {
+    await client.users.send(String(this.discordId), {
+      embeds: [success(content)],
+    });
+  } catch (e) {}
 }

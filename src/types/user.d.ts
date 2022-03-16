@@ -44,6 +44,7 @@ export interface UserInterface extends Mongoose.Document {
   deposit(group: GroupInterface, amount: number): void;
   search(term): Fuse.default.FuseResult<Item>[];
   updateDoc(): void;
+  notify(content: string): Promise<void>;
 }
 
 export interface TopGemsUserInterface extends Mongoose.Document {

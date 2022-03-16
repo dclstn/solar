@@ -39,6 +39,7 @@
     "@typescript-eslint/ban-ts-comment": "off",
     "no-throw-literal": 2,
     "camelcase": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "no-empty": "off"
   }
 }
