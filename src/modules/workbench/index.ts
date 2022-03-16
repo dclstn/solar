@@ -6,7 +6,6 @@ import commands from '../../interactions/commands.js';
 import WorkBench from '../../database/workbench/index.js';
 import {RECIPES} from '../../utils/recipes.js';
 import type {BenchInterface} from '../../types/bench.js';
-import {Items} from '../../utils/items.js';
 import ResponseError from '../../utils/error.js';
 import {warning} from '../../utils/embed.js';
 import Sentry from '../../sentry.js';
@@ -26,13 +25,13 @@ function createEmbed(workBench: BenchInterface, interaction) {
 
   for (const task of tasks) {
     const recipe = RECIPES[task.recipeId];
-    const item = Items[recipe.reward];
+    // const item = Items[recipe.reward];
 
-    const hoursLeft = moment(task.endDate).diff(new Date(), 'hours');
+    const minsLeft = moment(task.endDate).diff(new Date(), 'minutes');
 
     embed.addField(
-      `${capitalizeFirstLetter(recipe.name)} Recipe`,
-      `${capitalizeFirstLetter(moment.duration(hoursLeft, 'hours').humanize())} remaining.`
+      `Crafting ${capitalizeFirstLetter(recipe.name)}`,
+      `${capitalizeFirstLetter(moment.duration(minsLeft, 'minutes').humanize())} remaining`
     );
   }
 

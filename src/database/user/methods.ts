@@ -35,6 +35,10 @@ export function buy(item: Item, amount: number) {
     throw new ResponseError('Could not find item you specified');
   }
 
+  if (!item.buyable) {
+    throw new ResponseError('This item is not buyable');
+  }
+
   const totalCost = item.price * amount;
 
   if (totalCost > this.money) {
