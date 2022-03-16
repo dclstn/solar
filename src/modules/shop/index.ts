@@ -17,13 +17,6 @@ ${emoteStrings.success} **How to get started**
 ${emoteStrings.success} **How do I buy/sell?**
 *You should see a green or red button these will allow you 
 buy or sell*
-
-${emoteStrings.success} **Why are some buttons disabled?**
-*This indicates you cannot afford that item or, do not own 
-that selected item yet*
-
-${emoteStrings.success} **Whare are my items?**
-*You can see any items in your inventory via \`/profile\`*
 `;
 
 const EMBED = new MessageEmbed()
