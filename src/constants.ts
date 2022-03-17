@@ -37,6 +37,7 @@ export const AdminSubCommandNames = {
 
 export const WorkBenchSubCommandNames = {
   CRAFT: 'craft',
+  RECIPES: 'recipes',
   HOME: 'home',
 };
 
@@ -114,6 +115,11 @@ export const CommandOptions = {
     {
       name: WorkBenchSubCommandNames.HOME,
       description: '🔨 Show your current workbench status',
+      type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    },
+    {
+      name: WorkBenchSubCommandNames.RECIPES,
+      description: '📎 Show all the available recipes',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
     {
