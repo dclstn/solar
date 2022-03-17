@@ -18,7 +18,7 @@ export default async function migrate(interaction: CommandInteraction) {
         $replaceRoot: {newRoot: '$doc'}, // replace doc as object as new root of document
       },
       {
-        $out: 'collection_new',
+        $out: 'groups',
       }, // Test above aggregation & then use this
     ]);
   } catch (err) {
