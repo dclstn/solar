@@ -1,7 +1,13 @@
-import {CommandInteraction, MessageEmbed} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, MessageEmbed} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import moment from 'moment';
-import {CommandNames, CommandDescriptions, CommandOptions, WorkBenchSubCommandNames} from '../../constants.js';
+import {
+  CommandNames,
+  CommandDescriptions,
+  CommandOptions,
+  WorkBenchSubCommandNames,
+  MessageComponentIds,
+} from '../../constants.js';
 import commands from '../../interactions/commands.js';
 import WorkBench from '../../database/workbench/index.js';
 import {RECIPES} from '../../utils/recipes.js';
@@ -11,6 +17,8 @@ import {warning} from '../../utils/embed.js';
 import Sentry from '../../sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import {capitalizeFirstLetter} from '../../utils/index.js';
+import {handleRecipesPage} from './recipes.js';
+import components from '../../interactions/components.js';
 
 function createEmbed(workBench: BenchInterface, interaction) {
   const {tasks} = workBench;
@@ -40,9 +48,8 @@ function createEmbed(workBench: BenchInterface, interaction) {
   return embed;
 }
 
-async function handleCraftInteraction(interaction: CommandInteraction) {
+async function handleCraftInteraction(interaction: CommandInteraction | ButtonInteraction, recipeId) {
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
-  const recipeId = interaction.options.getString('recipe');
 
   try {
     const workBench = await WorkBench.get(interaction.user);
@@ -85,15 +92,24 @@ async function handleHomeInteraction(interaction: CommandInteraction) {
 
 commands.on(CommandNames.WORKBENCH, async (interaction: CommandInteraction) => {
   switch (interaction.options.getSubcommand()) {
-    case WorkBenchSubCommandNames.CRAFT:
-      handleCraftInteraction(interaction);
+    case WorkBenchSubCommandNames.CRAFT: {
+      const recipeId = interaction.options.getString('recipe');
+      handleCraftInteraction(interaction, recipeId);
       break;
+    }
     case WorkBenchSubCommandNames.HOME:
       handleHomeInteraction(interaction);
+      break;
+    case WorkBenchSubCommandNames.RECIPES:
+      handleRecipesPage(interaction);
       break;
     default:
       break;
   }
+});
+
+components.on(MessageComponentIds.CRAFT, (interaction: ButtonInteraction, recipeId) => {
+  handleCraftInteraction(interaction, recipeId);
 });
 
 commands.registerCommand({

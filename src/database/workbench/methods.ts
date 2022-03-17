@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 import moment from 'moment';
 import ResponseError from '../../utils/error.js';
 import type {BenchInterface, RecipeInterface} from '../../types/bench.js';
@@ -12,8 +13,8 @@ export async function addTask(recipe) {
     throw new ResponseError('No available task slots');
   }
 
-  for (const requirement of recipe.requirements) {
-    user.rem(Items[requirement], 1);
+  if (!recipe.requirements.every((requirement) => user.has(Items[requirement]))) {
+    throw new ResponseError('You do not meet the requirements to craft this');
   }
 
   await user.save();
@@ -32,6 +33,17 @@ export async function checkTasks(this: BenchInterface) {
 
   for await (const [index, task] of completedTasks.entries()) {
     const recipe = RECIPES[task.recipeId];
+
+    if (!recipe.requirements.every((requirement) => user.has(Items[requirement]))) {
+      await user.notify(`Missing requirements for **${recipe.name}** task.`);
+      this.tasks.splice(index, 1);
+      continue;
+    }
+
+    for (const requirement of recipe.requirements) {
+      user.rem(Items[requirement], 1);
+    }
+
     user.add(Items[recipe.reward], 1);
     await user.notify(`Your **${recipe.name}** task has completed!`);
     this.tasks.splice(index, 1);

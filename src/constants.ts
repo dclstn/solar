@@ -2,7 +2,7 @@ import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
 import isProd from './utils/enviroment.js';
 import {InventoryType} from './utils/enums.js';
 import {BUYABLE_ITEMS, Items} from './utils/items.js';
-import {RECIPE_NAMES} from './utils/recipes.js';
+import {RECIPES} from './utils/recipes.js';
 import {capitalizeFirstLetter} from './utils/index.js';
 
 export const Defaults = {
@@ -131,7 +131,7 @@ export const CommandOptions = {
           description: 'Select the recipe you wish to craft',
           type: ApplicationCommandOptionTypes.STRING,
           required: true,
-          choices: Object.values(RECIPE_NAMES).map((recipe) => ({
+          choices: Object.keys(RECIPES).map((recipe) => ({
             name: capitalizeFirstLetter(recipe),
             value: recipe,
           })),
@@ -472,6 +472,7 @@ export const MessageComponentIds = {
   LAST: 'last',
   BUY: 'buy',
   SELL: 'sell',
+  CRAFT: 'craft',
   SHOP: 'shop',
   STORAGE: 'storage',
   PROFILE: 'profile',

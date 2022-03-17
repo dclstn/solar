@@ -7,6 +7,7 @@ import {BUYABLE_ITEMS, Item} from '../../utils/items.js';
 import components from '../../interactions/components.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {createItemButton} from '../../utils/buttons.js';
+import client from '../../client.js';
 
 const PAGES: Item[][] = chunk(BUYABLE_ITEMS, Defaults.STORE_PAGE_SIZE);
 
@@ -20,7 +21,7 @@ buy or sell*
 `;
 
 const EMBED = new MessageEmbed()
-  .setTitle('Welcome to the Official CastleMania Shop!')
+  .setAuthor({name: 'Castle Mania Shop!', iconURL: client.user.avatarURL()})
   .setDescription(SHOP_DESCRIPTION)
   .setColor('GREEN')
   .setFooter({text: 'The shop was last updated:'})

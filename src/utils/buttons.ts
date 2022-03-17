@@ -1,5 +1,6 @@
 import {MessageButton} from 'discord.js';
-import {Item} from './items.js';
+import {RecipeInterface} from '../types/bench.js';
+import {Item, Items} from './items.js';
 import {MessageComponentIds} from '../constants.js';
 import {emoteIds} from './emotes.js';
 import {ItemTypes} from './enums.js';
@@ -73,3 +74,10 @@ export const createBuyButton = (user: UserInterface, item: Item, text?: string) 
     .setStyle('SUCCESS')
     .setEmoji(emoteIds.gem)
     .setDisabled(!item.buyable || item.price > user.money);
+
+export const createCraftButton = (user: UserInterface, item: Item, recipe) =>
+  new MessageButton()
+    .setCustomId(`${MessageComponentIds.CRAFT}.${item.id}`)
+    .setLabel(`Craft ${item.name}`)
+    .setStyle('PRIMARY')
+    .setDisabled(!recipe.requirements.every((itemId) => user.has(Items[itemId])));
