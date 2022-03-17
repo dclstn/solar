@@ -1,5 +1,4 @@
 import {MessageButton} from 'discord.js';
-import {RecipeInterface} from '../types/bench.js';
 import {Item, Items} from './items.js';
 import {MessageComponentIds} from '../constants.js';
 import {emoteIds} from './emotes.js';
