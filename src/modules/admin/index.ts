@@ -5,7 +5,6 @@ import commands from '../../interactions/commands.js';
 import {CommandNames, CommandDescriptions, CommandOptions, AdminSubCommandNames} from '../../constants.js';
 import reload from './reload.js';
 import giveItem from './give.js';
-import migrate from './migrate.js';
 
 commands.on(CommandNames.ADMIN, (interaction: CommandInteraction) => {
   if (interaction.user.id !== '176306508085067776') {
@@ -22,9 +21,6 @@ commands.on(CommandNames.ADMIN, (interaction: CommandInteraction) => {
       break;
     case AdminSubCommandNames.GIVE:
       giveItem(interaction);
-      break;
-    case AdminSubCommandNames.MIGRATE:
-      migrate(interaction);
       break;
     default:
       break;
