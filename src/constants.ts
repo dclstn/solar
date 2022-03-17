@@ -32,7 +32,6 @@ export const CommandNames = {
 export const AdminSubCommandNames = {
   RELOAD: 'reload',
   GIVE: 'give',
-  MIGRATE: 'migrate',
 };
 
 export const WorkBenchSubCommandNames = {
@@ -384,11 +383,6 @@ export const CommandOptions = {
           required: true,
         },
       ],
-    },
-    {
-      name: AdminSubCommandNames.MIGRATE,
-      description: 'Migrate the old db',
-      type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
     {
       name: AdminSubCommandNames.GIVE,
