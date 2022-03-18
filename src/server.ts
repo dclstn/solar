@@ -7,6 +7,7 @@ import authRoute from './routes/auth/index.js';
 import stripeRoute from './routes/stripe/index.js';
 import userRoute from './routes/user/index.js';
 import sessionsRoute from './routes/sessions/index.js';
+import votesRoute from './routes/votes/index.js';
 
 const App = fastify();
 const PORT = 8000;
@@ -17,6 +18,7 @@ App.register(authRoute);
 App.register(userRoute);
 App.register(stripeRoute);
 App.register(sessionsRoute);
+App.register(votesRoute);
 
 App.decorate('authenticate', async (request, response: FastifyReply) => {
   try {

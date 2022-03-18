@@ -27,6 +27,7 @@ export const CommandNames = {
   MOVE: 'move',
   STORAGE: 'storage',
   WORKBENCH: 'workbench',
+  VOTE: 'vote',
 };
 
 export const AdminSubCommandNames = {
@@ -92,6 +93,7 @@ export const CommandDescriptions = {
   [CommandNames.ADMIN]: '🖥️ Admin-only commands',
   [CommandNames.MOVE]: '📪 Move an item',
   [CommandNames.WORKBENCH]: '🛠️ Your workbench',
+  [CommandNames.VOTE]: '📩 Show your vote progress',
 };
 
 export const CommandOptions = {

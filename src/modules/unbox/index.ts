@@ -27,7 +27,7 @@ async function unboxGift(interaction: ButtonInteraction, gift: Item) {
     const embed = new MessageEmbed()
       .setTitle('Congratulations!')
       .setDescription(generatorDescription(item))
-      .setImage(item.url)
+      .setThumbnail(item.url)
       .setFooter({text: 'This item has been added to your profile!'})
       .setColor(RarityColours[item.rarity] as ColorResolvable);
 
