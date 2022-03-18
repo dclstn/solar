@@ -3,7 +3,7 @@
 export async function get(discordId) {
   return this.findOneAndUpdate(
     {
-      discordId: parseInt(discordId, 10),
+      discordId,
     },
     {},
     {
