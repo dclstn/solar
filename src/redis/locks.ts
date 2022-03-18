@@ -21,6 +21,7 @@ redlock.on('error', (error: Error) => {
 });
 
 export const userLock = (user: User): string => `account.${user.id}`;
+export const userLockId = (id): string => `account.${id}`;
 export const groupLock = (name: string): string => `group.${name}`;
 
 export default redlock;
