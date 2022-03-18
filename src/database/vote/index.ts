@@ -16,7 +16,7 @@ VoteSchema.statics = statics;
 VoteSchema.methods = methods;
 
 VoteSchema.virtual('topGG.hasVoted').get(function hasVoted() {
-  return this.topGG.lastVoted == null ? false : moment(this.topGG.lastVoted).diff(new Date(), 'day') < 1;
+  return this.topGG.lastVoted == null ? false : moment(this.topGG.lastVoted).diff(new Date(), 'hours') < 12;
 });
 
 VoteSchema.virtual('discordBotList.hasVoted').get(function hasVoted() {
@@ -26,7 +26,7 @@ VoteSchema.virtual('discordBotList.hasVoted').get(function hasVoted() {
 });
 
 VoteSchema.virtual('rewardable').get(function hasVoted() {
-  return this.lastReward == null ? true : moment(this.lastReward).diff(new Date(), 'day') > 1;
+  return this.lastReward == null ? true : moment(this.lastReward).diff(new Date(), 'hours') > 12;
 });
 
 export default connection.model<VotingInterface, VotingModelInterface>('Vote', VoteSchema);
