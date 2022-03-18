@@ -31,6 +31,11 @@ export async function validateVotes(this: VotingInterface) {
   const gift = Items[ItemIds.GIFT];
   try {
     user = await User.findOne({discordId: this.discordId});
+
+    if (user == null) {
+      return;
+    }
+
     user.add(gift, 1);
     await user.save();
   } finally {
