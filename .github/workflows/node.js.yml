@@ -33,7 +33,7 @@ jobs:
           echo STRIPE_KEY=${{ secrets.STRIPE_KEY }} >> .env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
-          echo VOTING_AUTHORIZATION=${{ secrets.VOTING_AUTHORIZATION }} >> .env
+          echo VOTING_AUTHORIZATION="${{ secrets.VOTING_AUTHORIZATION }}" >> .env
           echo WEBHOOK_URL=${{ secrets.WEBHOOK_URL }} >> .env
           cat .env
       - name: PM2 Restart
