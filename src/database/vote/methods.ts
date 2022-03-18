@@ -8,7 +8,10 @@ import redlock, {userLock} from '../../redis/locks.js';
 import webhook from '../../webhook.js';
 
 export async function addVote(providerId: string) {
-  this[providerId].lastVoted = new Date();
+  this.set(`${providerId}.lastVoted`, new Date());
+
+  await this.validateVotes();
+
   await this.save();
 }
 

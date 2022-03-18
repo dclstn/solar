@@ -7,9 +7,9 @@ import * as statics from './statics.js';
 
 const VoteSchema: Mongoose.Schema = new Mongoose.Schema<VotingInterface>({
   discordId: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
-  topGG: {lastVoted: {type: Date}},
-  discordBotList: {lastVoted: {type: Date}},
-  lastReward: {type: Date},
+  topGG: {lastVoted: {type: Date, default: null}},
+  discordBotList: {lastVoted: {type: Date, default: null}},
+  lastReward: {type: Date, default: null},
 });
 
 VoteSchema.statics = statics;

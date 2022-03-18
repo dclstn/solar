@@ -24,10 +24,8 @@ export default (fastify, opts, done) => {
     const {user} = request.body as TopGGBodyInterface;
     const vote = await Vote.get(user);
 
-    await vote.addVote('topGG');
-
     try {
-      await vote.validateVotes();
+      await vote.addVote('topGG');
     } catch (err) {
       if (err instanceof ResponseError) {
         return;
