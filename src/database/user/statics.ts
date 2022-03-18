@@ -2,7 +2,6 @@ import {User} from 'discord.js';
 import client from '../../client.js';
 
 export async function get(user: User, email: string, locale: string) {
-  console.log(user.id);
   return this.findOneAndUpdate(
     {
       discordId: user.id,
