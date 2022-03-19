@@ -16,17 +16,17 @@ VoteSchema.statics = statics;
 VoteSchema.methods = methods;
 
 VoteSchema.virtual('topGG.hasVoted').get(function hasVoted() {
-  return this.topGG.lastVoted == null ? false : moment(new Date()).diff(this.topGG.lastVoted, 'hours') < 12;
+  return this.topGG.lastVoted == null ? false : moment(this.topGG.lastVoted).add(12, 'hours').isBefore(new Date());
 });
 
 VoteSchema.virtual('discordBotList.hasVoted').get(function hasVoted() {
   return this.discordBotList.lastVoted == null
     ? false
-    : moment(this.discordBotList.lastVoted).diff(new Date(), 'hours') < 12;
+    : moment(this.discordBotList.lastVoted).add(12, 'hours').isBefore(new Date());
 });
 
 VoteSchema.virtual('rewardable').get(function hasVoted() {
-  return this.lastReward == null ? true : moment(new Date()).diff(this.lastReward, 'hours') > 12;
+  return this.lastReward == null ? true : moment(this.lastReward).add(12, 'hours').isAfter(new Date());
 });
 
 export default connection.model<VotingInterface, VotingModelInterface>('Vote', VoteSchema);
