@@ -30,6 +30,7 @@ export default (fastify, opts, done) => {
       await vote.validateVotes();
     } catch (err) {
       if (err instanceof ResponseError) {
+        response.status(400).send({message: err.message});
         return;
       }
 
