@@ -30,7 +30,7 @@ App.decorate('authenticate', async (request, response: FastifyReply) => {
 });
 
 App.register(fastifyCors, {
-  origin: /http:\/\/localhost/,
+  origin: /https:\/\/discordbotlist/,
   credentials: true,
   optionsSuccessStatus: 200,
 });
