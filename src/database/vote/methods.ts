@@ -1,3 +1,4 @@
+import Mongoose from 'mongoose';
 import ResponseError from '../../utils/error.js';
 import {VotingInterface} from '../../types/vote.js';
 import User from '../user/index.js';
@@ -29,7 +30,8 @@ export async function validateVotes(this: VotingInterface) {
   let user = null;
   const gift = Items[ItemIds.GIFT];
   try {
-    user = await User.findOne({discordId: this.discordId});
+    const id = String(this.discordId) as unknown as Mongoose.Schema.Types.Long;
+    user = await User.findOne({discordId: id});
 
     if (user == null) {
       return;
