@@ -14,9 +14,11 @@ export const emoteIds = {
   rucksack: '923894799352868874',
   shopping: '923924831223816242',
   earth: '924657486479364157',
+  info: '659437922436775936',
 };
 
 export const emoteStrings = {
+  info: `<:blobinfo:${emoteIds.info}>`,
   success: `<a:success:${emoteIds.success}>`,
   right: `<a:right:${emoteIds.right}>`,
   left: `<a:left:${emoteIds.left}>`,

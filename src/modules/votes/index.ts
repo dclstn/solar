@@ -20,30 +20,32 @@ commands.on(CommandNames.VOTE, async (interaction: CommandInteraction) => {
       iconURL: interaction.user.avatarURL(),
     });
 
-    let minsLeft = moment(new Date()).diff(moment(vote.topGG.lastVoted).add(12, 'hours'), 'minutes');
-    embed.addField(
-      'Top.GG',
-      vote.topGG.hasVoted
-        ? `${emoteStrings.neutral} Vote again in ${moment.duration(minsLeft, 'minutes').humanize()}`
-        : `${emoteStrings.success} Vote ready!`
-    );
+    let minsLeft;
+    if (!vote.rewardable) {
+      minsLeft = moment(new Date()).diff(moment(vote.lastReward).add(12, 'hours'), 'minutes');
+      embed.addField(
+        'Next Reward',
+        vote.rewardable
+          ? `${emoteStrings.success} Your reward is ready!`
+          : `${emoteStrings.neutral} Reward ready in ${moment.duration(minsLeft, 'minutes').humanize()}`
+      );
+    } else {
+      minsLeft = moment(new Date()).diff(moment(vote.topGG.lastVoted).add(12, 'hours'), 'minutes');
+      embed.addField(
+        'Top.GG',
+        vote.topGG.hasVoted
+          ? `${emoteStrings.neutral} Vote again in ${moment.duration(minsLeft, 'minutes').humanize()}`
+          : `${emoteStrings.success} Vote ready!`
+      );
 
-    minsLeft = moment(new Date()).diff(moment(vote.discordBotList.lastVoted).add(12, 'hours'), 'minutes');
-
-    embed.addField(
-      'DiscordBotList.com',
-      vote.discordBotList.hasVoted
-        ? `${emoteStrings.neutral} Vote again in ${moment.duration(minsLeft, 'minutes').humanize()}`
-        : `${emoteStrings.success} Vote ready!`
-    );
-
-    minsLeft = moment(new Date()).diff(moment(vote.lastReward).add(12, 'hours'), 'minutes');
-    embed.addField(
-      'Next Reward',
-      vote.rewardable
-        ? `${emoteStrings.success} Your reward is ready!`
-        : `${emoteStrings.neutral} Reward ready in ${moment.duration(minsLeft, 'minutes').humanize()}`
-    );
+      minsLeft = moment(new Date()).diff(moment(vote.discordBotList.lastVoted).add(12, 'hours'), 'minutes');
+      embed.addField(
+        'DiscordBotList.com',
+        vote.discordBotList.hasVoted
+          ? `${emoteStrings.neutral} Vote again in ${moment.duration(minsLeft, 'minutes').humanize()}`
+          : `${emoteStrings.success} Vote ready!`
+      );
+    }
 
     embed.setFooter({
       text: "You must vote on each network before you can claim your reward!\nDidn't have space for a gift? do not fret! just click the button below!",
