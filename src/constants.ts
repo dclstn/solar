@@ -481,6 +481,7 @@ export const MessageComponentIds = {
   GLOBAL_LB_USER_MONEY: 'global-lb-user-money',
   LOCAL_LB_USER_MONEY: 'local-lb-user-money',
   UNBOX: 'unbox',
+  VALIDATE_VOTES: 'validate_votes',
 };
 
 export const PaymentIds = {

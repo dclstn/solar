@@ -6,6 +6,7 @@ import {ItemTypes} from './enums.js';
 import type {UserInterface} from '../types/user.js';
 import {numberWithCommas} from './embed.js';
 import type {GroupInterface} from '../types/group.js';
+import client from '../client.js';
 
 export const PROFILE_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.PROFILE)
@@ -24,6 +25,21 @@ export const SHOP_BUTTON = new MessageButton()
   .setStyle('PRIMARY')
   .setLabel('Shop')
   .setEmoji(emoteIds.shopping);
+
+export const VALIDATE_VOTES_BUTTON = new MessageButton()
+  .setCustomId(MessageComponentIds.VALIDATE_VOTES)
+  .setStyle('PRIMARY')
+  .setLabel('Check Votes');
+
+export const VOTE_TOPGG = new MessageButton()
+  .setStyle('LINK')
+  .setURL(`https://top.gg/bot/${client.user.id}/vote`)
+  .setLabel('Vote Top.GG');
+
+export const VOTE_DBL = new MessageButton()
+  .setStyle('LINK')
+  .setURL('https://discordbotlist.com/bots/castle-mania/upvote')
+  .setLabel('Vote DiscordBotList.com');
 
 export const createAcceptButton = (group: GroupInterface) =>
   new MessageButton()

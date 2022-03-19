@@ -2,6 +2,7 @@
 import fastify, {FastifyReply} from 'fastify';
 import fastifyJwt from 'fastify-jwt';
 import chalk from 'chalk';
+import fastifyCors from 'fastify-cors';
 import Sentry from './sentry.js';
 import authRoute from './routes/auth/index.js';
 import stripeRoute from './routes/stripe/index.js';
@@ -26,6 +27,12 @@ App.decorate('authenticate', async (request, response: FastifyReply) => {
   } catch (err) {
     response.status(401).send('Unauthorized');
   }
+});
+
+App.register(fastifyCors, {
+  origin: /http:\/\/localhost/,
+  credentials: true,
+  optionsSuccessStatus: 200,
 });
 
 App.setErrorHandler(async (error, request, reply) => {

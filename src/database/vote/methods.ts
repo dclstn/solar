@@ -13,17 +13,16 @@ export async function addVote(providerId: string) {
 
 export async function validateVotes(this: VotingInterface) {
   if (!this.rewardable) {
-    throw new ResponseError('You cannot yet redeem a reward');
+    throw new ResponseError('You cannot yet redeem a reward!');
   }
 
   if (!this.topGG.hasVoted) {
     throw new ResponseError('You must vote on Top.GG!');
   }
 
-  // they're sending a OPTIONS request for some reason?
-  // if (!this.discordBotList.hasVoted) {
-  //   throw new ResponseError('You must vote on discordbotlist.com!');
-  // }
+  if (!this.discordBotList.hasVoted) {
+    throw new ResponseError('You must vote on discordbotlist.com!');
+  }
 
   const lock = await redlock.acquire([userLockId(this.discordId)], 1000);
 
