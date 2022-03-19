@@ -1,6 +1,7 @@
 import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import moment from 'moment';
+import Long from 'long';
 import {CommandNames, CommandDescriptions, MessageComponentIds} from '../../constants.js';
 import commands from '../../interactions/commands.js';
 import Vote from '../../database/vote/index.js';
@@ -12,7 +13,7 @@ import {emoteStrings} from '../../utils/emotes.js';
 import {VALIDATE_VOTES_BUTTON, VOTE_DBL, VOTE_TOPGG} from '../../utils/buttons.js';
 
 commands.on(CommandNames.VOTE, async (interaction: CommandInteraction) => {
-  const vote = await Vote.get(interaction.user.id);
+  const vote = await Vote.get(Long.fromString(interaction.user.id));
 
   try {
     const embed = new MessageEmbed().setColor('GOLD').setAuthor({
@@ -69,7 +70,7 @@ commands.on(CommandNames.VOTE, async (interaction: CommandInteraction) => {
 });
 
 components.on(MessageComponentIds.VALIDATE_VOTES, async (interaction: ButtonInteraction) => {
-  const vote = await Vote.get(interaction.user.id);
+  const vote = await Vote.get(Long.fromString(interaction.user.id));
 
   try {
     await vote.validateVotes();

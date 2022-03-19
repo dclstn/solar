@@ -2,10 +2,10 @@
 
 import Long from 'long';
 
-export async function get(discordId) {
+export async function get(discordId: Long) {
   return this.findOneAndUpdate(
     {
-      discordId: Long.fromString(discordId),
+      discordId,
     },
     {},
     {

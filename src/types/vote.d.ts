@@ -1,3 +1,4 @@
+import Long from 'long';
 import Mongoose from 'mongoose';
 
 export interface ProviderInterface {
@@ -16,5 +17,5 @@ export interface VotingInterface extends Mongoose.Document {
 }
 
 export interface VotingModelInterface extends Mongoose.Model<VotingInterface> {
-  get(discordId: string): Promise<VotingInterface>;
+  get(discordId: Long): Promise<VotingInterface>;
 }
