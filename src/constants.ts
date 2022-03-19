@@ -97,6 +97,13 @@ export const CommandDescriptions = {
 };
 
 export const CommandOptions = {
+  [CommandNames.VOTE]: [
+    {
+      name: 'user',
+      description: "Inspect a selected user's votes",
+      type: ApplicationCommandOptionTypes.USER,
+    },
+  ],
   [CommandNames.BUY]: [
     {
       name: 'item',

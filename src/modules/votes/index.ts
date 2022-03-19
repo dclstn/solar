@@ -2,7 +2,7 @@ import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} f
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import moment from 'moment';
 import Long from 'long';
-import {CommandNames, CommandDescriptions, MessageComponentIds} from '../../constants.js';
+import {CommandNames, CommandDescriptions, MessageComponentIds, CommandOptions} from '../../constants.js';
 import commands from '../../interactions/commands.js';
 import Vote from '../../database/vote/index.js';
 import {success, warning} from '../../utils/embed.js';
@@ -13,12 +13,13 @@ import {emoteStrings} from '../../utils/emotes.js';
 import {VALIDATE_VOTES_BUTTON, VOTE_DBL, VOTE_TOPGG} from '../../utils/buttons.js';
 
 commands.on(CommandNames.VOTE, async (interaction: CommandInteraction) => {
-  const vote = await Vote.get(Long.fromString(interaction.user.id));
+  const discordUser = interaction.options.getUser('user') || interaction.user;
+  const vote = await Vote.get(Long.fromString(discordUser.id));
 
   try {
     const embed = new MessageEmbed().setColor('GOLD').setAuthor({
-      name: `${interaction.user.username}'s Voting Status ${vote.rewardable ? '(REWARD READY)' : ''}`,
-      iconURL: interaction.user.avatarURL(),
+      name: `${discordUser.username}'s Voting Status ${vote.rewardable ? '(REWARD READY)' : ''}`,
+      iconURL: discordUser.avatarURL(),
     });
 
     let minsLeft;
@@ -92,4 +93,5 @@ commands.registerCommand({
   type: ApplicationCommandTypes.CHAT_INPUT,
   name: CommandNames.VOTE,
   description: CommandDescriptions[CommandNames.VOTE],
+  options: CommandOptions[CommandNames.VOTE],
 });
