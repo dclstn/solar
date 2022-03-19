@@ -1,7 +1,7 @@
 import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
 import isProd from './utils/enviroment.js';
 import {InventoryType} from './utils/enums.js';
-import {BUYABLE_ITEMS, Items} from './utils/items.js';
+import {BUYABLE_ITEMS} from './utils/items.js';
 import {RECIPES} from './utils/recipes.js';
 import {capitalizeFirstLetter} from './utils/index.js';
 
@@ -215,9 +215,7 @@ export const CommandOptions = {
       description: 'Select an item to inspect',
       type: ApplicationCommandOptionTypes.STRING,
       required: true,
-      choices: Object.values(Items)
-        .slice(0, 25)
-        .map(({id, name}) => ({name, value: id})),
+      autocomplete: true,
     },
   ],
   [CommandNames.RAID]: [
@@ -234,9 +232,7 @@ export const CommandOptions = {
       description: 'Select an item to move',
       type: ApplicationCommandOptionTypes.STRING,
       required: true,
-      choices: Object.values(Items)
-        .slice(0, 25)
-        .map(({id, name}) => ({name, value: id})),
+      autocomplete: true,
     },
     {
       name: 'from',

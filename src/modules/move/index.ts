@@ -1,6 +1,6 @@
-import {CommandInteraction} from 'discord.js';
+import {AutocompleteInteraction, CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {Items} from '../../utils/items.js';
+import {handleItemAutocomplete, Items} from '../../utils/items.js';
 import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
 import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
@@ -8,6 +8,7 @@ import Sentry from '../../sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import ResponseError from '../../utils/error.js';
 import {success, warning} from '../../utils/embed.js';
+import autocomplete from '../../interactions/autocomplete.js';
 
 commands.on(CommandNames.MOVE, async (interaction: CommandInteraction) => {
   const fromInventory = interaction.options.getInteger('from');
@@ -35,6 +36,10 @@ commands.on(CommandNames.MOVE, async (interaction: CommandInteraction) => {
   } finally {
     lock.release();
   }
+});
+
+autocomplete.on(CommandNames.MOVE, (interaction: AutocompleteInteraction) => {
+  handleItemAutocomplete(interaction);
 });
 
 commands.registerCommand({

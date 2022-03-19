@@ -416,3 +416,23 @@ export const fuzzy = new Fuse(Object.values(Items), {
   shouldSort: true,
   keys: ['name', 'type'],
 });
+
+export function handleItemAutocomplete(interaction) {
+  const search = interaction.options.getString('item');
+
+  const results =
+    search.length === 0
+      ? DEFAULT_ITEMS.map((item) => ({
+          name: item.name,
+          value: item.id,
+        }))
+      : fuzzy
+          .search(search)
+          .splice(0, 24)
+          .map((result) => ({
+            name: result.item.name,
+            value: result.item.id,
+          }));
+
+  interaction.respond(results);
+}

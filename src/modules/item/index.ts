@@ -1,12 +1,13 @@
-import {ButtonInteraction, CommandInteraction} from 'discord.js';
+import {AutocompleteInteraction, ButtonInteraction, CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
 import commands from '../../interactions/commands.js';
-import {findById, Item, Items} from '../../utils/items.js';
+import {findById, handleItemAutocomplete, Item, Items} from '../../utils/items.js';
 import {ItemTypes} from '../../utils/enums.js';
 import components from '../../interactions/components.js';
 import handleGenerator from './generator.js';
 import handleGift from './gift.js';
+import autocomplete from '../../interactions/autocomplete.js';
 
 class ItemCommand {
   constructor() {
@@ -31,6 +32,10 @@ class ItemCommand {
     }
   }
 }
+
+autocomplete.on(CommandNames.ITEM, (interaction: AutocompleteInteraction) => {
+  handleItemAutocomplete(interaction);
+});
 
 commands.registerCommand({
   type: ApplicationCommandTypes.CHAT_INPUT,

@@ -1,5 +1,5 @@
 import {AutocompleteInteraction, CommandInteraction} from 'discord.js';
-import {DEFAULT_ITEMS, findById, fuzzy} from '../../utils/items.js';
+import {findById, handleItemAutocomplete} from '../../utils/items.js';
 import ResponseError from '../../utils/error.js';
 import {success, warning} from '../../utils/embed.js';
 import Sentry from '../../sentry.js';
@@ -11,23 +11,7 @@ import {CommandNames, AdminSubCommandNames} from '../../constants.js';
 autocomplete.on(CommandNames.ADMIN, (interaction: AutocompleteInteraction) => {
   if (interaction.options.getSubcommand() !== AdminSubCommandNames.GIVE) return;
 
-  const search = interaction.options.getString('item');
-
-  const results =
-    search.length === 0
-      ? DEFAULT_ITEMS.map((item) => ({
-          name: item.name,
-          value: item.id,
-        }))
-      : fuzzy
-          .search(search)
-          .splice(0, 24)
-          .map((result) => ({
-            name: result.item.name,
-            value: result.item.id,
-          }));
-
-  interaction.respond(results);
+  handleItemAutocomplete(interaction);
 });
 
 export default async function giveItem(interaction: CommandInteraction) {
