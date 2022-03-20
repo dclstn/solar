@@ -8,6 +8,17 @@ export function numberWithCommas(x: number): string {
   return y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+const slotsRow = (symbols: Item[], left = emoteStrings.blank, right = emoteStrings.blank) =>
+  [left, left, ...symbols.map((item) => item.emoji), right, right].join(' ');
+
+const slotsDisplay = (symbols: Item[][], message: string) => `
+${`${slotsRow(symbols[0])}\n${slotsRow(symbols[1])}`}
+${slotsRow(symbols[2], emoteStrings.right, emoteStrings.left)}
+${`${slotsRow(symbols[3])}\n${slotsRow(symbols[4])}`}
+
+${message}
+`;
+
 export function success(content: string): MessageEmbed {
   return new MessageEmbed().setColor('GREEN').setDescription(`${emoteStrings.success} ${content}`);
 }
@@ -39,4 +50,18 @@ export function createLeaderboardEmbed(headers: string[], values: string[][]): M
     .setDescription(`\`\`\`md\n${table([headers, ...values])}\`\`\``)
     .setColor('GOLD')
     .setTimestamp(new Date());
+}
+
+export function slotsWin(generators: Item[][], multiplier: number, gems: string) {
+  return new MessageEmbed()
+    .setAuthor('🎰 Slot Machine!')
+    .setColor('GREEN')
+    .setDescription(slotsDisplay(generators, `**You Won!** - ${multiplier}x Combo!\n+${emoteStrings.gem}${gems}`));
+}
+
+export function slotsLose(generators: Item[][], gems: string) {
+  return new MessageEmbed()
+    .setAuthor('🎰 Slot Machine!')
+    .setColor('RED')
+    .setDescription(slotsDisplay(generators, `**You Lost!**\n-${emoteStrings.gem}${gems}`));
 }

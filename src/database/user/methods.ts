@@ -185,3 +185,7 @@ export async function notify(this: UserInterface, content: string) {
     });
   } catch (e) {}
 }
+
+export function updateBalance(amount: number) {
+  this.set('money', this.money + amount);
+}
