@@ -41,7 +41,6 @@ export default async function spinSlots(interaction: CommandInteraction) {
       await user.save();
 
       interaction.reply({
-        ephemeral: true,
         embeds: [slotsWin(symbols, multiplier, numberWithCommas(wager * multiplier))],
       });
     } else {
@@ -49,7 +48,6 @@ export default async function spinSlots(interaction: CommandInteraction) {
       await user.save();
 
       interaction.reply({
-        ephemeral: true,
         embeds: [slotsLose(symbols, numberWithCommas(wager))],
       });
     }
