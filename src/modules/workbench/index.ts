@@ -19,13 +19,15 @@ import redlock, {userLock} from '../../redis/locks.js';
 import {capitalizeFirstLetter} from '../../utils/index.js';
 import {handleRecipesPage} from './recipes.js';
 import components from '../../interactions/components.js';
+import {emoteStrings} from '../../utils/emotes.js';
+import {Items} from '../../utils/items.js';
 
 function createEmbed(workBench: BenchInterface, interaction) {
   const {tasks} = workBench;
 
   const embed = new MessageEmbed()
     .setColor('PURPLE')
-    .setAuthor({name: interaction.user.username, iconURL: interaction.user.avatarURL()});
+    .setAuthor({name: `${interaction.user.username}'s Workbench`, iconURL: interaction.user.avatarURL()});
 
   if (tasks.length === 0) {
     embed.setDescription('You have no on-going tasks, `/workbench craft` to get started!');
@@ -33,17 +35,28 @@ function createEmbed(workBench: BenchInterface, interaction) {
 
   for (const task of tasks) {
     const recipe = RECIPES[task.recipeId];
-    // const item = Items[recipe.reward];
+    const item = Items[recipe.reward];
 
     const minsLeft = moment(task.endDate).diff(new Date(), 'minutes');
 
     embed.addField(
       `Crafting ${capitalizeFirstLetter(recipe.name)}`,
-      `${capitalizeFirstLetter(moment.duration(minsLeft, 'minutes').humanize())} remaining`
+      `${capitalizeFirstLetter(moment.duration(minsLeft, 'minutes').humanize())} remaining`,
+      true
     );
+
+    embed.addField(
+      'Recipe',
+      `${recipe.requirements.map((itemId) => Items[itemId].emoji).join(' ')} ${emoteStrings.right} ${item.emoji}`,
+      true
+    );
+
+    embed.addField('Finish time', `<t:${moment(task.endDate).unix()}>`, true);
   }
 
-  embed.setFooter({text: "Task's are checked on intervals of every minute"});
+  embed.setFooter({
+    text: "Your craft will fail if it doesn't meet the requirements on completion!",
+  });
 
   return embed;
 }

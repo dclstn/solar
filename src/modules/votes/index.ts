@@ -18,7 +18,7 @@ commands.on(CommandNames.VOTE, async (interaction: CommandInteraction) => {
 
   try {
     const embed = new MessageEmbed().setColor('GOLD').setAuthor({
-      name: `${discordUser.username}'s Voting Status ${vote.rewardable ? '(REWARD READY)' : ''}`,
+      name: `${discordUser.username}'s Voting Status ${vote.rewardable}`,
       iconURL: discordUser.avatarURL(),
     });
 
@@ -27,25 +27,28 @@ commands.on(CommandNames.VOTE, async (interaction: CommandInteraction) => {
       minsLeft = moment(new Date()).diff(moment(vote.lastReward).add(12, 'hours'), 'minutes');
       embed.addField(
         'Next Reward',
-        vote.rewardable
-          ? `${emoteStrings.success} Your reward is ready!`
-          : `${emoteStrings.neutral} Reward ready in ${moment.duration(minsLeft, 'minutes').humanize()}`
+        `${emoteStrings.neutral} Claimed! (Reward ready in ${moment.duration(minsLeft, 'minutes').humanize()})`
       );
     } else {
       minsLeft = moment(new Date()).diff(moment(vote.topGG.lastVoted).add(12, 'hours'), 'minutes');
       embed.addField(
-        'Top.GG',
+        'Step 1: Vote onTop.GG',
         vote.topGG.hasVoted
-          ? `${emoteStrings.neutral} Vote again in ${moment.duration(minsLeft, 'minutes').humanize()}`
-          : `${emoteStrings.success} Vote ready!`
+          ? `${emoteStrings.success} Voted! (Vote again in ${moment.duration(minsLeft, 'minutes').humanize()})`
+          : `${emoteStrings.neutral} Vote ready!`
       );
 
       minsLeft = moment(new Date()).diff(moment(vote.discordBotList.lastVoted).add(12, 'hours'), 'minutes');
       embed.addField(
-        'DiscordBotList.com',
+        'Step 2: Vote on DiscordBotList.com',
         vote.discordBotList.hasVoted
-          ? `${emoteStrings.neutral} Vote again in ${moment.duration(minsLeft, 'minutes').humanize()}`
-          : `${emoteStrings.success} Vote ready!`
+          ? `${emoteStrings.success} Voted! (Vote again in ${moment.duration(minsLeft, 'minutes').humanize()})`
+          : `${emoteStrings.neutral} Vote ready!`
+      );
+
+      embed.addField(
+        `Step 3: Recieve Reward`,
+        `${emoteStrings.neutral} Your reward is ready! (complete the other steps!)`
       );
     }
 

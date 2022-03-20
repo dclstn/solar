@@ -29,7 +29,7 @@ export const SHOP_BUTTON = new MessageButton()
 export const VALIDATE_VOTES_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.VALIDATE_VOTES)
   .setStyle('PRIMARY')
-  .setLabel('Check Votes');
+  .setLabel('Claim Reward');
 
 export const VOTE_TOPGG = new MessageButton()
   .setStyle('LINK')
