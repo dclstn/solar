@@ -45,6 +45,7 @@ export interface UserInterface extends Mongoose.Document {
   search(term): Fuse.default.FuseResult<Item>[];
   updateDoc(): void;
   notify(content: string): Promise<void>;
+  updateBalance(amount: number): void;
 }
 
 export interface TopGemsUserInterface extends Mongoose.Document {

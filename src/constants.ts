@@ -422,6 +422,15 @@ export const CommandOptions = {
       name: GameSubCommandNames.SPIN,
       description: '🤞 Spin the wheel',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'wager',
+          description: 'How many gems do you wish to wager?',
+          type: ApplicationCommandOptionTypes.INTEGER,
+          required: true,
+          min_value: 1,
+        },
+      ],
     },
     {
       name: GameSubCommandNames.ROLL,
