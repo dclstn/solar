@@ -9,10 +9,8 @@ import User from '../../database/user/index.js';
 import {sale, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
-import {PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
+import {createSellButton, PROFILE_BUTTON} from '../../utils/buttons.js';
 import autocomplete from '../../interactions/autocomplete.js';
-
-const NAV_ROW = new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON);
 
 async function processSale(interaction: ButtonInteraction | CommandInteraction, item: Item, amount: number) {
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
@@ -21,6 +19,8 @@ async function processSale(interaction: ButtonInteraction | CommandInteraction, 
     const user = await User.get(interaction.user);
     user.sell(item, amount);
     await user.save();
+
+    const NAV_ROW = new MessageActionRow().addComponents(createSellButton(user, item, 'Sell Another'), PROFILE_BUTTON);
 
     interaction.reply({
       embeds: [sale(item, amount)],

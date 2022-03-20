@@ -74,10 +74,10 @@ export const createUnboxButton = (user: UserInterface, item: Item, another = fal
     .setEmoji(item.emojiId)
     .setDisabled(!user.has(item));
 
-export const createSellButton = (user: UserInterface, item: Item) =>
+export const createSellButton = (user: UserInterface, item: Item, text?: string) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.SELL}.${item.id}`)
-    .setLabel(`Sell for ${numberWithCommas(item.price / 2)}`)
+    .setLabel(text != null ? text : `Sell for ${numberWithCommas(item.price / 2)}`)
     .setEmoji(emoteIds.gem)
     .setStyle('DANGER')
     .setDisabled(!user.has(item));
