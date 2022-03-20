@@ -408,7 +408,7 @@ export const BUYABLE_ITEMS = Object.values(Items).filter((item) => item.buyable)
 export const DEFAULT_BUYABLE_ITEMS = BUYABLE_ITEMS.slice(0, 24);
 export const DEFAULT_ITEMS = Object.values(Items).slice(0, 24);
 
-export const SlotItems = BUYABLE_ITEMS;
+export const SLOT_ITEMS = BUYABLE_ITEMS.slice(0, 4);
 
 export function findById(itemId: string): Item {
   return Items[itemId];
