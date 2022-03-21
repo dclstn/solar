@@ -6,6 +6,7 @@ import Sentry from '../../sentry.js';
 
 import {numberWithCommas, slotsWin, slotsLose, warning} from '../../utils/embed.js';
 import {SLOT_ITEMS, Item} from '../../utils/items.js';
+import {secureMathRandom} from '../../utils/misc.js';
 
 const SYMBOL_LIST = Object.values(SLOT_ITEMS);
 
@@ -16,7 +17,7 @@ export default async function spinSlots(interaction: CommandInteraction) {
   for (let i = 0; i < 5; i += 1) {
     symbols.push([]);
     for (let j = 0; j < 3; j += 1) {
-      symbols[i].push(SYMBOL_LIST[Math.floor(Math.random() * SYMBOL_LIST.length)]);
+      symbols[i].push(SYMBOL_LIST[Math.floor(secureMathRandom() * SYMBOL_LIST.length)]);
     }
   }
 
