@@ -54,14 +54,14 @@ export function createLeaderboardEmbed(headers: string[], values: string[][]): M
 
 export function slotsWin(generators: Item[][], multiplier: number, gems: string) {
   return new MessageEmbed()
-    .setAuthor('🎰 Slot Machine!')
+    .setAuthor({name: '🎰 Slot Machine!'})
     .setColor('GREEN')
     .setDescription(slotsDisplay(generators, `**You Won!** - ${multiplier}x Combo!\n+${emoteStrings.gem}${gems}`));
 }
 
 export function slotsLose(generators: Item[][], gems: string) {
   return new MessageEmbed()
-    .setAuthor('🎰 Slot Machine!')
+    .setAuthor({name: '🎰 Slot Machine!'})
     .setColor('RED')
     .setDescription(slotsDisplay(generators, `**You Lost!**\n-${emoteStrings.gem}${gems}`));
 }
