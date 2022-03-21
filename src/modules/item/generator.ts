@@ -36,7 +36,10 @@ export default async function handleGenerator(interaction: CommandInteraction | 
       );
     }
 
-    const actionRow = new MessageActionRow().addComponents(createBuyButton(user, item), createSellButton(user, item));
+    const actionRow = new MessageActionRow().addComponents(
+      ...(item.buyable ? [createBuyButton(user, item)] : []),
+      createSellButton(user, item)
+    );
 
     interaction.reply({
       embeds: [embed],
