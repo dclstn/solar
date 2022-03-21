@@ -38,6 +38,7 @@ export default async function handleGenerator(interaction: CommandInteraction | 
 
     const actionRow = new MessageActionRow().addComponents(
       ...(item.buyable ? [createBuyButton(user, item)] : []),
+      ...(!item.buyable && recipe != null ? [createCraftButton(user, item, recipe)] : []),
       createSellButton(user, item)
     );
 
@@ -45,7 +46,9 @@ export default async function handleGenerator(interaction: CommandInteraction | 
       embeds: [embed],
       components: [
         actionRow,
-        ...(recipe != null ? [new MessageActionRow().addComponents(createCraftButton(user, item, recipe))] : []),
+        ...(recipe != null && item.buyable
+          ? [new MessageActionRow().addComponents(createCraftButton(user, item, recipe))]
+          : []),
       ],
       ephemeral: true,
     });
