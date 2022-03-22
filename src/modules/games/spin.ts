@@ -37,6 +37,10 @@ export default async function spinSlots(interaction: CommandInteraction) {
   try {
     const user = await User.get(interaction.user);
 
+    if (user.money < wager) {
+      throw new ResponseError('You do not have enoguh funds');
+    }
+
     if (multiplier > 1) {
       user.updateBalance(wager * (multiplier - 1));
       await user.save();
