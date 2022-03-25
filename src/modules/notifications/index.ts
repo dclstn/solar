@@ -25,5 +25,6 @@ components.on(MessageComponentIds.TOGGLE_NOTIFICATION, async (interaction: Butto
 
   await interaction.reply({
     embeds: [success(cooldown[type].shouldNotify ? 'You will now be notified!' : 'You will no longer be notified!')],
+    ephemeral: true,
   });
 });
