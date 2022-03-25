@@ -1,6 +1,11 @@
+import {MessageButton} from 'discord.js';
+
 export default class ResponseError extends Error {
-  constructor(message: string) {
+  components: [MessageButton];
+
+  constructor(message: string, components?: [MessageButton]) {
     super(message);
     this.name = 'ResponseError';
+    this.components = components;
   }
 }

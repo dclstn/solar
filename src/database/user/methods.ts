@@ -4,7 +4,7 @@ import flatten from 'lodash.flatten';
 import uniqby from 'lodash.uniqby';
 import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
-import {Chances, Item, ItemRarities, Items} from '../../utils/items.js';
+import {Chances, Item, ItemIds, ItemRarities, Items} from '../../utils/items.js';
 import type {InventoryInterface, UserInterface} from '../../types/user.js';
 import type {ItemInterface} from '../../types/item.js';
 import type {GroupInterface} from '../../types/group.js';
@@ -12,6 +12,8 @@ import {InventoryType} from '../../utils/enums.js';
 import {secureMathRandom} from '../../utils/misc.js';
 import client from '../../client.js';
 import {success} from '../../utils/embed.js';
+import Cooldown from '../cooldown/index.js';
+import {createToggleNotificationButton} from '../../utils/buttons.js';
 
 export function add(item: Item, amount: number) {
   if (amount > this.totalFree()) {
@@ -188,4 +190,34 @@ export async function notify(this: UserInterface, content: string) {
 
 export function updateBalance(amount: number) {
   this.set('money', this.money + amount);
+}
+
+export async function spinWheel() {
+  const cooldown = await Cooldown.get(this.discordId);
+
+  if (moment(cooldown.wheelSpin.endDate).isAfter(new Date())) {
+    const diff = moment(cooldown.wheelSpin.endDate).diff(new Date(), 'seconds');
+
+    throw new ResponseError(
+      `You cannot spin the wheel yet, ${moment.duration(diff, 'seconds').humanize()} remaining`,
+      !cooldown.wheelSpin.shouldNotify ? [createToggleNotificationButton('wheelSpin')] : null
+    );
+  }
+
+  if (this.totalFree() === 0) {
+    throw new ResponseError(`You do not have enough space to perform this action`);
+  }
+
+  cooldown.set('wheelSpin.endDate', moment(new Date()).add(1, 'day'));
+  cooldown.set('wheelSpin.notified', false);
+
+  const win = secureMathRandom() > 0.5;
+
+  if (win) {
+    this.add(Items[ItemIds.GIFT], 1);
+    await this.save();
+  }
+
+  await cooldown.save();
+  return win;
 }

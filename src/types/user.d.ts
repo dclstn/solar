@@ -46,6 +46,7 @@ export interface UserInterface extends Mongoose.Document {
   updateDoc(): void;
   notify(content: string): Promise<void>;
   updateBalance(amount: number): void;
+  spinWheel(): Promise<boolean>;
 }
 
 export interface TopGemsUserInterface extends Mongoose.Document {

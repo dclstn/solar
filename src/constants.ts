@@ -42,8 +42,8 @@ export const WorkBenchSubCommandNames = {
 };
 
 export const GameSubCommandNames = {
-  ROLL: 'roll',
   SPIN: 'spin',
+  SLOTS: 'slots',
 };
 
 export const GroupSubCommandNames = {
@@ -419,8 +419,8 @@ export const CommandOptions = {
   ],
   [CommandNames.GAMES]: [
     {
-      name: GameSubCommandNames.SPIN,
-      description: '🤞 Spin the wheel',
+      name: GameSubCommandNames.SLOTS,
+      description: 'Play a game of slots!',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
       options: [
         {
@@ -433,50 +433,9 @@ export const CommandOptions = {
       ],
     },
     {
-      name: GameSubCommandNames.ROLL,
-      description: '🤞 Roll a dice',
+      name: GameSubCommandNames.SPIN,
+      description: 'Spin the wheel for a prize!',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
-      options: [
-        {
-          name: 'wager',
-          description: 'How many gems do you wish to wager?',
-          type: ApplicationCommandOptionTypes.INTEGER,
-          required: true,
-          min_value: 1,
-        },
-        {
-          name: 'side',
-          description: 'Choose the side of die',
-          type: ApplicationCommandOptionTypes.INTEGER,
-          required: true,
-          choices: [
-            {
-              name: 'One',
-              value: 1,
-            },
-            {
-              name: 'Two',
-              value: 2,
-            },
-            {
-              name: 'Three',
-              value: 3,
-            },
-            {
-              name: 'Four',
-              value: 4,
-            },
-            {
-              name: 'Five',
-              value: 5,
-            },
-            {
-              name: 'Six',
-              value: 6,
-            },
-          ],
-        },
-      ],
     },
   ],
 };
@@ -497,7 +456,8 @@ export const MessageComponentIds = {
   GLOBAL_LB_USER_MONEY: 'global-lb-user-money',
   LOCAL_LB_USER_MONEY: 'local-lb-user-money',
   UNBOX: 'unbox',
-  VALIDATE_VOTES: 'validate_votes',
+  VALIDATE_VOTES: 'validate-votes',
+  TOGGLE_NOTIFICATION: 'toggle-notification',
 };
 
 export const PaymentIds = {

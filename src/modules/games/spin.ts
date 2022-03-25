@@ -1,64 +1,69 @@
-import {CommandInteraction} from 'discord.js';
-import redlock, {userLock} from '../../redis/locks.js';
-import User from '../../database/user/index.js';
+import {CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
+import cron from 'node-cron';
+import {warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
+import redlock, {userLock} from '../../redis/locks.js';
+import User from '../../database/user/index.js';
+import Cooldown from '../../database/cooldown/index.js';
+import {createToggleNotificationButton} from '../../utils/buttons.js';
 
-import {numberWithCommas, slotsWin, slotsLose, warning} from '../../utils/embed.js';
-import {SLOT_ITEMS, Item} from '../../utils/items.js';
-import {secureMathRandom} from '../../utils/misc.js';
+const DAILY_WHEEL_SPIN_QUERY = {
+  'wheelSpin.endDate': {$lte: new Date()},
+  'wheelSpin.notified': false,
+  'wheelSpin.shouldNotify': true,
+};
 
-const SYMBOL_LIST = Object.values(SLOT_ITEMS);
+const cronJob = cron.schedule('*/60 * * * * *', async () => {
+  const readyCooldowns = await Cooldown.find(DAILY_WHEEL_SPIN_QUERY);
 
-export default async function spinSlots(interaction: CommandInteraction) {
-  const wager = interaction.options.getInteger('wager');
-  const symbols: Item[][] = [];
-
-  for (let i = 0; i < 5; i += 1) {
-    symbols.push([]);
-    for (let j = 0; j < 3; j += 1) {
-      symbols[i].push(SYMBOL_LIST[Math.floor(secureMathRandom() * SYMBOL_LIST.length)]);
-    }
+  if (readyCooldowns.length === 0) {
+    return;
   }
 
-  // It would probably be more efficient on average for larger arrays to use a hashmap to store counts, but this
-  // list will only ever be 3 items long, so it doesn't really matter too much I guess. Might even be able to do it
-  // with only 3 checks (compare 0 & 1, 1 & 2, 2 & 0 and if only one is true, then that's a x2, if all are true, that's
-  // a x3, and if none are true, then there is no combo), but I'll get this done and then think about it for a bit and make sure it checks out after.
-  // - Josh
-  //
-  // 1. Of middle row (symbols[2])
-  // 2. Map each item in middle row to the number of occurences of that item in the row
-  // 3. Get max of the new list of counts
-  const multiplier = Math.max(...symbols[2].map((item, i, arr) => arr.filter((_item) => _item.id === item.id).length));
+  await Cooldown.updateMany(DAILY_WHEEL_SPIN_QUERY, {'wheelSpin.notified': true});
 
+  for await (const cooldown of readyCooldowns) {
+    const user = await User.findOne({discordId: cooldown.discordId});
+
+    if (user == null) {
+      continue;
+    }
+
+    await user.notify('Your daily wheel-spin is ready!');
+  }
+});
+
+cronJob.start();
+
+const LOSS_IMAGE = 'https://castlemania.bot/imgs/slot_machine_loss.gif';
+const WIN_IMAGE = 'https://castlemania.bot/imgs/slot_machine_win_legendary.gif';
+
+const createEmbed = (win: boolean) =>
+  new MessageEmbed()
+    .setImage(win ? WIN_IMAGE : LOSS_IMAGE)
+    .setColor(win ? 'GREEN' : 'RED')
+    .setFooter({text: 'You can spin Loot Mania every-day!'});
+
+export default async function spinWheel(interaction: CommandInteraction) {
   const lock = await redlock.acquire([userLock(interaction.user)], 1000);
 
   try {
-    const user = await User.get(interaction.user);
+    const [user, cooldown] = await Promise.all([User.get(interaction.user), Cooldown.get(interaction.user.id)]);
+    const win = await user.spinWheel();
 
-    if (user.money <= wager) {
-      throw new ResponseError('You do not have enough funds');
-    }
-
-    if (multiplier > 1) {
-      user.updateBalance(wager * (multiplier - 1));
-      await user.save();
-
-      interaction.reply({
-        embeds: [slotsWin(symbols, multiplier, numberWithCommas(wager * multiplier))],
-      });
-    } else {
-      user.updateBalance(wager * -1);
-      await user.save();
-
-      interaction.reply({
-        embeds: [slotsLose(symbols, numberWithCommas(wager))],
-      });
-    }
+    await interaction.reply({
+      ephemeral: true,
+      embeds: [createEmbed(win)],
+      ...(!cooldown.voting.shouldNotify ? [createToggleNotificationButton('wheelSpin')] : []),
+    });
   } catch (err) {
     if (err instanceof ResponseError) {
-      interaction.reply({embeds: [warning(err.message)], ephemeral: true});
+      interaction.reply({
+        embeds: [warning(err.message)],
+        ...(err.components != null ? {components: [new MessageActionRow().addComponents(...err.components)]} : {}),
+        ephemeral: true,
+      });
       return;
     }
 

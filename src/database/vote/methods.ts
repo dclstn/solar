@@ -1,4 +1,5 @@
 import Mongoose from 'mongoose';
+import moment from 'moment';
 import ResponseError from '../../utils/error.js';
 import {VotingInterface} from '../../types/vote.js';
 import User from '../user/index.js';
@@ -6,6 +7,7 @@ import {success} from '../../utils/embed.js';
 import {ItemIds, Items} from '../../utils/items.js';
 import redlock, {userLockId} from '../../redis/locks.js';
 import webhook from '../../webhook.js';
+import Cooldown from '../cooldown/index.js';
 
 export async function addVote(providerId: string) {
   this[providerId].lastVoted = new Date();
@@ -28,17 +30,22 @@ export async function validateVotes(this: VotingInterface) {
   const lock = await redlock.acquire([userLockId(this.discordId)], 1000);
 
   let user = null;
+  let cooldown = null;
   const gift = Items[ItemIds.GIFT];
+
   try {
     const id = String(this.discordId) as unknown as Mongoose.Schema.Types.Long;
-    user = await User.findOne({discordId: id});
+    [user, cooldown] = await Promise.all([User.findOne({discordId: id}), Cooldown.get(id)]);
 
-    if (user == null) {
+    if (user == null || cooldown == null) {
       return;
     }
 
+    cooldown.set('voting.endDate', moment(new Date()).add(12, 'hours').toDate());
+    cooldown.set('voting.notified', false);
+
     user.add(gift, 1);
-    await user.save();
+    await Promise.all([user.save(), cooldown.save()]);
   } finally {
     await lock.release();
   }

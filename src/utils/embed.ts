@@ -24,7 +24,7 @@ export function success(content: string): MessageEmbed {
 }
 
 export function warning(content: string): MessageEmbed {
-  return new MessageEmbed().setColor('RED').setDescription(`${emoteStrings.error} ${content}`);
+  return new MessageEmbed().setColor('ORANGE').setDescription(`${emoteStrings.neutral} ${content}`);
 }
 
 export function purchase(item: Item, amount: number): MessageEmbed {

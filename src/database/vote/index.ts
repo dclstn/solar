@@ -5,7 +5,7 @@ import connection from '../connection.js';
 import * as methods from './methods.js';
 import * as statics from './statics.js';
 
-const VoteSchema: Mongoose.Schema = new Mongoose.Schema<VotingInterface>({
+const VoteSchema: Mongoose.Schema = new Mongoose.Schema<VotingInterface, VotingModelInterface>({
   discordId: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
   topGG: {lastVoted: {type: Date, default: null}},
   discordBotList: {lastVoted: {type: Date, default: null}},

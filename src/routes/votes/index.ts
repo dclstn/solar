@@ -45,7 +45,7 @@ export default (fastify, opts, done) => {
       return;
     }
 
-    const vote = await Vote.get(Long.fromString(provider.discordId));
+    const vote = await Vote.get(provider.discordId);
     await vote.addVote(provider.id);
 
     try {

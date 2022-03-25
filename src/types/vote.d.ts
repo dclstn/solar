@@ -17,5 +17,5 @@ export interface VotingInterface extends Mongoose.Document {
 }
 
 export interface VotingModelInterface extends Mongoose.Model<VotingInterface> {
-  get(discordId: Long): Promise<VotingInterface>;
+  get(discordId: Long | string): Promise<VotingInterface>;
 }

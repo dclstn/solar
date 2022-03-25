@@ -41,6 +41,13 @@ export const VOTE_DBL = new MessageButton()
   .setURL('https://discordbotlist.com/bots/castle-mania/upvote')
   .setLabel('Vote DiscordBotList.com');
 
+export const createToggleNotificationButton = (type: string) =>
+  new MessageButton()
+    .setCustomId(`${MessageComponentIds.TOGGLE_NOTIFICATION}.${type}`)
+    .setStyle('PRIMARY')
+    .setLabel('Notify me when ready')
+    .setEmoji('552927522824781834');
+
 export const createAcceptButton = (group: GroupInterface) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.ACCEPT_INVITE}.${group._id}`)
