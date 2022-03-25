@@ -1,4 +1,3 @@
-import {User} from 'discord.js';
 import Mongoose from 'mongoose';
 import {VotingInterface} from './vote';
 

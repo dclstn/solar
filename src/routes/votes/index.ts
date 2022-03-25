@@ -1,7 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 import type {FastifyRequest, FastifyReply} from 'fastify';
 import dotenv from 'dotenv';
-import Long from 'long';
 import Vote from '../../database/vote/index.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';

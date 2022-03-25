@@ -2,7 +2,6 @@ import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} f
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import moment from 'moment';
 import cron from 'node-cron';
-import Long from 'long';
 import {CommandNames, CommandDescriptions, MessageComponentIds, CommandOptions} from '../../constants.js';
 import commands from '../../interactions/commands.js';
 import Vote from '../../database/vote/index.js';
