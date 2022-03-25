@@ -1,6 +1,5 @@
 import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
-import moment from 'moment';
 import connection from '../connection.js';
 import * as statics from './statics.js';
 import {CoolDownModelInterface, CoolDownsInterface} from '../../types/cooldown.js';
