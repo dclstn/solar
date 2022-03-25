@@ -33,7 +33,7 @@ export const VALIDATE_VOTES_BUTTON = new MessageButton()
 
 export const VOTE_TOPGG = new MessageButton()
   .setStyle('LINK')
-  .setURL(`https://top.gg/bot/${client.user.id}/vote`)
+  .setURL(`https://top.gg/bot/757120026867138580/vote`)
   .setLabel('Vote Top.GG');
 
 export const VOTE_DBL = new MessageButton()
