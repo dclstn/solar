@@ -6,7 +6,6 @@ import {ItemTypes} from './enums.js';
 import type {UserInterface} from '../types/user.js';
 import {numberWithCommas} from './embed.js';
 import type {GroupInterface} from '../types/group.js';
-import client from '../client.js';
 
 export const PROFILE_BUTTON = new MessageButton()
   .setCustomId(MessageComponentIds.PROFILE)
