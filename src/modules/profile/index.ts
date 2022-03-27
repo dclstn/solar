@@ -22,9 +22,9 @@ import {STORAGE_BUTTON, PROFILE_BUTTON, SHOP_BUTTON, createItemButton} from '../
 
 const createProfileDescription = (user: UserInterface, grid: string) => `
 
-${emoteStrings.gem} Gems: **${numberWithCommas(user.money)}**
-💰 Gems Per Hour: **${numberWithCommas(user.getInventory(InventoryType.Main).gph())}**
-${user.group != null ? `🏰 Group: **${user.group.name}**\n` : ''}
+${emoteStrings.gem} Gems **${numberWithCommas(user.money)}**
+💰 Gems Per Hour **${numberWithCommas(user.getInventory(InventoryType.Main).gph())}**
+${user.group != null ? `🏰 Group **${user.group.name}**\n` : ''}
 ${grid}
 `;
 
@@ -44,7 +44,7 @@ async function createEmbed(user: UserInterface, inventoryType: number): Promise<
     .setDescription(inventoryType === InventoryType.Main ? createProfileDescription(user, gridString) : gridString)
     .setColor(user.colour)
     .setTimestamp(new Date())
-    .setFooter({text: `Pvp: ${user.pvp.enabled} • ${InventoryType[inventoryType]}`});
+    .setFooter({text: `PVP: ${user.pvp.enabled ? 'on' : 'off'} • ${InventoryType[inventoryType]}`});
 }
 
 function handleReply(

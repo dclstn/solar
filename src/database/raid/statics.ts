@@ -104,6 +104,11 @@ export async function createRaid(meta: RaidCreateInterface) {
   userRaid.set('lastRaid', new Date());
 
   const sessionId = targetRaid.discordId;
+
+  try {
+    await client.del(sessionId);
+  } catch (err) {}
+
   await Promise.all([client.lpush(sessionId, userRaid.discordId), targetRaid.save(), userRaid.save()]);
 
   setTimeout(async () => {
