@@ -1,6 +1,6 @@
 import {CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import cron from 'node-cron';
-import {warning} from '../../utils/embed.js';
+import {success, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
@@ -30,7 +30,7 @@ const cronJob = cron.schedule('*/60 * * * * *', async () => {
       continue;
     }
 
-    await user.notify('Your daily wheel-spin is ready!');
+    await user.notify({embeds: [success('Your daily wheel-spin is ready!')]});
   }
 });
 

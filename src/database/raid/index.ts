@@ -18,11 +18,11 @@ const RaidSchema: Mongoose.Schema = new Mongoose.Schema<RaidInterface>({
 });
 
 RaidSchema.virtual('canRaid').get(function canRaid() {
-  return this.lastRaid == null ? true : moment(this.lastRaid).add(3, 'hours').isBefore(new Date());
+  return this.lastRaid == null ? true : moment(this.lastRaid).add(1, 'hours').isBefore(new Date());
 });
 
 RaidSchema.virtual('isRaidable').get(function isRaidable() {
-  return this.lastRaided == null ? true : moment(this.lastRaided).add(3, 'hours').isBefore(new Date());
+  return this.lastRaided == null ? true : moment(this.lastRaided).add(1, 'hours').isBefore(new Date());
 });
 
 RaidSchema.statics = statics;

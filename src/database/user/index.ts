@@ -1,5 +1,6 @@
 import Mongoose from 'mongoose';
 import mongooseLong from 'mongoose-long';
+import moment from 'moment';
 import connection from '../connection.js';
 import type {ItemInterface} from '../../types/item.js';
 import * as statics from './statics.js';
@@ -87,6 +88,10 @@ const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModel
 
 UserSchema.statics = statics;
 UserSchema.methods = methods;
+
+UserSchema.virtual('pvp.canDisable').get(function canDisable() {
+  return this.pvp.updated == null ? true : moment(this.pvp.updated).add(1, 'day').isBefore(new Date());
+});
 
 UserSchema.virtual('level').get(function calcLevel() {
   return Math.floor(Math.sqrt(this.exp));

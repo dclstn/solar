@@ -12,7 +12,7 @@ import redlock, {userLock} from '../../redis/locks.js';
 
 const {duration} = moment;
 
-const RAID_TIMEOUT = 5000;
+const RAID_TIMEOUT = 10000;
 
 export async function get(discordId: Mongoose.Schema.Types.Long) {
   return this.findOneAndUpdate(
@@ -77,7 +77,7 @@ export async function createRaid(meta: RaidCreateInterface) {
   }
 
   if (!targetModel.pvp.enabled) {
-    throw new ResponseError('Target must enable pvp first.');
+    throw new ResponseError('Target must enable pvp first');
   }
 
   if (target.id === user.id) {
@@ -87,14 +87,14 @@ export async function createRaid(meta: RaidCreateInterface) {
   const [targetRaid, userRaid] = await Promise.all([this.get(target.id), this.get(user.id)]);
 
   if (!userRaid.canRaid) {
-    const waitingTime = moment(userRaid.lastRaided).add(3, 'hours').diff(new Date(), 'seconds');
+    const waitingTime = moment(userRaid.lastRaided).add(1, 'hours').diff(new Date(), 'seconds');
     throw new ResponseError(
       `This user isnt currently raidable, available in ${duration(waitingTime, 'seconds').humanize()}`
     );
   }
 
   if (!targetRaid.isRaidable) {
-    const waitingTime = moment(targetRaid.lastRaided).add(3, 'hours').diff(new Date(), 'seconds');
+    const waitingTime = moment(targetRaid.lastRaided).add(1, 'hours').diff(new Date(), 'seconds');
     throw new ResponseError(
       `This user isnt currently raidable, available in ${duration(waitingTime, 'seconds').humanize()}`
     );

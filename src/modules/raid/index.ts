@@ -16,8 +16,9 @@ import webhook from '../../webhook.js';
 const createInitialEmbed = (user: User, target: User) =>
   new MessageEmbed()
     .setAuthor({name: `${user.username} is raiding ${target.username}`, iconURL: user.avatarURL()})
-    .setDescription(`${emoteStrings.loading} Raid in progress...`)
-    .setColor('ORANGE');
+    .setDescription(`${emoteStrings.loading} Raid in progress`)
+    .setFooter({text: 'Raid will commence in a few seconds...'})
+    .setColor('DARK_GREEN');
 
 const createCompleteEmbed = (raidMeta: RaidResultInterface) => {
   const raidersUsernames = raidMeta.raiders.map((raider) => `**${raider.username}**`).join(', ');
@@ -42,6 +43,7 @@ async function handleRaidComplete(raidMeta: RaidResultInterface, interaction: Co
       components: [new MessageActionRow().addComponents(PROFILE_BUTTON, SHOP_BUTTON)],
     }),
     webhook.send({content: mentions, embeds: [embed]}),
+    raidMeta.target.notify({embeds: [embed]}),
   ]);
 }
 

@@ -44,7 +44,7 @@ async function createEmbed(user: UserInterface, inventoryType: number): Promise<
     .setDescription(inventoryType === InventoryType.Main ? createProfileDescription(user, gridString) : gridString)
     .setColor(user.colour)
     .setTimestamp(new Date())
-    .setFooter({text: `Lvl ${user.level} • ${InventoryType[inventoryType]}`});
+    .setFooter({text: `Pvp: ${user.pvp.enabled} • ${InventoryType[inventoryType]}`});
 }
 
 function handleReply(

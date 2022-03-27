@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Fuse from 'fuse.js';
+import type {MessagePayload} from 'discord.js';
 import flatten from 'lodash.flatten';
 import uniqby from 'lodash.uniqby';
 import ResponseError from '../../utils/error.js';
@@ -11,7 +12,6 @@ import type {GroupInterface} from '../../types/group.js';
 import {InventoryType} from '../../utils/enums.js';
 import {secureMathRandom} from '../../utils/misc.js';
 import client from '../../client.js';
-import {success} from '../../utils/embed.js';
 import Cooldown from '../cooldown/index.js';
 import {createToggleNotificationButton} from '../../utils/buttons.js';
 
@@ -180,11 +180,9 @@ export function search(term: string) {
   return fuzzy.search(term);
 }
 
-export async function notify(this: UserInterface, content: string) {
+export async function notify(this: UserInterface, message: MessagePayload) {
   try {
-    await client.users.send(String(this.discordId), {
-      embeds: [success(content)],
-    });
+    await client.users.send(String(this.discordId), message);
   } catch (e) {}
 }
 
