@@ -28,16 +28,15 @@ export async function addTask(recipe) {
 
 export async function checkTasks(this: BenchInterface) {
   const user = await User.findOne({discordId: this.discordId});
-  const completedTasks = this.tasks.filter((recipe: RecipeInterface) => moment(recipe.endDate).isBefore(moment()));
+  const completedTasks = this.tasks.filter((recipe: RecipeInterface) => moment(recipe.endDate).isBefore(new Date()));
 
   if (completedTasks.length === 0) return;
 
-  for await (const [index, task] of completedTasks.entries()) {
+  for await (const task of completedTasks) {
     const recipe = RECIPES[task.recipeId];
 
     if (!recipe.requirements.every((requirement) => user.has(Items[requirement]))) {
       await user.notify({content: `Missing requirements for **${recipe.name}** task.`});
-      this.set('tasks', this.tasks.splice(index, 1));
       continue;
     }
 
@@ -47,8 +46,14 @@ export async function checkTasks(this: BenchInterface) {
 
     user.add(Items[recipe.reward], 1);
     await user.notify({embeds: [warning(`Your **${recipe.name}** task has completed!`)]});
-    this.tasks.splice(index, 1);
   }
 
-  await Promise.all([this.save(), user.save()]);
+  await Promise.all([
+    this.updateOne({
+      $pull: {
+        tasks: {_id: {$in: completedTasks.map(({_id}) => _id)}},
+      },
+    }),
+    user.save(),
+  ]);
 }

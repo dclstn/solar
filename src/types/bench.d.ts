@@ -1,7 +1,7 @@
 import {User} from 'discord.js';
 import Mongoose from 'mongoose';
 
-export interface RecipeInterface {
+export interface RecipeInterface extends Mongoose.Document {
   recipeId: string;
   endDate: Date;
 }
