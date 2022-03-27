@@ -37,10 +37,7 @@ export async function checkTasks(this: BenchInterface) {
 
     if (!recipe.requirements.every((requirement) => user.has(Items[requirement]))) {
       await user.notify({content: `Missing requirements for **${recipe.name}** task.`});
-      this.set(
-        'tasks',
-        this.tasks.filter(({recipeId}) => recipeId !== task.recipeId)
-      );
+      this.set('tasks', this.tasks.splice(index, 1));
       continue;
     }
 
