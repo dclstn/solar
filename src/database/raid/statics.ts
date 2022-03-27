@@ -37,7 +37,7 @@ async function completeRaid(sessionId: string, targetUser: User): Promise<RaidRe
     return {success: false, raiders: [], target};
   }
 
-  const chance = 0.9 + (users.length - 1) * 0.05;
+  const chance = 0.5 + (users.length - 1) * 0.05;
   const success = secureMathRandom() <= chance;
 
   let split = null;
