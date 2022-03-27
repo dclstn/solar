@@ -227,10 +227,10 @@ export const CommandOptions = {
   ],
   [CommandNames.RAID]: [
     {
-      name: 'gem_wager',
-      description: 'The amount of gems will decide the impact of your raid',
-      min_value: 1,
-      type: ApplicationCommandOptionTypes.NUMBER,
+      name: 'user',
+      description: 'Select a user to raid',
+      type: ApplicationCommandOptionTypes.USER,
+      required: true,
     },
   ],
   [CommandNames.MOVE]: [

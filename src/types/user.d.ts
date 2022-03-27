@@ -1,4 +1,4 @@
-import {User} from 'discord.js';
+import {ColorResolvable, User} from 'discord.js';
 import Mongoose from 'mongoose';
 import {InventoryType} from '../utils/enums.js';
 import {Item} from '../utils/items.js';
@@ -27,10 +27,14 @@ export interface UserInterface extends Mongoose.Document {
   group: GroupInterface;
   inventories: InventoryInterface[];
   updated: Date;
+  pvp: {
+    enabled: boolean;
+    updated: Date;
+  };
   email?: string;
   locale?: string;
   avatar?: string;
-  colour?: string;
+  colour?: ColorResolvable;
   buy(item: Item, amount: number): void;
   add(item: Item, amount: number): void;
   sell(item: Item, amount: number): void;

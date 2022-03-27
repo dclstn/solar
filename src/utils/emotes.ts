@@ -2,7 +2,7 @@ export const emoteIds = {
   success: '795440550127730689',
   right: '768500035083698186',
   left: '768499967136104539',
-  gem: '768816036245536788',
+  gem: '957471144754163802',
   loading: '762810546067865610',
   heart: '808394046908137512',
   pet: '808472431337013299',
@@ -15,6 +15,7 @@ export const emoteIds = {
   shopping: '923924831223816242',
   earth: '924657486479364157',
   info: '659437922436775936',
+  coin: '957471145202941962',
 };
 
 export const emoteStrings = {
@@ -22,7 +23,7 @@ export const emoteStrings = {
   success: `<a:success:${emoteIds.success}>`,
   right: `<a:right:${emoteIds.right}>`,
   left: `<a:left:${emoteIds.left}>`,
-  gem: `<:gem:${emoteIds.gem}>`,
+  gem: `<a:gem:${emoteIds.gem}>`,
   loading: `<a:loading:${emoteIds.loading}>`,
   heart: `<:heart:${emoteIds.heart}>`,
   pet: `<:pet:${emoteIds.pet}>`,
@@ -34,4 +35,5 @@ export const emoteStrings = {
   rucksack: `<:rucksack:${emoteIds.rucksack}>`,
   shopping: `<:shopping:${emoteIds.shopping}>`,
   earth: `<:earth:${emoteIds.earth}>`,
+  coin: `<a:coin:${emoteIds.coin}>`,
 };

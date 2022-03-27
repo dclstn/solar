@@ -102,3 +102,15 @@ export const createCraftButton = (user: UserInterface, item: Item, recipe) =>
     .setLabel(`Craft ${item.name}`)
     .setStyle('PRIMARY')
     .setDisabled(!recipe.requirements.every((itemId) => user.has(Items[itemId])));
+
+export const createJoinRaidButton = (sessionId) =>
+  new MessageButton()
+    .setCustomId(`${MessageComponentIds.JOIN_RAID}.${sessionId}`)
+    .setLabel(`Join Raid`)
+    .setStyle('SUCCESS');
+
+export const createLeaveRaidButton = (sessionId) =>
+  new MessageButton()
+    .setCustomId(`${MessageComponentIds.LEAVE_RAID}.${sessionId}`)
+    .setLabel(`Leave Raid`)
+    .setStyle('DANGER');
