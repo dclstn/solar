@@ -28,6 +28,7 @@ export const CommandNames = {
   STORAGE: 'storage',
   WORKBENCH: 'workbench',
   VOTE: 'vote',
+  PVP: 'pvp',
 };
 
 export const AdminSubCommandNames = {
@@ -85,7 +86,7 @@ export const CommandDescriptions = {
   [CommandNames.SELL]: '🛍️ Sell an item from your inventory',
   [CommandNames.SHOP]: '🛍️ Browse the buyable items',
   [CommandNames.ITEM]: '🔎 Inspect an item',
-  [CommandNames.RAID]: '🛡️ Raid another user for their gems',
+  [CommandNames.RAID]: '🔫 Fight another user',
   [CommandNames.GROUP]: '🌏 Group commands',
   [CommandNames.SORT]: '🧵 Sort your inventory',
   [CommandNames.LEADERBOARD]: '🌏 View the rankings',
@@ -94,6 +95,7 @@ export const CommandDescriptions = {
   [CommandNames.MOVE]: '📪 Move an item',
   [CommandNames.WORKBENCH]: '🛠️ Your workbench',
   [CommandNames.VOTE]: '📩 Show your vote progress',
+  [CommandNames.PVP]: 'Enable/disable pvp mode',
 };
 
 export const CommandOptions = {
@@ -102,6 +104,14 @@ export const CommandOptions = {
       name: 'user',
       description: "Inspect a selected user's votes",
       type: ApplicationCommandOptionTypes.USER,
+    },
+  ],
+  [CommandNames.PVP]: [
+    {
+      name: 'enable',
+      description: 'Enable PVP mode for yourself',
+      type: ApplicationCommandOptionTypes.BOOLEAN,
+      required: true,
     },
   ],
   [CommandNames.BUY]: [
@@ -227,10 +237,10 @@ export const CommandOptions = {
   ],
   [CommandNames.RAID]: [
     {
-      name: 'gem_wager',
-      description: 'The amount of gems will decide the impact of your raid',
-      min_value: 1,
-      type: ApplicationCommandOptionTypes.NUMBER,
+      name: 'user',
+      description: 'Select a user to raid',
+      type: ApplicationCommandOptionTypes.USER,
+      required: true,
     },
   ],
   [CommandNames.MOVE]: [

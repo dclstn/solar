@@ -5,6 +5,7 @@ import type {BenchInterface, RecipeInterface} from '../../types/bench.js';
 import User from '../user/index.js';
 import {RECIPES} from '../../utils/recipes.js';
 import {Items} from '../../utils/items.js';
+import {warning} from '../../utils/embed.js';
 
 export async function addTask(recipe) {
   const user = await User.findOne({discordId: this.discordId});
@@ -35,7 +36,7 @@ export async function checkTasks(this: BenchInterface) {
     const recipe = RECIPES[task.recipeId];
 
     if (!recipe.requirements.every((requirement) => user.has(Items[requirement]))) {
-      await user.notify(`Missing requirements for **${recipe.name}** task.`);
+      await user.notify({content: `Missing requirements for **${recipe.name}** task.`});
       this.tasks.splice(index, 1);
       continue;
     }
@@ -45,7 +46,7 @@ export async function checkTasks(this: BenchInterface) {
     }
 
     user.add(Items[recipe.reward], 1);
-    await user.notify(`Your **${recipe.name}** task has completed!`);
+    await user.notify({embeds: [warning(`Your **${recipe.name}** task has completed!`)]});
     this.tasks.splice(index, 1);
   }
 

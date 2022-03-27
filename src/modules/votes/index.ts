@@ -36,7 +36,7 @@ const cronJob = cron.schedule('*/60 * * * * *', async () => {
       continue;
     }
 
-    await user.notify('You can now vote again!');
+    await user.notify({embeds: [success('You can now vote again!')]});
   }
 });
 

@@ -41,6 +41,7 @@
     "camelcase": "off",
     "no-restricted-syntax": "off",
     "no-empty": "off",
-    "no-continue": "off"
+    "no-continue": "off",
+    "import/prefer-default-export": "off"
   }
 }

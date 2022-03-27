@@ -1,4 +1,4 @@
-import {User} from 'discord.js';
+import {ColorResolvable, MessageOptions, User} from 'discord.js';
 import Mongoose from 'mongoose';
 import {InventoryType} from '../utils/enums.js';
 import {Item} from '../utils/items.js';
@@ -27,10 +27,15 @@ export interface UserInterface extends Mongoose.Document {
   group: GroupInterface;
   inventories: InventoryInterface[];
   updated: Date;
+  pvp: {
+    enabled: boolean;
+    updated: Date;
+    canDisable: boolean;
+  };
   email?: string;
   locale?: string;
   avatar?: string;
-  colour?: string;
+  colour?: ColorResolvable;
   buy(item: Item, amount: number): void;
   add(item: Item, amount: number): void;
   sell(item: Item, amount: number): void;
@@ -44,7 +49,7 @@ export interface UserInterface extends Mongoose.Document {
   deposit(group: GroupInterface, amount: number): void;
   search(term): Fuse.default.FuseResult<Item>[];
   updateDoc(): void;
-  notify(content: string): Promise<void>;
+  notify(content: MessageOptions): Promise<void>;
   updateBalance(amount: number): void;
   spinWheel(): Promise<boolean>;
 }
