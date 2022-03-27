@@ -39,7 +39,7 @@ commands.on(CommandNames.PVP, async (interaction: CommandInteraction) => {
     ]);
   } catch (err) {
     if (err instanceof ResponseError) {
-      interaction.reply({embeds: [warning(err.message)]});
+      interaction.reply({embeds: [warning(err.message)], ephemeral: true});
       return;
     }
 
