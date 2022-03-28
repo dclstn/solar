@@ -71,10 +71,6 @@ export default {
     return this.items.find(({id}) => id === item.id) != null;
   },
 
-  gph(): number {
-    return this.fetchAll().reduce((a: number, {gph}) => a + (gph || 0), 0);
-  },
-
   fetchAll(): Item[] {
     return this.items.map(({id}) => findById(id));
   },

@@ -5,6 +5,11 @@ import {BUYABLE_ITEMS} from './utils/items.js';
 import {RECIPES} from './utils/recipes.js';
 import {capitalizeFirstLetter} from './utils/index.js';
 
+export const LeaderboardType = {
+  GPH: 'gph',
+  MONEY: 'money',
+};
+
 export const Defaults = {
   MAX_SLOTS: 36,
   STORE_PAGE_SIZE: 5,
@@ -378,6 +383,24 @@ export const CommandOptions = {
       name: LeaderbordSubCommands.LOCAL,
       description: '🌏 View the local leadboard',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'type',
+          description: 'Sort by field',
+          type: ApplicationCommandOptionTypes.STRING,
+          required: true,
+          choices: [
+            {
+              name: 'Gems Per Hour',
+              value: LeaderboardType.GPH,
+            },
+            {
+              name: 'Gems',
+              value: LeaderboardType.MONEY,
+            },
+          ],
+        },
+      ],
     },
     {
       name: LeaderbordSubCommands.GLOBAL,

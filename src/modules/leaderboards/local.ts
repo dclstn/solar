@@ -6,8 +6,12 @@ import {createLeaderboardEmbed, numberWithCommas, warning} from '../../utils/emb
 import ResponseError from '../../utils/error.js';
 import Guilds from '../../database/guild/index.js';
 import type {UserInterface} from '../../types/user';
+import {LeaderboardType} from '../../constants.js';
+import {InventoryType} from '../../utils/enums.js';
 
 export default async function localLeaderboard(interaction: CommandInteraction) {
+  const type = interaction.options.getString('type', true);
+
   try {
     if (interaction.guildId == null) {
       throw new ResponseError('The command is only available in guilds');
@@ -20,13 +24,36 @@ export default async function localLeaderboard(interaction: CommandInteraction) 
       throw new ResponseError('Failed to find members');
     }
 
-    const users = guild.users.sort((a: UserInterface, b: UserInterface) => b.money - a.money).slice(0, 10);
+    let embed;
 
-    // TODO: add a formatter for usernames/guild names
-    const embed = createLeaderboardEmbed(
-      ['#', 'Username', 'Gems'],
-      users.map(({username, money}, index) => [(index + 1).toString(), username, numberWithCommas(money)])
-    ).setTitle(`🏆 ${guild.name} Leaderboard`);
+    if (type === LeaderboardType.MONEY) {
+      const users = guild.users.sort((a: UserInterface, b: UserInterface) => b.money - a.money).slice(0, 10);
+
+      // TODO: add a formatter for usernames/guild names
+      embed = createLeaderboardEmbed(
+        ['#', 'Username', 'Gems'],
+        users.map(({username, money}, index) => [(index + 1).toString(), username, numberWithCommas(money)])
+      ).setTitle(`🏆 ${guild.name} Leaderboard`);
+    }
+
+    if (type === LeaderboardType.GPH) {
+      const users = guild.users
+        .sort(
+          (a: UserInterface, b: UserInterface) =>
+            b.getInventory(InventoryType.Main).gph - a.getInventory(InventoryType.Main).gph
+        )
+        .slice(0, 10);
+
+      // TODO: add a formatter for usernames/guild names
+      embed = createLeaderboardEmbed(
+        ['#', 'Username', 'GPH'],
+        users.map((user, index) => [
+          (index + 1).toString(),
+          user.username,
+          numberWithCommas(user.getInventory(InventoryType.Main).gph),
+        ])
+      ).setTitle(`🏆 ${guild.name} Leaderboard`);
+    }
 
     interaction.reply({
       embeds: [embed],

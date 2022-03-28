@@ -8,12 +8,12 @@ import type {ItemInterface, Cords} from './item.js';
 export interface InventoryInterface extends Mongoose.Types.Subdocument {
   type: number;
   items: ItemInterface[];
+  gph: number;
   add(item: Item, cords?: Cords): void;
   rem(item: Item | Cords): void;
   has(item: Item): boolean;
   fetch(cords: Cords): Item;
   fetchAll(): Item[];
-  gph(): number;
   sort(fn: (a: ItemInterface, b: ItemInterface) => number): void;
 }
 

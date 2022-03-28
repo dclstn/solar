@@ -51,6 +51,10 @@ const InventorySchema: Mongoose.Schema = new Mongoose.Schema<InventoryInterface>
 
 InventorySchema.methods = inventory;
 
+InventorySchema.virtual('gph').get(function calculdateGph() {
+  return this.fetchAll().reduce((a: number, {gph}) => a + (gph || 0), 0);
+});
+
 const UserSchema: Mongoose.Schema = new Mongoose.Schema<UserInterface, UserModelInterface>({
   discordId: {type: Mongoose.Schema.Types.Long, required: true, index: {unique: true}},
   username: {type: String},
