@@ -31,7 +31,7 @@ export function purchase(item: Item, amount: number): MessageEmbed {
   return new MessageEmbed()
     .setColor('GREEN')
     .addField('Purchase', `${item.emoji} **${item.name}** x${amount}`, true)
-    .addField('Cost', `- ${emoteStrings.gem} **${numberWithCommas(amount * item.price)}**`, true)
+    .addField('Cost', `- ${emoteStrings.gold} **${numberWithCommas(amount * item.price)}**`, true)
     .setFooter({text: 'Thank you for your purchase!'})
     .setTimestamp(new Date());
 }
@@ -40,7 +40,7 @@ export function sale(item: Item, amount: number): MessageEmbed {
   return new MessageEmbed()
     .setColor('RED')
     .addField('Sold', `${item.emoji} **${item.name}** x${amount}`, true)
-    .addField('Gain', `+ ${emoteStrings.gem} **${numberWithCommas((amount * item.price) / 2)}**`, true)
+    .addField('Gain', `+ ${emoteStrings.gold} **${numberWithCommas((amount * item.price) / 2)}**`, true)
     .setFooter({text: 'Thank you for your sale!'})
     .setTimestamp(new Date());
 }
@@ -52,16 +52,16 @@ export function createLeaderboardEmbed(headers: string[], values: string[][]): M
     .setTimestamp(new Date());
 }
 
-export function slotsWin(generators: Item[][], multiplier: number, gems: string) {
+export function slotsWin(generators: Item[][], multiplier: number, coins: string) {
   return new MessageEmbed()
     .setAuthor({name: '🎰 Slot Machine!'})
     .setColor('GREEN')
-    .setDescription(slotsDisplay(generators, `**You Won!** - ${multiplier}x Combo!\n+${emoteStrings.gem}${gems}`));
+    .setDescription(slotsDisplay(generators, `**You Won!** - ${multiplier}x Combo!\n+${emoteStrings.gold}${coins}`));
 }
 
-export function slotsLose(generators: Item[][], gems: string) {
+export function slotsLose(generators: Item[][], coins: string) {
   return new MessageEmbed()
     .setAuthor({name: '🎰 Slot Machine!'})
     .setColor('RED')
-    .setDescription(slotsDisplay(generators, `**You Lost!**\n-${emoteStrings.gem}${gems}`));
+    .setDescription(slotsDisplay(generators, `**You Lost!**\n-${emoteStrings.gold}${coins}`));
 }

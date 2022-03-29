@@ -44,7 +44,7 @@ export function buy(item: Item, amount: number) {
   const totalCost = item.price * amount;
 
   if (totalCost > this.money) {
-    throw new ResponseError(`You do not have enough gems for this purchase`);
+    throw new ResponseError(`You do not have enough coins for this purchase`);
   }
 
   this.add(item, amount);
@@ -161,7 +161,7 @@ export function deposit(group: GroupInterface, amount: number) {
   }
 
   if (this.money < amount) {
-    throw new ResponseError('You do not have that many gems');
+    throw new ResponseError('You do not have that many coins');
   }
 
   group.set('money', group.money + amount);

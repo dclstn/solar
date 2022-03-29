@@ -343,12 +343,12 @@ export const CommandOptions = {
     },
     {
       name: GroupSubCommandNames.DEPOSIT,
-      description: '💰 Deposit gems into your group',
+      description: '💰 Deposit coins into your group',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
       options: [
         {
           name: 'amount',
-          description: 'The amount of gems you wish to deposit',
+          description: 'The amount of coins you wish to deposit',
           type: ApplicationCommandOptionTypes.INTEGER,
           required: true,
           min_value: 1,
@@ -359,12 +359,12 @@ export const CommandOptions = {
   [CommandNames.SORT]: [
     {
       name: SortCommandNames.ASCENDING,
-      description: '🧵 Sort your inventories by ascending gems per hour',
+      description: '🧵 Sort your inventories by ascending coins per hour',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
     {
       name: SortCommandNames.DESCENDING,
-      description: '🧵 Sort your inventories by decending gems per hour',
+      description: '🧵 Sort your inventories by decending coins per hour',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
     },
     {
@@ -391,11 +391,11 @@ export const CommandOptions = {
           required: true,
           choices: [
             {
-              name: 'Gems Per Hour',
+              name: 'Coins Per Hour',
               value: LeaderboardType.GPH,
             },
             {
-              name: 'Gems',
+              name: 'Coins',
               value: LeaderboardType.MONEY,
             },
           ],
@@ -458,7 +458,7 @@ export const CommandOptions = {
       options: [
         {
           name: 'wager',
-          description: 'How many gems do you wish to wager?',
+          description: 'How many coins do you wish to wager?',
           type: ApplicationCommandOptionTypes.INTEGER,
           required: true,
           min_value: 1,

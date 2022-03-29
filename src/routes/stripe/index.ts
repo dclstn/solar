@@ -45,7 +45,7 @@ export default (fastify, opts, done) => {
     }
   });
 
-  fastify.post('/webhook', async (request, response: FastifyReply) => {
+  fastify.post('/webhooks/payment', async (request, response: FastifyReply) => {
     const sig = request.headers['stripe-signature'];
 
     let event: Stripe.Event;

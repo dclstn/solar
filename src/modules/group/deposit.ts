@@ -9,7 +9,7 @@ import ResponseError from '../../utils/error.js';
 import type {GroupInterface} from '../../types/group.js';
 
 const depositDescription = (group: GroupInterface, amount: number) =>
-  `Successfully deposited ${emoteStrings.gem} **${numberWithCommas(amount)}** into ${group.name}`;
+  `Successfully deposited ${emoteStrings.gold} **${numberWithCommas(amount)}** into ${group.name}`;
 
 export default async function deposit(interaction: CommandInteraction) {
   const amount = interaction.options.getInteger('amount');

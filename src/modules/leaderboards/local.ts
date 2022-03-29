@@ -31,7 +31,7 @@ export default async function localLeaderboard(interaction: CommandInteraction) 
 
       // TODO: add a formatter for usernames/guild names
       embed = createLeaderboardEmbed(
-        ['#', 'Username', 'Gems'],
+        ['#', 'Username', 'Coins'],
         users.map(({username, money}, index) => [(index + 1).toString(), username, numberWithCommas(money)])
       ).setTitle(`🏆 ${guild.name} Leaderboard`);
     }

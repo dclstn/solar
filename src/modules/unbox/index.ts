@@ -11,9 +11,9 @@ import Sentry from '../../sentry.js';
 import {numberWithCommas, warning} from '../../utils/embed.js';
 
 const generatorDescription = (item: Item): string => `
-Price: ${emoteStrings.gem} **${numberWithCommas(item.price)}**
+Price: ${emoteStrings.gold} **${numberWithCommas(item.price)}**
 Level: **${item.level}**
-Gems per hour: **${item.gph}/h**
+Coins per hour: **${item.gph}/h**
 `;
 
 async function unboxGift(interaction: ButtonInteraction, gift: Item) {

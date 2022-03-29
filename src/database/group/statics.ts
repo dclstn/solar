@@ -22,7 +22,7 @@ export function validGroupName(name: string): boolean {
 
 export async function createGroup(user: UserInterface, name: string) {
   if (user.money < Defaults.GROUP_COST) {
-    throw new ResponseError(`You need ${numberWithCommas(Defaults.GROUP_COST)} gems to create a group`);
+    throw new ResponseError(`You need ${numberWithCommas(Defaults.GROUP_COST)} coins to create a group`);
   }
 
   if (!validGroupName(name)) {

@@ -9,7 +9,7 @@ import {emoteStrings} from '../../utils/emotes.js';
 import type {GroupInterface} from '../../types/group.js';
 
 const createGroupDescription = (group: GroupInterface) => `
-${emoteStrings.gem} Gems: **${numberWithCommas(group.money)}**
+${emoteStrings.gold} Coins: **${numberWithCommas(group.money)}**
 🌍 Members: ${group.users.length}
 `;
 

@@ -24,7 +24,7 @@ const createCompleteEmbed = (raidMeta: RaidResultInterface) => {
   const raidersUsernames = raidMeta.raiders.map((raider) => `**${raider.username}**`).join(', ');
   const midText = raidMeta.success ? 'has raided' : 'attempted to raid';
   const endText = raidMeta.success
-    ? `${emoteStrings.gem} **${numberWithCommas(raidMeta.stolen)}** was split between all raiders!`
+    ? `${emoteStrings.gold} **${numberWithCommas(raidMeta.stolen)}** was split between all raiders!`
     : '';
 
   return new MessageEmbed()

@@ -37,7 +37,7 @@ export default async function globalLeaderboard(interaction: CommandInteraction)
 
     // TODO: add a formatter for usernames/guild names
     const embed = createLeaderboardEmbed(
-      ['#', 'Username', 'Gems'],
+      ['#', 'Username', 'Coins'],
       users.map(({username, money}, index) => [(index + 1).toString(), username, numberWithCommas(money)])
     ).setTitle(`🏆 Global Leaderboard`);
 

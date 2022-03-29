@@ -21,9 +21,7 @@ import {emoteStrings} from '../../utils/emotes.js';
 import {STORAGE_BUTTON, PROFILE_BUTTON, SHOP_BUTTON, createItemButton} from '../../utils/buttons.js';
 
 const createProfileDescription = (user: UserInterface, grid: string) => `
-
-${emoteStrings.gem} Gems **${numberWithCommas(user.money)}**
-💰 Gems Per Hour **${numberWithCommas(user.getInventory(InventoryType.Main).gph)}**
+${emoteStrings.gold} Gold **${numberWithCommas(user.money)}**
 ${user.group != null ? `🏰 Group **${user.group.name}**\n` : ''}
 ${grid}
 `;

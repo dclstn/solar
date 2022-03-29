@@ -9,9 +9,9 @@ import {createBuyButton, createCraftButton, createSellButton} from '../../utils/
 import {RECIPES} from '../../utils/recipes.js';
 
 const generatorDescription = (item: Item): string => `
-Price: ${emoteStrings.gem} **${numberWithCommas(item.price)}**
+Price: ${emoteStrings.gold} **${numberWithCommas(item.price)}**
 Level: **${item.level}**
-Gems per hour: **${item.gph}/h**
+Coins per hour: **${item.gph}/h**
 `;
 
 export default async function handleGenerator(interaction: CommandInteraction | ButtonInteraction, item: Item) {

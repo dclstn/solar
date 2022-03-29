@@ -84,7 +84,7 @@ export const createSellButton = (user: UserInterface, item: Item, text?: string)
   new MessageButton()
     .setCustomId(`${MessageComponentIds.SELL}.${item.id}`)
     .setLabel(text != null ? text : `Sell for ${numberWithCommas(item.price / 2)}`)
-    .setEmoji(emoteIds.gem)
+    .setEmoji(emoteIds.gold)
     .setStyle('DANGER')
     .setDisabled(!user.has(item));
 
@@ -93,7 +93,7 @@ export const createBuyButton = (user: UserInterface, item: Item, text?: string) 
     .setCustomId(`${MessageComponentIds.BUY}.${item.id}`)
     .setLabel(text != null ? text : `Buy for ${numberWithCommas(item.price)}`)
     .setStyle('SUCCESS')
-    .setEmoji(emoteIds.gem)
+    .setEmoji(emoteIds.gold)
     .setDisabled(!item.buyable || item.price > user.money);
 
 export const createCraftButton = (user: UserInterface, item: Item, recipe) =>
