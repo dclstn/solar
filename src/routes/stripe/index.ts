@@ -55,7 +55,8 @@ export default (fastify, opts, done) => {
       event = stripe.webhooks.constructEvent(
         request.body.raw,
         sig,
-        isProd() ? process.env.STRIPE_WEBHOOK_KEY : process.env.STRIPE_TEST_WEBHOOK_KEY
+        // @ts-ignore
+        Buffer.from(isProd() ? process.env.STRIPE_WEBHOOK_KEY : process.env.STRIPE_TEST_WEBHOOK_KEY)
       );
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
@@ -67,10 +68,7 @@ export default (fastify, opts, done) => {
       const session: Stripe.Checkout.Session = event.data.object;
 
       await createOrder(session);
-
-      if (session.payment_status === 'paid') {
-        await fulfillOrder(session);
-      }
+      await fulfillOrder(session);
     }
 
     response.status(200);
