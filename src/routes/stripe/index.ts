@@ -4,6 +4,7 @@ import stripe from '../../stripe.js';
 import Order from '../../database/order/index.js';
 import {FULLFILLMENTS} from './payment.js';
 import User from '../../database/user/index.js';
+import isProd from '../../utils/enviroment.js';
 
 async function createOrder(session: Stripe.Checkout.Session) {
   const discordId = session.client_reference_id;
@@ -51,7 +52,11 @@ export default (fastify, opts, done) => {
     let event: Stripe.Event;
 
     try {
-      event = stripe.webhooks.constructEvent(request.body.raw, sig, process.env.STRIPE_WEBHOOK_KEY);
+      event = stripe.webhooks.constructEvent(
+        request.body.raw,
+        sig,
+        isProd() ? process.env.STRIPE_WEBHOOK_KEY : process.env.STRIPE_TEST_WEBHOOK_KEY
+      );
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
