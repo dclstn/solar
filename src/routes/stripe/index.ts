@@ -51,7 +51,7 @@ export default (fastify, opts, done) => {
     let event: Stripe.Event;
 
     try {
-      event = stripe.webhooks.constructEvent(request.body.raw, sig, process.env.STRIPE_TEST_WEBHOOK_KEY);
+      event = stripe.webhooks.constructEvent(request.body.raw, sig, process.env.STRIPE_WEBHOOK_KEY);
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
