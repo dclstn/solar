@@ -33,6 +33,7 @@ jobs:
           echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
           echo VOTING_AUTHORIZATION="${{ secrets.VOTING_AUTHORIZATION }}" >> .env
           echo WEBHOOK_URL=${{ secrets.WEBHOOK_URL }} >> .env
+          echo STRIPE_WEBOOK_TEST_KEY=${{ secrets.STRIPE_WEBOOK_TEST_KEY }} >> .env
           cat .env
       - name: PM2 Restart
         run: pm2 restart backend

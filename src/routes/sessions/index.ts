@@ -17,23 +17,23 @@ const Popular = {
 };
 
 export default (fastify, opts, done) => {
-  // fastify.post(
-  //   '/api/create-checkout-session',
-  //   {preValidation: [fastify.authenticate]},
-  //   async (request, response: FastifyReply) => {
-  //     const {quantity, price_id} = request.body;
+  fastify.post(
+    '/api/create-checkout-session',
+    {preValidation: [fastify.authenticate]},
+    async (request, response: FastifyReply) => {
+      const {quantity, price_id} = request.body;
 
-  //     const session = await stripe.checkout.sessions.create({
-  //       line_items: [{price: PaymentIds.TEST_BUTTLOAD_OF_GEMS, quantity}],
-  //       client_reference_id: request.user.id,
-  //       mode: 'payment',
-  //       success_url: `${ENDPOINT}/payment/success`,
-  //       cancel_url: `${ENDPOINT}/payment/cancel`,
-  //     });
+      const session = await stripe.checkout.sessions.create({
+        line_items: [{price: price_id, quantity}],
+        client_reference_id: request.user.id,
+        mode: 'payment',
+        success_url: `${ENDPOINT}/payment/success`,
+        cancel_url: `${ENDPOINT}/payment/cancel`,
+      });
 
-  //     response.send({redirect_url: session.url});
-  //   }
-  // );
+      response.send({redirect_url: session.url});
+    }
+  );
 
   fastify.get('/api/products', async (_, response: FastifyReply) => {
     const [products, prices] = await Promise.all([stripe.products.list(), stripe.prices.list()]);
