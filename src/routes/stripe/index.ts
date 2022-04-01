@@ -8,9 +8,11 @@ import isProd from '../../utils/enviroment.js';
 import Sentry from '../../sentry.js';
 
 async function createOrder(session: Stripe.Checkout.Session) {
-  const discordId = session.client_reference_id;
+  const user = await User.findOne({discordId: session.client_reference_id});
 
-  const user = await User.getById(discordId);
+  if (user == null) {
+    throw new Error('Could not find user');
+  }
 
   await Order.create({
     id: session.id,
