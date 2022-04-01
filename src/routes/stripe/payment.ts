@@ -9,12 +9,12 @@ export const FULLFILLMENTS = {
     user.addFunds(100);
     await user.save();
   },
-  [PaymentIds.HANDFUL_OF_GEMS]: async (session: Stripe.Checkout.Session) => {
+  [PaymentIds.BAG_OF_GEMS]: async (session: Stripe.Checkout.Session) => {
     const user = await User.findOne({discordId: session.client_reference_id});
     user.addFunds(300);
     await user.save();
   },
-  [PaymentIds.BAG_OF_GEMS]: async (session: Stripe.Checkout.Session) => {
+  [PaymentIds.CHEST_FULL_OF_GEMS]: async (session: Stripe.Checkout.Session) => {
     const user = await User.findOne({discordId: session.client_reference_id});
     user.addFunds(900);
     await user.save();
