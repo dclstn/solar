@@ -81,7 +81,7 @@ export default (fastify, opts, done) => {
       }
     }
 
-    response.code(200);
+    response.code(200).send('success');
   });
 
   done();
