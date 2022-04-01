@@ -24,7 +24,7 @@ export default (fastify, opts, done) => {
   //     const {quantity, price_id} = request.body;
 
   //     const session = await stripe.checkout.sessions.create({
-  //       line_items: [{price: price_id, quantity}],
+  //       line_items: [{price: PaymentIds.TEST_BUTTLOAD_OF_GEMS, quantity}],
   //       client_reference_id: request.user.id,
   //       mode: 'payment',
   //       success_url: `${ENDPOINT}/payment/success`,

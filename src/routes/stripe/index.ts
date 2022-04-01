@@ -5,6 +5,7 @@ import Order from '../../database/order/index.js';
 import {FULLFILLMENTS} from './payment.js';
 import User from '../../database/user/index.js';
 import isProd from '../../utils/enviroment.js';
+import Sentry from '../../sentry.js';
 
 async function createOrder(session: Stripe.Checkout.Session) {
   const discordId = session.client_reference_id;
@@ -55,10 +56,10 @@ export default (fastify, opts, done) => {
       event = stripe.webhooks.constructEvent(
         request.body.raw,
         sig,
-        // @ts-ignore
-        Buffer.from(isProd() ? process.env.STRIPE_WEBHOOK_KEY : process.env.STRIPE_TEST_WEBHOOK_KEY)
+        isProd() ? process.env.STRIPE_WEBHOOK_KEY : process.env.STRIPE_TEST_WEBHOOK_KEY
       );
     } catch (err) {
+      Sentry.captureException(err);
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
@@ -68,7 +69,10 @@ export default (fastify, opts, done) => {
       const session: Stripe.Checkout.Session = event.data.object;
 
       await createOrder(session);
-      await fulfillOrder(session);
+
+      if (session.payment_status === 'paid') {
+        await fulfillOrder(session);
+      }
     }
 
     response.status(200);
