@@ -14,6 +14,10 @@ async function createOrder(session: Stripe.Checkout.Session) {
     throw new Error('Could not find user');
   }
 
+  if (await Order.exists({id: session.id})) {
+    return;
+  }
+
   await Order.create({
     id: session.id,
     buyer: user._id,
@@ -77,7 +81,7 @@ export default (fastify, opts, done) => {
       }
     }
 
-    response.status(200);
+    response.code(200);
   });
 
   done();
