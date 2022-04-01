@@ -2,7 +2,6 @@
 import Stripe from 'stripe';
 import {PaymentIds} from '../../constants.js';
 import User from '../../database/user/index.js';
-import client from '../../client.js';
 
 export const FULLFILLMENTS = {
   [PaymentIds.HANDFUL_OF_GEMS]: async (session: Stripe.Checkout.Session) => {
