@@ -5,6 +5,7 @@ import {Context} from '@sentry/types';
 import Sentry from '../sentry.js';
 import rest from '../rest.js';
 import client from '../client.js';
+import {warning} from '../utils/embed.js';
 
 export interface Command {
   type: number;
@@ -34,6 +35,28 @@ class Commands extends EventEmitter {
 
         this.emit(interaction.commandName, interaction);
       });
+    });
+
+    client.on('messageCreate', async (message) => {
+      this.commands.forEach(async (command) => {
+        if (message.content.startsWith(`!${command.name}`)) {
+          try {
+            await message.channel.send({
+              content: `<@${message.author.id}>`,
+              embeds: [warning(`We have moved to slash commands! try \`/${command.name}\` instead!`)],
+            });
+          } catch (e) {}
+        }
+      });
+
+      if (message.content.startsWith('!castle') || message.content.startsWith('!c')) {
+        try {
+          await message.channel.send({
+            content: `<@${message.author.id}>`,
+            embeds: [warning(`We have moved to slash commands! try \`/profile\` instead!`)],
+          });
+        } catch (e) {}
+      }
     });
   }
 
