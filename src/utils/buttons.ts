@@ -40,6 +40,12 @@ export const VOTE_DBL = new MessageButton()
   .setURL('https://discordbotlist.com/bots/castle-mania/upvote')
   .setLabel('Vote DiscordBotList.com');
 
+export const INVITE_BOT = new MessageButton()
+  .setStyle('LINK')
+  .setURL('https://castlemania.bot/invite')
+  .setEmoji(emoteIds.gem)
+  .setLabel('Reinvite Castle Mania with Correct Permissions');
+
 export const createToggleNotificationButton = (type: string) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.TOGGLE_NOTIFICATION}.${type}`)

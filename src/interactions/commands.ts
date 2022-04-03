@@ -1,4 +1,4 @@
-import type {CommandInteraction} from 'discord.js';
+import {CommandInteraction, MessageActionRow} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Routes} from 'discord-api-types/v9';
 import {Context} from '@sentry/types';
@@ -6,6 +6,7 @@ import Sentry from '../sentry.js';
 import rest from '../rest.js';
 import client from '../client.js';
 import {warning} from '../utils/embed.js';
+import {INVITE_BOT} from '../utils/buttons.js';
 
 export interface Command {
   type: number;
@@ -43,7 +44,12 @@ class Commands extends EventEmitter {
           try {
             await message.channel.send({
               content: `<@${message.author.id}>`,
-              embeds: [warning(`We have moved to slash commands! try \`/${command.name}\` instead!`)],
+              embeds: [
+                warning(
+                  `**IMPORTANT!** We have moved to slash commands! try \`/${command.name}\` instead! You may need to reinvite our bot with the correct permissions.`
+                ),
+              ],
+              components: [new MessageActionRow().addComponents(INVITE_BOT)],
             });
           } catch (e) {}
         }
@@ -53,7 +59,12 @@ class Commands extends EventEmitter {
         try {
           await message.channel.send({
             content: `<@${message.author.id}>`,
-            embeds: [warning(`We have moved to slash commands! try \`/profile\` instead!`)],
+            embeds: [
+              warning(
+                `**IMPORTANT!** We have moved to slash commands! try \`/profile\` instead! You may need to reinvite our bot with the correct permissions.`
+              ),
+            ],
+            components: [new MessageActionRow().addComponents(INVITE_BOT)],
           });
         } catch (e) {}
       }
