@@ -50,7 +50,7 @@ function aggregate() {
 }
 
 aggregate();
-setInterval(() => aggregate(), 60 * 1000);
+setInterval(() => aggregate(), 3 * 60 * 1000);
 
 export default async function globalLeaderboard(interaction: CommandInteraction) {
   const type = interaction.options.getString('type', true);
