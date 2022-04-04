@@ -74,4 +74,8 @@ export default {
   fetchAll(): Item[] {
     return this.items.map(({id}) => findById(id));
   },
+
+  calcCPH() {
+    return this.fetchAll().reduce((a: number, {gph}) => a + (gph || 0), 0);
+  },
 };

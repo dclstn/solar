@@ -149,7 +149,7 @@ export function updateDoc() {
     diffMinutes = 1440;
   }
 
-  const earned = (this.getInventory(InventoryType.Main).gph / 60) * diffMinutes;
+  const earned = (this.getInventory(InventoryType.Main).cph / 60) * diffMinutes;
 
   this.set('money', this.money + earned);
   this.set('updated', new Date());

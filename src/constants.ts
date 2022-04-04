@@ -406,6 +406,24 @@ export const CommandOptions = {
       name: LeaderbordSubCommands.GLOBAL,
       description: '🌏 View the global leadboard',
       type: ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'type',
+          description: 'Sort by field',
+          type: ApplicationCommandOptionTypes.STRING,
+          required: true,
+          choices: [
+            {
+              name: 'Coins Per Hour',
+              value: LeaderboardType.GPH,
+            },
+            {
+              name: 'Coins',
+              value: LeaderboardType.MONEY,
+            },
+          ],
+        },
+      ],
     },
   ],
   [CommandNames.ADMIN]: [

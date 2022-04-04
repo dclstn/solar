@@ -40,17 +40,17 @@ export default async function localLeaderboard(interaction: CommandInteraction) 
       const users = guild.users
         .sort(
           (a: UserInterface, b: UserInterface) =>
-            b.getInventory(InventoryType.Main).gph - a.getInventory(InventoryType.Main).gph
+            b.getInventory(InventoryType.Main).cph - a.getInventory(InventoryType.Main).cph
         )
         .slice(0, 10);
 
       // TODO: add a formatter for usernames/guild names
       embed = createLeaderboardEmbed(
-        ['#', 'Username', 'GPH'],
+        ['#', 'Username', 'CPH'],
         users.map((user, index) => [
           (index + 1).toString(),
           user.username,
-          numberWithCommas(user.getInventory(InventoryType.Main).gph),
+          numberWithCommas(user.getInventory(InventoryType.Main).cph),
         ])
       ).setTitle(`🏆 ${guild.name} Leaderboard`);
     }

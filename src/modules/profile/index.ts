@@ -44,7 +44,7 @@ async function createEmbed(user: UserInterface, inventoryType: number): Promise<
     .setColor(user.colour)
     .setTimestamp(new Date())
     .setFooter({
-      text: `${numberWithCommas(user.getInventory(InventoryType.Main).gph)}/H • ${InventoryType[inventoryType]}`,
+      text: `${numberWithCommas(user.getInventory(InventoryType.Main).cph)}/H • ${InventoryType[inventoryType]}`,
     });
 }
 

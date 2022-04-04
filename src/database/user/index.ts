@@ -10,6 +10,7 @@ import type {InventoryInterface, UserInterface, UserModelInterface} from '../../
 import {InventoryType} from '../../utils/enums.js';
 import {Defaults} from '../../constants.js';
 import {Items} from '../../utils/items.js';
+import {VirtualUserModel} from './aggregation-models.js';
 
 const max = Math.sqrt(Defaults.MAX_SLOTS);
 
@@ -51,7 +52,7 @@ const InventorySchema: Mongoose.Schema = new Mongoose.Schema<InventoryInterface>
 
 InventorySchema.methods = inventory;
 
-InventorySchema.virtual('gph').get(function calculdateGph() {
+InventorySchema.virtual('cph').get(function calculdateGph() {
   return this.fetchAll().reduce((a: number, {gph}) => a + (gph || 0), 0);
 });
 
@@ -106,9 +107,24 @@ UserSchema.post<UserInterface>('init', function initCallback() {
   this.updateDoc();
 });
 
-// eslint-disable-next-line prefer-arrow-callback
-UserSchema.post('aggregate', function postCallback(docs, next) {
-  docs.forEach((doc: UserInterface) => doc.updateDoc());
+UserSchema.post('save', async (res: UserInterface, next) => {
+  await VirtualUserModel.findOneAndUpdate(
+    {
+      discordId: res.discordId,
+    },
+    {
+      username: res.username,
+      avatar: res.avatar,
+      cph: res.getInventory(InventoryType.Main).calcCPH(),
+    },
+    {
+      new: true,
+      upsert: true,
+      runValidators: true,
+      setDefaultsOnInsert: true,
+    }
+  );
+
   next();
 });
 

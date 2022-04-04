@@ -8,7 +8,8 @@ import type {ItemInterface, Cords} from './item.js';
 export interface InventoryInterface extends Mongoose.Types.Subdocument {
   type: number;
   items: ItemInterface[];
-  gph: number;
+  cph: number;
+  calcCPH(): number;
   add(item: Item, cords?: Cords): void;
   rem(item: Item | Cords): void;
   has(item: Item): boolean;
@@ -59,6 +60,20 @@ export interface TopGemsUserInterface extends Mongoose.Document {
   discordId: Mongoose.Schema.Types.Long;
   username: string;
   money: number;
+  avatar?: string;
+}
+
+export interface VirtualUserInterface extends Mongoose.Document {
+  discordId: Mongoose.Schema.Types.Long;
+  username: string;
+  cph: number;
+  avatar?: string;
+}
+
+export interface TopCPHUserInterface extends Mongoose.Document {
+  discordId: Mongoose.Schema.Types.Long;
+  username: string;
+  cph: number;
   avatar?: string;
 }
 
