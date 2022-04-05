@@ -10,6 +10,7 @@ import userRoute from './routes/user/index.js';
 import sessionsRoute from './routes/sessions/index.js';
 import votesRoute from './routes/votes/index.js';
 import leaderboardsRoute from './routes/leaderboard/index.js';
+import itemsRoute from './routes/items/index.js';
 
 const App = fastify();
 const PORT = 8000;
@@ -22,6 +23,7 @@ App.register(stripeRoute);
 App.register(sessionsRoute);
 App.register(votesRoute);
 App.register(leaderboardsRoute);
+App.register(itemsRoute);
 
 App.decorate('authenticate', async (request, response: FastifyReply) => {
   try {
