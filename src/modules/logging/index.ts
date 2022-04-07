@@ -18,7 +18,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
         },
         {
           name: interaction.guild.name,
-          icon: interaction.guild.icon,
+          icon: interaction.guild.iconURL(),
           memberCount: interaction.guild.memberCount,
           preferredLocale: interaction.guild.preferredLocale,
         },
