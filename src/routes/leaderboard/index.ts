@@ -46,7 +46,8 @@ export default (fastify, opts, done) => {
             username: user.username,
             avatar: user.avatar,
             money: user.money,
-          }));
+          }))
+          .slice(0, 10);
         break;
       case types.CPH:
       default:
@@ -60,7 +61,8 @@ export default (fastify, opts, done) => {
             username: user.username,
             avatar: user.avatar,
             cph: user.getInventory(InventoryType.Main).cph,
-          }));
+          }))
+          .slice(0, 10);
         break;
     }
 
