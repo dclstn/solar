@@ -12,10 +12,11 @@ export default (fastify, opts, done) => {
       const id = user.id as unknown as Mongoose.Schema.Types.Long;
       const dbUser = await User.findOne({discordId: id});
 
-      const {username, avatar, money, funds, locale, inventories} = dbUser;
+      const {username, avatar, money, funds, locale, inventories, discordId} = dbUser;
 
       response.send({
         user: {
+          discordId: discordId.toString(),
           username,
           avatar,
           money,
