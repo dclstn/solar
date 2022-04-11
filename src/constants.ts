@@ -100,7 +100,7 @@ export const CommandDescriptions = {
   [CommandNames.MOVE]: '📪 Move an item',
   [CommandNames.WORKBENCH]: '🛠️ Your workbench',
   [CommandNames.VOTE]: '📩 Show your vote progress',
-  [CommandNames.PVP]: 'Enable/disable pvp mode',
+  [CommandNames.PVP]: '🔫 Enable/disable pvp mode',
 };
 
 export const CommandOptions = {
