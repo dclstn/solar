@@ -31,10 +31,15 @@ export default (fastify, opts, done) => {
       },
     });
 
-    await User.upsert(data.id, data.email, data.locale);
+    User.upsert(data.id, data.email, data.locale);
 
     const {id, username, locale} = data;
-    const jwtToken = fastify.jwt.sign({id, username, locale});
+    const jwtToken = fastify.jwt.sign({
+      id,
+      username,
+      locale,
+      token,
+    });
 
     response.send({token: jwtToken});
   });
