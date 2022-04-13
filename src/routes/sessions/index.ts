@@ -21,10 +21,10 @@ export default (fastify, opts, done) => {
     '/api/create-checkout-session',
     {preValidation: [fastify.authenticate]},
     async (request, response: FastifyReply) => {
-      const {price_id} = request.body;
+      const {quantity, price_id} = request.body;
 
       const session = await stripe.checkout.sessions.create({
-        line_items: [{price: price_id, quantity: 1}],
+        line_items: [{price: price_id, quantity}],
         client_reference_id: request.user.id,
         mode: 'payment',
         success_url: `${ENDPOINT}/payment/success`,
