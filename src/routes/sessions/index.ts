@@ -16,7 +16,7 @@ const Popular = {
   [PaymentIds.HANDFUL_OF_GEMS]: false,
 };
 
-export default (fastify, opts, done) => {
+export default async function sessionRoute(fastify, opts, done) {
   fastify.post(
     '/api/create-checkout-session',
     {preValidation: [fastify.authenticate]},
@@ -35,27 +35,27 @@ export default (fastify, opts, done) => {
     }
   );
 
+  const [products, prices] = await Promise.all([stripe.products.list(), stripe.prices.list()]);
+
+  const data = products.data
+    .filter((product) => product.active)
+    .map(({id, description, name, metadata}) => {
+      const price = prices.data.find(({product}) => product === id);
+
+      return {
+        id: price.id,
+        description,
+        name,
+        metadata,
+        price: price.unit_amount,
+        image: Images[price.id],
+        popular: Popular[price.id],
+      };
+    });
+
   fastify.get('/api/products', async (_, response: FastifyReply) => {
-    const [products, prices] = await Promise.all([stripe.products.list(), stripe.prices.list()]);
-
-    const data = products.data
-      .filter((product) => product.active)
-      .map(({id, description, name, metadata}) => {
-        const price = prices.data.find(({product}) => product === id);
-
-        return {
-          id: price.id,
-          description,
-          name,
-          metadata,
-          price: price.unit_amount,
-          image: Images[price.id],
-          popular: Popular[price.id],
-        };
-      });
-
     response.send(data).status(200);
   });
 
   done();
-};
+}
