@@ -13,6 +13,7 @@ import leaderboardsRoute from './routes/leaderboard/index.js';
 import itemsRoute from './routes/items/index.js';
 import guildRoute from './routes/guilds/index.js';
 import commandsRoute from './routes/commands/index.js';
+import workshopRoute from './routes/workshop/index.js';
 
 const App = fastify();
 const PORT = 8000;
@@ -28,6 +29,7 @@ App.register(leaderboardsRoute);
 App.register(itemsRoute);
 App.register(guildRoute);
 App.register(commandsRoute);
+App.register(workshopRoute);
 
 App.decorate('authenticate', async (request, response: FastifyReply) => {
   try {
