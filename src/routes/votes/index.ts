@@ -5,6 +5,7 @@ import Long from 'long';
 import Vote from '../../database/vote/index.js';
 import ResponseError from '../../utils/error.js';
 import Sentry from '../../sentry.js';
+import type jwtTokenInterface from '../../types/jwt.js';
 
 dotenv.config();
 
@@ -58,6 +59,31 @@ export default (fastify, opts, done) => {
 
     response.send(200);
   });
+
+  fastify.get(
+    '/api/votes',
+    {preValidation: [fastify.authenticate]},
+    async (request: FastifyRequest, response: FastifyReply) => {
+      const user = request.user as jwtTokenInterface;
+      const votes = await Vote.get(user.id);
+
+      if (votes == null) {
+        response.status(404).send({message: 'Voting status not found'});
+        return;
+      }
+
+      const {discordId, topGG, discordBotList, lastReward} = votes;
+
+      response.send({
+        votes: {
+          discordId: discordId.toString(),
+          topGG,
+          discordBotList,
+          lastReward,
+        },
+      });
+    }
+  );
 
   done();
 };
