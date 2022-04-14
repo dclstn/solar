@@ -22,15 +22,20 @@ export default (fastify, opts, done) => {
       let users = null;
       switch (type) {
         case types.MONEY:
-          users = await TopUserMoneyModel.find({}).lean().limit(10);
+          users = await TopUserMoneyModel.find({}).limit(10);
           break;
         case types.CPH:
         default:
-          users = await TopCPHUserModel.find({}).lean().limit(10);
+          users = await TopCPHUserModel.find({}).limit(10);
           break;
       }
 
-      response.send({users});
+      response.send({
+        users: users.map((user) => ({
+          ...user._doc,
+          discordId: user.discordId.toString(),
+        })),
+      });
       return;
     }
 
