@@ -51,7 +51,10 @@ interface BaseItem {
   type: ItemTypes;
   emojiId: string;
   level: number;
-  buyable: boolean;
+  buyable: {
+    coins: boolean;
+    gems: boolean;
+  };
   rarity: ItemRarities;
   animated?: boolean;
 }
@@ -64,7 +67,10 @@ const BaseItems = {
     rarity: ItemRarities.COMMON,
     emojiId: '757396142962245752',
     level: 1,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.BRONZE]: {
@@ -74,7 +80,10 @@ const BaseItems = {
     rarity: ItemRarities.COMMON,
     emojiId: '757395337685237771',
     level: 2,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.GOLD]: {
@@ -84,7 +93,10 @@ const BaseItems = {
     rarity: ItemRarities.COMMON,
     emojiId: '757394237623894118',
     level: 3,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.RUBY]: {
@@ -94,7 +106,10 @@ const BaseItems = {
     emojiId: '757333439782453359',
     id: ItemIds.RUBY,
     level: 4,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.DIAMOND]: {
@@ -104,7 +119,10 @@ const BaseItems = {
     emojiId: '757333439631589486',
     id: ItemIds.DIAMOND,
     level: 5,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.EMERALD]: {
@@ -114,7 +132,10 @@ const BaseItems = {
     emojiId: '757333439648366642',
     id: ItemIds.EMERALD,
     level: 6,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.ACID]: {
@@ -124,7 +145,10 @@ const BaseItems = {
     emojiId: '761298415149121578',
     id: ItemIds.ACID,
     level: 7,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.SEASIDE]: {
@@ -134,7 +158,10 @@ const BaseItems = {
     emojiId: '766695960817827861',
     id: ItemIds.SEASIDE,
     level: 8,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.FADE]: {
@@ -144,7 +171,10 @@ const BaseItems = {
     emojiId: '757611084101451846',
     id: ItemIds.FADE,
     level: 9,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.MOON]: {
@@ -154,7 +184,10 @@ const BaseItems = {
     emojiId: '757615307811586048',
     id: ItemIds.MOON,
     level: 10,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.SUN]: {
@@ -164,7 +197,10 @@ const BaseItems = {
     emojiId: '757628531264978944',
     id: ItemIds.SUN,
     level: 11,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.RAINBOW]: {
@@ -174,7 +210,10 @@ const BaseItems = {
     emojiId: '761280663017881640',
     id: ItemIds.RAINBOW,
     level: 12,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.DISCO]: {
@@ -184,7 +223,10 @@ const BaseItems = {
     emojiId: '761289756692185098',
     id: ItemIds.DISCO,
     level: 13,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.KING]: {
@@ -194,7 +236,10 @@ const BaseItems = {
     emojiId: '765942419518521366',
     id: ItemIds.KING,
     level: 14,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.MYTHIC]: {
@@ -204,7 +249,10 @@ const BaseItems = {
     emojiId: '775214117719769140',
     id: ItemIds.MYTHIC,
     level: 15,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.PEPE]: {
@@ -214,7 +262,10 @@ const BaseItems = {
     emojiId: '772493391082553354',
     id: ItemIds.PEPE,
     level: 15,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.PUMPKIN]: {
@@ -224,7 +275,10 @@ const BaseItems = {
     emojiId: '766678940970123296',
     id: ItemIds.PUMPKIN,
     level: 15,
-    buyable: month === '10',
+    buyable: {
+      coins: month === '10',
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.SKELETON]: {
@@ -234,7 +288,10 @@ const BaseItems = {
     emojiId: '766680624504635443',
     id: ItemIds.SKELETON,
     level: 15,
-    buyable: month === '10',
+    buyable: {
+      coins: month === '10',
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.PRESENT]: {
@@ -244,7 +301,10 @@ const BaseItems = {
     emojiId: '780028217092341780',
     id: ItemIds.PRESENT,
     level: 15,
-    buyable: month === '12',
+    buyable: {
+      coins: month === '12',
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.SNOWMAN]: {
@@ -254,7 +314,10 @@ const BaseItems = {
     emojiId: '791567451422851082',
     id: ItemIds.SNOWMAN,
     level: 15,
-    buyable: month === '12',
+    buyable: {
+      coins: month === '12',
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.MINECRAFT]: {
@@ -264,7 +327,10 @@ const BaseItems = {
     emojiId: '797932521999564821',
     id: ItemIds.MINECRAFT,
     level: 15,
-    buyable: true,
+    buyable: {
+      coins: true,
+      gems: false,
+    },
     animated: true,
   },
   [ItemIds.MYSTIC]: {
@@ -274,7 +340,10 @@ const BaseItems = {
     emojiId: '768521388754862110',
     id: ItemIds.MYSTIC,
     level: 16,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.BLUE_DIAMOND]: {
@@ -284,7 +353,10 @@ const BaseItems = {
     emojiId: '771335875220602900',
     id: ItemIds.BLUE_DIAMOND,
     level: 17,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.RED_DIAMOND]: {
@@ -294,7 +366,10 @@ const BaseItems = {
     emojiId: '775288572595929099',
     id: ItemIds.RED_DIAMOND,
     level: 18,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.TORTOISE]: {
@@ -304,7 +379,10 @@ const BaseItems = {
     emojiId: '772311731556843570',
     id: ItemIds.TORTOISE,
     level: 19,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.BURNING]: {
@@ -314,7 +392,10 @@ const BaseItems = {
     emojiId: '779853678021836830',
     id: ItemIds.BURNING,
     level: 20,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.SCORCHING]: {
@@ -324,7 +405,10 @@ const BaseItems = {
     emojiId: '779853678295121930',
     id: ItemIds.SCORCHING,
     level: 21,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.AZURE]: {
@@ -334,7 +418,10 @@ const BaseItems = {
     emojiId: '798744705608187924',
     id: ItemIds.AZURE,
     level: 22,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.RGB]: {
@@ -344,7 +431,10 @@ const BaseItems = {
     emojiId: '778186833557323786',
     id: ItemIds.RGB,
     level: 23,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.OMEGA]: {
@@ -354,7 +444,10 @@ const BaseItems = {
     emojiId: '802954138702053416',
     id: ItemIds.OMEGA,
     level: 24,
-    buyable: false,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: true,
   },
   [ItemIds.GIFT]: {
@@ -363,8 +456,11 @@ const BaseItems = {
     rarity: ItemRarities.LEGENDARY,
     emojiId: '851512656019324938',
     id: ItemIds.GIFT,
-    level: 0,
-    buyable: false,
+    level: 9,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
     animated: false,
   },
 };
@@ -378,7 +474,7 @@ export const Chances = {
 
 export const RarityColours = {
   [ItemRarities.COMMON]: 'BLURPLE',
-  [ItemRarities.UNCOMMON]: 'DARK_GREEN',
+  [ItemRarities.UNCOMMON]: 'GREEN',
   [ItemRarities.EPIC]: 'PURPLE',
   [ItemRarities.LEGENDARY]: 'GOLD',
 };
@@ -386,7 +482,10 @@ export const RarityColours = {
 export interface Item extends BaseItem {
   emoji: string;
   url: string;
-  price?: number;
+  price?: {
+    coins: number;
+    gems: number;
+  };
   gph?: number;
 }
 
@@ -396,14 +495,17 @@ export const Items = Object.fromEntries(
     {
       ...item,
       gph: item.level / 2,
-      price: item.level ** 3,
+      price: {
+        coins: item.level ** 3,
+        gems: item.level ** 2.1,
+      },
       emoji: item.animated ? `<a:${item.id}:${item.emojiId}>` : `<:${item.id}:${item.emojiId}>`,
       url: `https://cdn.discordapp.com/emojis/${item.emojiId}.${item.animated ? 'gif' : 'png'}`,
     },
   ])
 );
 
-export const BUYABLE_ITEMS = Object.values(Items).filter((item) => item.buyable);
+export const BUYABLE_ITEMS = Object.values(Items).filter((item) => item.buyable.coins);
 
 export const DEFAULT_BUYABLE_ITEMS = BUYABLE_ITEMS.slice(0, 24);
 export const DEFAULT_ITEMS = Object.values(Items).slice(0, 24);

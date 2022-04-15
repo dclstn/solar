@@ -2,6 +2,7 @@ import {MessageEmbed} from 'discord.js';
 import table from 'text-table';
 import {Item} from './items.js';
 import {emoteStrings} from './emotes.js';
+import {BuyType} from '../types/user.js';
 
 export function numberWithCommas(x: number): string {
   const y = x < 100 ? x.toFixed(2) : Math.floor(x);
@@ -19,6 +20,13 @@ ${`${slotsRow(symbols[3])}\n${slotsRow(symbols[4])}`}
 ${message}
 `;
 
+export const generatorDescription = (item: Item): string => `${
+  item.buyable.coins ? `Price: ${emoteStrings.gold} **${numberWithCommas(item.price.coins)}**` : ''
+}${item.buyable.gems ? `Price: ${emoteStrings.gem} **${numberWithCommas(item.price.gems)}**` : ''}
+Level: **${item.level}**
+Coins per hour: **${item.gph}/h**
+`;
+
 export function success(content: string): MessageEmbed {
   return new MessageEmbed().setColor('GREEN').setDescription(`${emoteStrings.success} ${content}`);
 }
@@ -27,11 +35,18 @@ export function warning(content: string): MessageEmbed {
   return new MessageEmbed().setColor('ORANGE').setDescription(`${emoteStrings.neutral} ${content}`);
 }
 
-export function purchase(item: Item, amount: number): MessageEmbed {
+export function purchase(item: Item, amount: number, currency: BuyType): MessageEmbed {
+  // TODO: refactor this
   return new MessageEmbed()
     .setColor('GREEN')
     .addField('Purchase', `${item.emoji} **${item.name}** x${amount}`, true)
-    .addField('Cost', `- ${emoteStrings.gold} **${numberWithCommas(amount * item.price)}**`, true)
+    .addField(
+      'Cost',
+      `- ${currency === BuyType.COINS ? emoteStrings.gold : emoteStrings.gem} **${numberWithCommas(
+        amount * (currency === BuyType.COINS ? item.price.coins : item.price.gems)
+      )}**`,
+      true
+    )
     .setFooter({text: 'Thank you for your purchase!'})
     .setTimestamp(new Date());
 }
@@ -40,7 +55,7 @@ export function sale(item: Item, amount: number): MessageEmbed {
   return new MessageEmbed()
     .setColor('RED')
     .addField('Sold', `${item.emoji} **${item.name}** x${amount}`, true)
-    .addField('Gain', `+ ${emoteStrings.gold} **${numberWithCommas((amount * item.price) / 2)}**`, true)
+    .addField('Gain', `+ ${emoteStrings.gold} **${numberWithCommas((amount * item.price.coins) / 2)}**`, true)
     .setFooter({text: 'Thank you for your sale!'})
     .setTimestamp(new Date());
 }

@@ -6,14 +6,14 @@ import uniqby from 'lodash.uniqby';
 import ResponseError from '../../utils/error.js';
 import {Defaults} from '../../constants.js';
 import {Chances, Item, ItemIds, ItemRarities, Items} from '../../utils/items.js';
-import type {InventoryInterface, UserInterface} from '../../types/user.js';
+import {BuyType, InventoryInterface, UserInterface} from '../../types/user.js';
 import type {ItemInterface} from '../../types/item.js';
 import type {GroupInterface} from '../../types/group.js';
 import {InventoryType} from '../../utils/enums.js';
 import {secureMathRandom} from '../../utils/misc.js';
 import client from '../../client.js';
 import Cooldown from '../cooldown/index.js';
-import {createToggleNotificationButton} from '../../utils/buttons.js';
+import {BUY_GEMS, createToggleNotificationButton} from '../../utils/buttons.js';
 
 export function add(item: Item, amount: number) {
   if (amount > this.totalFree()) {
@@ -32,24 +32,47 @@ export function add(item: Item, amount: number) {
   }
 }
 
-export function buy(item: Item, amount: number) {
+export function buy(item: Item, amount: number, currency: BuyType) {
   if (item == null) {
     throw new ResponseError('Could not find item you specified');
   }
 
-  if (!item.buyable) {
-    throw new ResponseError('This item is not buyable');
+  switch (currency) {
+    case BuyType.COINS: {
+      if (!item.buyable.coins) {
+        throw new ResponseError('This item is not buyable for coins');
+      }
+
+      const totalCost = item.price.coins * amount;
+
+      if (totalCost > this.money) {
+        throw new ResponseError(`You do not have enough coins for this purchase`);
+      }
+
+      this.add(item, amount);
+      this.set('money', this.money - totalCost);
+      break;
+    }
+    case BuyType.GEMS: {
+      if (!item.buyable.gems) {
+        throw new ResponseError('This item is not buyable for gems');
+      }
+
+      const totalCost = item.price.gems * amount;
+
+      if (totalCost > this.funds) {
+        throw new ResponseError(`You do not have enough gems for this purchase`, [BUY_GEMS]);
+      }
+
+      this.add(item, amount);
+      this.set('funds', this.funds - totalCost);
+      break;
+    }
+    default:
+      throw new Error('Invalid currency');
   }
 
-  const totalCost = item.price * amount;
-
-  if (totalCost > this.money) {
-    throw new ResponseError(`You do not have enough coins for this purchase`);
-  }
-
-  this.add(item, amount);
-
-  this.money -= totalCost;
+  this.save();
 }
 
 export function has(item: Item): boolean {
@@ -123,7 +146,7 @@ export function sell(item: Item, amount: number) {
   }
 
   this.rem(item, amount);
-  this.money += (item.price * amount) / 2;
+  this.money += (item.price.coins * amount) / 2;
 }
 
 export function sort(fn: (a: ItemInterface, b: ItemInterface) => number) {

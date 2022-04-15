@@ -3,7 +3,7 @@ import {Item, Items} from './items.js';
 import {MessageComponentIds} from '../constants.js';
 import {emoteIds} from './emotes.js';
 import {ItemTypes} from './enums.js';
-import type {UserInterface} from '../types/user.js';
+import {BuyType, UserInterface} from '../types/user.js';
 import {numberWithCommas} from './embed.js';
 import type {GroupInterface} from '../types/group.js';
 
@@ -46,11 +46,17 @@ export const INVITE_BOT = new MessageButton()
   .setEmoji(emoteIds.gem)
   .setLabel('Reinvite Castle Mania with Correct Permissions');
 
+export const BUY_GEMS = new MessageButton()
+  .setStyle('LINK')
+  .setURL('https://castlemania.bot/store')
+  .setEmoji(emoteIds.gem)
+  .setLabel('Purchase Gems');
+
 export const createToggleNotificationButton = (type: string) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.TOGGLE_NOTIFICATION}.${type}`)
     .setStyle('PRIMARY')
-    .setLabel('Notify me when ready')
+    .setLabel('Notify me')
     .setEmoji('552927522824781834');
 
 export const createAcceptButton = (group: GroupInterface) =>
@@ -81,32 +87,44 @@ export const createItemButton = (item: Item) =>
 export const createUnboxButton = (user: UserInterface, item: Item, another = false) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.UNBOX}.${item.id}`)
-    .setLabel(another ? 'Unwrap another' : 'Unwrap')
-    .setStyle('SUCCESS')
-    .setEmoji(item.emojiId)
+    .setLabel(another ? 'Unbox another Gift' : 'Unbox Gift')
+    .setStyle('PRIMARY')
     .setDisabled(!user.has(item));
 
 export const createSellButton = (user: UserInterface, item: Item, text?: string) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.SELL}.${item.id}`)
-    .setLabel(text != null ? text : `Sell for ${numberWithCommas(item.price / 2)}`)
+    .setLabel(text != null ? text : `Sell 1x for ${numberWithCommas(item.price.coins / 2)}`)
     .setEmoji(emoteIds.gold)
-    .setStyle('DANGER')
+    .setStyle('SECONDARY')
     .setDisabled(!user.has(item));
 
-export const createBuyButton = (user: UserInterface, item: Item, text?: string) =>
-  new MessageButton()
-    .setCustomId(`${MessageComponentIds.BUY}.${item.id}`)
-    .setLabel(text != null ? text : `Buy for ${numberWithCommas(item.price)}`)
-    .setStyle('SUCCESS')
-    .setEmoji(emoteIds.gold)
-    .setDisabled(!item.buyable || item.price > user.money);
+export function createBuyButton(user: UserInterface, item: Item, buyType: BuyType, text?: string) {
+  if (buyType === BuyType.COINS) {
+    return new MessageButton()
+      .setCustomId(`${MessageComponentIds.BUY}.${item.id}.${buyType}`)
+      .setLabel(text != null ? text : `Buy 1x for ${numberWithCommas(item.price.coins)}`)
+      .setStyle('SUCCESS')
+      .setEmoji(emoteIds.gold)
+      .setDisabled(!item.buyable.coins || item.price.coins > user.money);
+  }
+
+  if (buyType === BuyType.GEMS) {
+    return new MessageButton()
+      .setCustomId(`${MessageComponentIds.BUY}.${item.id}.${buyType}`)
+      .setLabel(text != null ? text : `Buy 1x for ${numberWithCommas(item.price.gems)}`)
+      .setStyle('SUCCESS')
+      .setEmoji(emoteIds.gem);
+  }
+
+  return null;
+}
 
 export const createCraftButton = (user: UserInterface, item: Item, recipe) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.CRAFT}.${item.id}`)
     .setLabel(`Craft ${item.name}`)
-    .setStyle('PRIMARY')
+    .setStyle('SECONDARY')
     .setDisabled(!recipe.requirements.every((itemId) => user.has(Items[itemId])));
 
 export const createJoinRaidButton = (sessionId) =>
@@ -119,4 +137,4 @@ export const createLeaveRaidButton = (sessionId) =>
   new MessageButton()
     .setCustomId(`${MessageComponentIds.LEAVE_RAID}.${sessionId}`)
     .setLabel(`Leave Raid`)
-    .setStyle('DANGER');
+    .setStyle('SECONDARY');

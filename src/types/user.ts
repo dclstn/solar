@@ -5,6 +5,10 @@ import {Item} from '../utils/items.js';
 import type {GroupInterface} from './group.js';
 import type {ItemInterface, Cords} from './item.js';
 
+export enum BuyType {
+  COINS = '0',
+  GEMS = '1',
+}
 export interface InventoryInterface extends Mongoose.Types.Subdocument {
   type: number;
   items: ItemInterface[];
@@ -38,7 +42,7 @@ export interface UserInterface extends Mongoose.Document {
   locale?: string;
   avatar?: string;
   colour?: ColorResolvable;
-  buy(item: Item, amount: number): void;
+  buy(item: Item, amount: number, currency: BuyType): void;
   add(item: Item, amount: number): void;
   sell(item: Item, amount: number): void;
   rem(item: Item, amount: number): void;
