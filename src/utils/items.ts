@@ -497,7 +497,7 @@ export const Items = Object.fromEntries(
       gph: item.level / 2,
       price: {
         coins: item.level ** 3,
-        gems: item.level ** 2.1,
+        gems: item.level ** 2,
       },
       emoji: item.animated ? `<a:${item.id}:${item.emojiId}>` : `<:${item.id}:${item.emojiId}>`,
       url: `https://cdn.discordapp.com/emojis/${item.emojiId}.${item.animated ? 'gif' : 'png'}`,
