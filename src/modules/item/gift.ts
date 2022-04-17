@@ -16,7 +16,10 @@ export default async function handleGift(interaction: CommandInteraction | Butto
 
     user = await User.get(interaction.user);
 
-    const embed = new MessageEmbed().setImage(item.url).setColor('GOLD');
+    const embed = new MessageEmbed()
+      .setImage(item.url)
+      .setColor('GOLD')
+      .setFooter({text: 'Guaranteed legendary / epic every 5 gifts!'});
 
     const actionRow = new MessageActionRow().addComponents(
       createBuyButton(user, item, BuyType.GEMS),
