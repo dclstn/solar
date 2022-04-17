@@ -14,8 +14,7 @@ async function unboxGift(interaction: ButtonInteraction, gift: Item) {
 
   try {
     const user = await User.get(interaction.user);
-    const item = user.unbox(gift);
-    await user.save();
+    const item = await user.unbox(gift);
 
     const embed = new MessageEmbed()
       .setTitle(item.name)

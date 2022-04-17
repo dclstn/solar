@@ -14,6 +14,7 @@ import {secureMathRandom} from '../../utils/misc.js';
 import client from '../../client.js';
 import Cooldown from '../cooldown/index.js';
 import {BUY_GEMS, createToggleNotificationButton} from '../../utils/buttons.js';
+import lootbox from '../lootbox/index.js';
 
 export function add(item: Item, amount: number) {
   if (amount > this.totalFree()) {
@@ -105,14 +106,23 @@ export function move(inventoryTypeFrom: InventoryType, inventoryTypeTo: Inventor
 }
 
 // TODO: build this out
-export function unbox(item: Item): Item {
+export async function unbox(item: Item): Promise<Item> {
   this.rem(item, 1);
 
+  const {totalUnboxed} = await lootbox.get(this.discordId);
+
   const rand = secureMathRandom();
-  const lowestKey = Object.entries(Chances).reduce(
+  let lowestKey = Object.entries(Chances).reduce(
     (lowest, [key, chance]) => (rand < chance ? key : lowest),
     ItemRarities.COMMON
   );
+
+  if (totalUnboxed !== 0) {
+    // forced odds
+    lowestKey = totalUnboxed % 5 === 0 ? ItemRarities.EPIC : lowestKey;
+    lowestKey = totalUnboxed % 10 === 0 ? ItemRarities.LEGENDARY : lowestKey;
+  }
+
   // eslint-disable-next-line eqeqeq
   const pool = Object.values(Items).filter(({rarity}) => rarity == lowestKey);
   const unboxed = pool[Math.floor(secureMathRandom() * pool.length)];
@@ -120,6 +130,7 @@ export function unbox(item: Item): Item {
   this.add(unboxed, 1);
   this.set('exp', this.exp + 10);
 
+  await Promise.all([lootbox.updateOne({discordId: this.discordId}, {$inc: {totalUnboxed: 1}}), this.save()]);
   return unboxed;
 }
 
