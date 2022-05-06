@@ -385,26 +385,13 @@ const BaseItems = {
     },
     animated: true,
   },
-  [ItemIds.BURNING]: {
-    name: 'Burning',
+  [ItemIds.RGB]: {
+    name: 'RGB',
     type: ItemTypes.GENERATOR,
     rarity: ItemRarities.LEGENDARY,
-    emojiId: '779853678021836830',
-    id: ItemIds.BURNING,
+    emojiId: '778186833557323786',
+    id: ItemIds.RGB,
     level: 20,
-    buyable: {
-      coins: false,
-      gems: true,
-    },
-    animated: true,
-  },
-  [ItemIds.SCORCHING]: {
-    name: 'Scorching',
-    type: ItemTypes.GENERATOR,
-    rarity: ItemRarities.LEGENDARY,
-    emojiId: '779853678295121930',
-    id: ItemIds.SCORCHING,
-    level: 21,
     buyable: {
       coins: false,
       gems: true,
@@ -417,6 +404,19 @@ const BaseItems = {
     rarity: ItemRarities.LEGENDARY,
     emojiId: '798744705608187924',
     id: ItemIds.AZURE,
+    level: 21,
+    buyable: {
+      coins: false,
+      gems: true,
+    },
+    animated: true,
+  },
+  [ItemIds.BURNING]: {
+    name: 'Burning',
+    type: ItemTypes.GENERATOR,
+    rarity: ItemRarities.LEGENDARY,
+    emojiId: '779853678021836830',
+    id: ItemIds.BURNING,
     level: 22,
     buyable: {
       coins: false,
@@ -424,12 +424,12 @@ const BaseItems = {
     },
     animated: true,
   },
-  [ItemIds.RGB]: {
-    name: 'RGB',
+  [ItemIds.SCORCHING]: {
+    name: 'Scorching',
     type: ItemTypes.GENERATOR,
     rarity: ItemRarities.LEGENDARY,
-    emojiId: '778186833557323786',
-    id: ItemIds.RGB,
+    emojiId: '779853678295121930',
+    id: ItemIds.SCORCHING,
     level: 23,
     buyable: {
       coins: false,
