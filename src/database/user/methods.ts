@@ -120,7 +120,6 @@ export async function unbox(item: Item): Promise<Item> {
   if (totalUnboxed !== 0) {
     // forced odds
     lowestKey = totalUnboxed % 5 === 0 ? ItemRarities.EPIC : lowestKey;
-    lowestKey = totalUnboxed % 10 === 0 ? ItemRarities.LEGENDARY : lowestKey;
   }
 
   // eslint-disable-next-line eqeqeq
