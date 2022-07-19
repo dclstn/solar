@@ -30,7 +30,7 @@
     "@sentry/integrations": "^6.16.1",
     "@sentry/node": "^6.16.1",
     "@sentry/tracing": "^6.16.1",
-    "@sentry/types": "^6.16.1",
+    "@sentry/types": "^7.7.0",
     "axios": "^0.24.0",
     "chalk": "^5.0.0",
     "discord-api-types": "^0.25.2",
