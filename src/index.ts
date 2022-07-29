@@ -9,6 +9,8 @@ dotenv.config();
 const manager = new Discord.ShardingManager('./dist/app.js', {
   totalShards: 'auto',
   token: process.env.DISCORD_TOKEN,
+  timeout: -1,
+  respawn: true
 });
 
 manager.on('shardCreate', (shard) => {
@@ -19,6 +21,6 @@ manager.on('shardCreate', (shard) => {
   console.log(`${chalk.cyan(`[Shards]`)} Launched shard ${shard.id}`);
 });
 
-manager.spawn();
+manager.spawn({ amount: 'auto', delay: 5500, timeout: 30000 });
 
 import('./server.js');
