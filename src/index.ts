@@ -23,7 +23,7 @@ manager.on('shardCreate', (shard) => {
 });
 
 manager.spawn({
-  amount: manager.totalShards,
+  amount: 20,
   delay: 5500,
   timeout: 30000
 });
