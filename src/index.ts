@@ -22,6 +22,10 @@ manager.on('shardCreate', (shard) => {
   console.log(`${chalk.cyan(`[Shards]`)} Launched shard ${shard.id}`);
 });
 
-manager.spawn({ amount: 'auto', delay: 5500, timeout: 30000 });
+manager.spawn({
+  amount: manager.totalShards,
+  delay: 5500,
+  timeout: 30000
+});
 
 import('./server.js');
