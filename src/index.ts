@@ -9,7 +9,9 @@ dotenv.config();
 const manager = new Discord.ShardingManager('./dist/app.js', {
   totalShards: 'auto',
   token: process.env.DISCORD_TOKEN,
-  respawn: true
+  respawn: true,
+  // @ts-ignore
+  timeout: -1
 });
 
 manager.on('shardCreate', (shard) => {
