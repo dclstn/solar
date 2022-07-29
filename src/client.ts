@@ -1,9 +1,9 @@
-import {Client, IntentsBitField} from 'discord.js';
+import {Client, Intents} from 'discord.js';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const client = new Client({ intents: [IntentsBitField.Flags.GuildMembers, IntentsBitField.Flags.GuildMessages] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 client.login(process.env.DISCORD_TOKEN);
 
