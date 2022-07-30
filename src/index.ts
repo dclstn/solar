@@ -10,8 +10,6 @@ const manager = new Discord.ShardingManager('./dist/app.js', {
   totalShards: 'auto',
   token: process.env.DISCORD_TOKEN,
   respawn: true,
-  // @ts-ignore
-  timeout: -1
 });
 
 manager.on('shardCreate', (shard) => {
@@ -22,10 +20,6 @@ manager.on('shardCreate', (shard) => {
   console.log(`${chalk.cyan(`[Shards]`)} Launched shard ${shard.id}`);
 });
 
-manager.spawn({
-  amount: manager.totalShards,
-  delay: 5500,
-  timeout: 30000
-});
+manager.spawn({timeout: 60000});
 
 import('./server.js');
