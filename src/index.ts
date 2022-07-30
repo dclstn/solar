@@ -1,22 +1,23 @@
 /* eslint-disable no-console */
-import {ClusterManager} from 'discord.js-cluster';
+import Discord from 'discord.js';
 import * as dotenv from 'dotenv';
 import chalk from 'chalk';
 import Sentry from './sentry.js';
 
 dotenv.config();
 
-const manager = new ClusterManager('./dist/app.js', {
+const manager = new Discord.ShardingManager('./dist/app.js', {
   totalShards: 'auto',
   token: process.env.DISCORD_TOKEN,
+  respawn: true,
 });
 
-manager.on('clusterCreate', (cluster) => {
-  cluster.on('error', (error: Error) => {
+manager.on('shardCreate', (shard) => {
+  shard.on('error', (error: Error) => {
     Sentry.captureException(error);
   });
 
-  console.log(`${chalk.cyan(`[Clusters]`)} Launched cluster ${cluster.id}`);
+  console.log(`${chalk.cyan(`[Shards]`)} Launched shard ${shard.id}`);
 });
 
 manager.spawn({timeout: 60000});
