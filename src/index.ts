@@ -10,6 +10,7 @@ const manager = new Discord.ShardingManager('./dist/app.js', {
   totalShards: 'auto',
   token: process.env.DISCORD_TOKEN,
   respawn: true,
+  mode: 'worker'
 });
 
 manager.on('shardCreate', (shard) => {
