@@ -14,6 +14,7 @@ const manager = new Discord.ShardingManager('./dist/app.js', {
 });
 
 manager.on('shardCreate', (shard) => {
+  if (shard == null) return;
   shard.on('error', (error: Error) => {
     Sentry.captureException(error);
   });
