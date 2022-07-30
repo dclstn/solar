@@ -2,7 +2,7 @@
 import fastify, {FastifyReply} from 'fastify';
 import fastifyJwt from 'fastify-jwt';
 import chalk from 'chalk';
-import fastifyCors from 'fastify-cors';
+import fastifyCors from '@fastify/cors';
 import Sentry from './sentry.js';
 import authRoute from './routes/auth/index.js';
 import stripeRoute from './routes/stripe/index.js';
