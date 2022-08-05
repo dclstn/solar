@@ -14,8 +14,8 @@ export const emoteIds = {
   shopping: '923924831223816242',
   earth: '924657486479364157',
   info: '659437922436775936',
-  gold: '957471145202941962',
-  gem: '957471144754163802',
+  gold: '957399019720704032',
+  gem: '957399447984295946',
 };
 
 export const emoteStrings = {
@@ -35,5 +35,5 @@ export const emoteStrings = {
   rucksack: `<:rucksack:${emoteIds.rucksack}>`,
   shopping: `<:shopping:${emoteIds.shopping}>`,
   earth: `<:earth:${emoteIds.earth}>`,
-  gold: `<a:gold:${emoteIds.gold}>`,
+  gold: `<a:coin:${emoteIds.gold}>`,
 };
