@@ -17,10 +17,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - name: Linting Check
-        run: npm run lint
       - name: Clean Install
         run: npm ci
+       - name: Linting Check
+        run: npm run lint
       - name: Create env file
         run: |
           touch .env
