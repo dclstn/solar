@@ -5,4 +5,7 @@ declare module 'fastify' {
     discordOAuth2: OAuth2Namespace;
     authenticate: (request: FastifyRequest) => void;
   }
+  interface FastifyRequest {
+    user: any;
+  }
 }
