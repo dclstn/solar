@@ -19,7 +19,7 @@ jobs:
           cache: 'npm'
       - name: Clean Install
         run: npm ci
-       - name: Linting Check
+      - name: Linting Check
         run: npm run lint
       - name: Create env file
         run: |
