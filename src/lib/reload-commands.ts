@@ -1,5 +1,6 @@
 import {Routes} from 'discord-api-types/v9';
 import dotenv from 'dotenv';
+import glob from 'glob';
 import rest from './rest.js';
 import Sentry from './sentry.js';
 import CommandsManager, {Command} from '../interactions/commands.js';
@@ -7,6 +8,20 @@ import CommandsManager, {Command} from '../interactions/commands.js';
 dotenv.config();
 
 async function reloadApplicationCommands(): Promise<void> {
+  glob('./dist/modules/**/index.js', async (err: Error, files: [string]) => {
+    if (err) {
+      process.exit(1);
+    }
+
+    for await (const file of files) {
+      try {
+        await import(`../../${file}`);
+      } catch (moduleErr) {
+        Sentry.captureException(moduleErr);
+      }
+    }
+  });
+
   const commands = Array.from(CommandsManager.commands.values()).map((command: Command) => ({
     type: command.type,
     name: command.name,
