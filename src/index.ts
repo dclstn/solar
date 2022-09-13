@@ -6,7 +6,7 @@ import Sentry from './lib/sentry.js';
 
 dotenv.config();
 
-const manager = new Discord.ShardingManager('./dist/app.js', {
+const manager = new Discord.ShardingManager('./dist/lib/app.js', {
   totalShards: 'auto',
   token: process.env.DISCORD_TOKEN,
   respawn: true,
