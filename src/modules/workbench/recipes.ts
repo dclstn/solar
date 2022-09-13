@@ -6,7 +6,6 @@ import {Item, Items} from '../../utils/items.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {createItemButton} from '../../utils/buttons.js';
 import {RECIPES} from '../../utils/recipes.js';
-import client from '../../lib/client.js';
 
 const PAGES: Item[][] = chunk(
   Object.values(RECIPES).map(({reward}) => Items[reward]),
@@ -22,7 +21,7 @@ ${emoteStrings.success} **How do I view my crafting status?**
 `;
 
 const EMBED = new MessageEmbed()
-  .setAuthor({name: 'Castle Mania Crafting!', iconURL: client.user.avatarURL()})
+  .setAuthor({name: 'Castle Mania Crafting!'})
   .setDescription(SHOP_DESCRIPTION)
   .setColor('PURPLE')
   .setFooter({text: 'The shop was last updated:'})
