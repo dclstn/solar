@@ -4,7 +4,7 @@ import {emoteStrings} from '../../utils/emotes.js';
 import {numberWithCommas, success, warning} from '../../utils/embed.js';
 import redlock, {groupLock, userLock} from '../../redis/locks.js';
 import User from '../../database/user/index.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import ResponseError from '../../utils/error.js';
 import type {GroupInterface} from '../../types/group.js';
 

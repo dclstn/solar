@@ -3,7 +3,7 @@ import Mongoose from 'mongoose';
 import {MessageEmbed} from 'discord.js';
 import {warning, numberWithCommas} from '../../utils/embed.js';
 import User from '../../database/user/index.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import ResponseError from '../../utils/error.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import type {GroupInterface} from '../../types/group.js';

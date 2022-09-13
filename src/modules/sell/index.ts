@@ -2,13 +2,13 @@ import {AutocompleteInteraction, ButtonInteraction, CommandInteraction, MessageA
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import redlock, {userLock} from '../../redis/locks.js';
 import components from '../../interactions/components.js';
-import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../constants.js';
+import {CommandDescriptions, CommandNames, CommandOptions, MessageComponentIds} from '../../lib/constants.js';
 import {DEFAULT_ITEMS, fuzzy, Item, Items} from '../../utils/items.js';
 import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
 import {sale, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import {createSellButton, PROFILE_BUTTON} from '../../utils/buttons.js';
 import autocomplete from '../../interactions/autocomplete.js';
 

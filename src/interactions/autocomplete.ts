@@ -1,8 +1,8 @@
 import {AutocompleteInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Context} from '@sentry/types';
-import Sentry from '../sentry.js';
-import client from '../client.js';
+import Sentry from '../lib/sentry.js';
+import client from '../lib/client.js';
 
 class Autocomplete extends EventEmitter {
   constructor() {

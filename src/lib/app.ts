@@ -1,6 +1,6 @@
 import glob from 'glob';
 import dotenv from 'dotenv';
-import commands from './interactions/commands.js';
+import commands from '../interactions/commands.js';
 import client from './client.js';
 import Sentry from './sentry.js';
 
@@ -14,7 +14,7 @@ client.once('ready', () => {
 
     for await (const file of files) {
       try {
-        await import(`../${file}`);
+        await import(`../../${file}`);
       } catch (moduleErr) {
         Sentry.captureException(moduleErr);
       }

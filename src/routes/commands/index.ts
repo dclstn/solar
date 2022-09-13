@@ -1,5 +1,5 @@
 import type {FastifyRequest, FastifyReply} from 'fastify';
-import {CommandOptions, CommandNames, CommandDescriptions} from '../../constants.js';
+import {CommandOptions, CommandNames, CommandDescriptions} from '../../lib/constants.js';
 
 const commands = Object.values(CommandNames).map((name) => ({
   name,

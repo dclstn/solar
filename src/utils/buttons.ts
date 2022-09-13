@@ -1,6 +1,6 @@
 import {MessageButton} from 'discord.js';
 import {Item, Items} from './items.js';
-import {MessageComponentIds} from '../constants.js';
+import {MessageComponentIds} from '../lib/constants.js';
 import {emoteIds} from './emotes.js';
 import {ItemTypes} from './enums.js';
 import {BuyType, UserInterface} from '../types/user.js';

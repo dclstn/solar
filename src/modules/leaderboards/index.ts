@@ -6,7 +6,7 @@ import {
   CommandOptions,
   LeaderbordSubCommands,
   MessageComponentIds,
-} from '../../constants.js';
+} from '../../lib/constants.js';
 import localLeaderboard from './local.js';
 import globalLeaderboard from './global.js';
 import components from '../../interactions/components.js';

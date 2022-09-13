@@ -1,6 +1,6 @@
 import type {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {CommandNames, CommandDescriptions, CommandOptions, GroupSubCommandNames} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions, GroupSubCommandNames} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 import deposit from './deposit.js';
 import create from './create.js';

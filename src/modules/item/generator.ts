@@ -4,7 +4,7 @@ import {Item, Items, RarityColours} from '../../utils/items.js';
 import User from '../../database/user/index.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {BuyType, UserInterface} from '../../types/user.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import {createBuyButton, createCraftButton, createSellButton} from '../../utils/buttons.js';
 import {RECIPES} from '../../utils/recipes.js';
 import ResponseError from '../../utils/error.js';

@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
-import isProd from './utils/enviroment.js';
+import isProd from '../utils/enviroment.js';
 
 dotenv.config();
 

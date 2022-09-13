@@ -1,6 +1,6 @@
 import {User} from 'discord.js';
 import Redlock, {ResourceLockedError} from 'redlock';
-import Sentry from '../sentry.js';
+import Sentry from '../lib/sentry.js';
 import client from './client.js';
 
 const redlock = new Redlock([client], {

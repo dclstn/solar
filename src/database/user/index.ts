@@ -8,7 +8,7 @@ import * as methods from './methods.js';
 import inventory from './inventory.js';
 import type {InventoryInterface, UserInterface, UserModelInterface} from '../../types/user.js';
 import {InventoryType} from '../../utils/enums.js';
-import {Defaults} from '../../constants.js';
+import {Defaults} from '../../lib/constants.js';
 import {Items} from '../../utils/items.js';
 import {VirtualUserModel} from './aggregation-models.js';
 

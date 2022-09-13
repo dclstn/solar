@@ -1,11 +1,11 @@
 import {CommandInteraction} from 'discord.js';
 import Mongoose from 'mongoose';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import {createLeaderboardEmbed, numberWithCommas, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import Guilds from '../../database/guild/index.js';
 import type {UserInterface} from '../../types/user';
-import {LeaderboardType} from '../../constants.js';
+import {LeaderboardType} from '../../lib/constants.js';
 import {InventoryType} from '../../utils/enums.js';
 
 export default async function localLeaderboard(interaction: CommandInteraction) {

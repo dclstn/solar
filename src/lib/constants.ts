@@ -1,9 +1,9 @@
 import {ApplicationCommandOptionTypes} from 'discord.js/typings/enums';
-import isProd from './utils/enviroment.js';
-import {InventoryType} from './utils/enums.js';
-import {BUYABLE_ITEMS} from './utils/items.js';
-import {RECIPES} from './utils/recipes.js';
-import {capitalizeFirstLetter} from './utils/index.js';
+import isProd from '../utils/enviroment.js';
+import {InventoryType} from '../utils/enums.js';
+import {BUYABLE_ITEMS} from '../utils/items.js';
+import {RECIPES} from '../utils/recipes.js';
+import {capitalizeFirstLetter} from '../utils/index.js';
 
 export const LeaderboardType = {
   GPH: 'gph',

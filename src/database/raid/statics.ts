@@ -7,7 +7,7 @@ import client from '../../redis/client.js';
 import ResponseError from '../../utils/error.js';
 import UserModel from '../user/index.js';
 import {secureMathRandom} from '../../utils/misc.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
 
 const {duration} = moment;

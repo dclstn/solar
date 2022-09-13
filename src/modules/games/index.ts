@@ -1,7 +1,7 @@
 import {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import commands from '../../interactions/commands.js';
-import {CommandNames, CommandDescriptions, CommandOptions, GameSubCommandNames} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions, GameSubCommandNames} from '../../lib/constants.js';
 import spinWheel from './spin.js';
 import spinSlots from './slots.js';
 

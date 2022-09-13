@@ -2,7 +2,7 @@ import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} f
 import {Item} from '../../utils/items.js';
 import User from '../../database/user/index.js';
 import {BuyType, UserInterface} from '../../types/user.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import {createBuyButton, createUnboxButton} from '../../utils/buttons.js';
 import ResponseError from '../../utils/error.js';
 

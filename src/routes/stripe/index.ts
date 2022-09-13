@@ -1,11 +1,11 @@
 import Stripe from 'stripe';
 import {FastifyReply} from 'fastify';
-import stripe from '../../stripe.js';
+import stripe from '../../lib/stripe.js';
 import Order from '../../database/order/index.js';
 import {FULLFILLMENTS} from './payment.js';
 import User from '../../database/user/index.js';
 import isProd from '../../utils/enviroment.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 
 async function createOrder(session: Stripe.Checkout.Session) {
   const user = await User.findOne({discordId: session.client_reference_id});

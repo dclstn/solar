@@ -1,6 +1,6 @@
 import {AutocompleteInteraction, ButtonInteraction, CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 import {handleItemAutocomplete, Item, Items} from '../../utils/items.js';
 import {ItemTypes} from '../../utils/enums.js';

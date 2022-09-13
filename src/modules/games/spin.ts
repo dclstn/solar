@@ -2,7 +2,7 @@ import {CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import cron from 'node-cron';
 import {success, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import User from '../../database/user/index.js';
 import Cooldown from '../../database/cooldown/index.js';

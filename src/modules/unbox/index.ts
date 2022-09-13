@@ -3,10 +3,10 @@ import {createSellButton, createUnboxButton} from '../../utils/buttons.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import {Item, Items, RarityColours} from '../../utils/items.js';
 import components from '../../interactions/components.js';
-import {MessageComponentIds} from '../../constants.js';
+import {MessageComponentIds} from '../../lib/constants.js';
 import User from '../../database/user/index.js';
 import ResponseError from '../../utils/error.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import {generatorDescription, warning} from '../../utils/embed.js';
 
 async function unboxGift(interaction: ButtonInteraction, gift: Item) {

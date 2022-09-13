@@ -1,10 +1,10 @@
 import {CommandInteraction} from 'discord.js';
 import {TopUserMoneyModel, VirtualUserModel, TopCPHUserModel} from '../../database/user/aggregation-models.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import {createLeaderboardEmbed, numberWithCommas, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
 import User from '../../database/user/index.js';
-import {LeaderboardType} from '../../constants.js';
+import {LeaderboardType} from '../../lib/constants.js';
 
 function aggregate() {
   User.aggregate([

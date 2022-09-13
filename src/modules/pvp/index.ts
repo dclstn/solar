@@ -2,13 +2,13 @@ import {CommandInteraction} from 'discord.js';
 import moment from 'moment';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {success, warning} from '../../utils/embed.js';
-import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import ResponseError from '../../utils/error.js';
-import Sentry from '../../sentry.js';
-import webhook from '../../webhook.js';
+import Sentry from '../../lib/sentry.js';
+import webhook from '../../lib/webhook.js';
 
 const {duration} = moment;
 

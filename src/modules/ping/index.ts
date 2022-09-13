@@ -1,6 +1,6 @@
 import type {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
-import {CommandNames, CommandDescriptions} from '../../constants.js';
+import {CommandNames, CommandDescriptions} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 
 class Ping {

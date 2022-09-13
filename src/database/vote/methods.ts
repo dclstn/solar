@@ -6,7 +6,7 @@ import User from '../user/index.js';
 import {success} from '../../utils/embed.js';
 import {ItemIds, Items} from '../../utils/items.js';
 import redlock, {userLockId} from '../../redis/locks.js';
-import webhook from '../../webhook.js';
+import webhook from '../../lib/webhook.js';
 import Cooldown from '../cooldown/index.js';
 
 export async function addVote(providerId: string) {

@@ -2,7 +2,7 @@ import {CommandInteraction} from 'discord.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import User from '../../database/user/index.js';
 import ResponseError from '../../utils/error.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 
 import {numberWithCommas, slotsWin, slotsLose, warning} from '../../utils/embed.js';
 import {SLOT_ITEMS, Item} from '../../utils/items.js';

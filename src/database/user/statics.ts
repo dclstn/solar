@@ -1,5 +1,5 @@
 import {User} from 'discord.js';
-import client from '../../client.js';
+import client from '../../lib/client.js';
 
 export async function get(user: User, email: string, locale: string) {
   return this.findOneAndUpdate(

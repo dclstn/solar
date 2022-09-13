@@ -2,12 +2,12 @@ import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} f
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import moment from 'moment';
 import cron from 'node-cron';
-import {CommandNames, CommandDescriptions, MessageComponentIds, CommandOptions} from '../../constants.js';
+import {CommandNames, CommandDescriptions, MessageComponentIds, CommandOptions} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 import Vote from '../../database/vote/index.js';
 import {success, warning} from '../../utils/embed.js';
 import ResponseError from '../../utils/error.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import components from '../../interactions/components.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {createToggleNotificationButton, VOTE_DBL, VOTE_TOPGG} from '../../utils/buttons.js';

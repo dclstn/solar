@@ -2,11 +2,11 @@ import {AutocompleteInteraction, CommandInteraction} from 'discord.js';
 import {findById, handleItemAutocomplete} from '../../utils/items.js';
 import ResponseError from '../../utils/error.js';
 import {success, warning} from '../../utils/embed.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import User from '../../database/user/index.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import autocomplete from '../../interactions/autocomplete.js';
-import {CommandNames, AdminSubCommandNames} from '../../constants.js';
+import {CommandNames, AdminSubCommandNames} from '../../lib/constants.js';
 
 autocomplete.on(CommandNames.ADMIN, (interaction: AutocompleteInteraction) => {
   if (interaction.options.getSubcommand() !== AdminSubCommandNames.GIVE) return;

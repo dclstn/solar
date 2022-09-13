@@ -1,13 +1,13 @@
 import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import chunk from 'lodash.chunk';
-import {CommandNames, CommandDescriptions, CommandOptions, Defaults, MessageComponentIds} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions, Defaults, MessageComponentIds} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 import {BUYABLE_ITEMS, Item} from '../../utils/items.js';
 import components from '../../interactions/components.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {createItemButton} from '../../utils/buttons.js';
-import client from '../../client.js';
+import client from '../../lib/client.js';
 
 const PAGES: Item[][] = chunk(BUYABLE_ITEMS, Defaults.STORE_PAGE_SIZE);
 

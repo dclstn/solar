@@ -1,6 +1,6 @@
 import {FastifyReply} from 'fastify';
-import stripe from '../../stripe.js';
-import {ENDPOINT, PaymentIds} from '../../constants.js';
+import stripe from '../../lib/stripe.js';
+import {ENDPOINT, PaymentIds} from '../../lib/constants.js';
 
 const Images = {
   [PaymentIds.BAG_OF_GEMS]: '/imgs/square_bag_gems.png',

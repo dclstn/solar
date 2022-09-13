@@ -2,7 +2,7 @@ import {CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {warning} from '../../utils/embed.js';
 import commands from '../../interactions/commands.js';
-import {CommandNames, CommandDescriptions, CommandOptions, AdminSubCommandNames} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions, AdminSubCommandNames} from '../../lib/constants.js';
 import reload from './reload.js';
 import giveItem from './give.js';
 

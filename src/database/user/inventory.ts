@@ -1,4 +1,4 @@
-import {Defaults} from '../../constants.js';
+import {Defaults} from '../../lib/constants.js';
 import {findById, Item} from '../../utils/items.js';
 import type {Cords, ItemInterface} from '../../types/item.js';
 import ResponseError from '../../utils/error.js';

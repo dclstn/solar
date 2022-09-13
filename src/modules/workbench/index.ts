@@ -7,14 +7,14 @@ import {
   CommandOptions,
   WorkBenchSubCommandNames,
   MessageComponentIds,
-} from '../../constants.js';
+} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 import WorkBench from '../../database/workbench/index.js';
 import {RECIPES} from '../../utils/recipes.js';
 import type {BenchInterface} from '../../types/bench.js';
 import ResponseError from '../../utils/error.js';
 import {warning} from '../../utils/embed.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import {capitalizeFirstLetter} from '../../utils/index.js';
 import {handleRecipesPage} from './recipes.js';

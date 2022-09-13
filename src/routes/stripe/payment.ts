@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import Stripe from 'stripe';
-import {PaymentIds} from '../../constants.js';
+import {PaymentIds} from '../../lib/constants.js';
 import User from '../../database/user/index.js';
 
 export const FULLFILLMENTS = {

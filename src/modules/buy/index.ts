@@ -3,13 +3,13 @@ import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {createBuyButton, PROFILE_BUTTON} from '../../utils/buttons.js';
 import {DEFAULT_BUYABLE_ITEMS, fuzzy, Item, Items} from '../../utils/items.js';
 import commands from '../../interactions/commands.js';
-import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../lib/constants.js';
 import User from '../../database/user/index.js';
 import {purchase, warning} from '../../utils/embed.js';
 import components from '../../interactions/components.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import ResponseError from '../../utils/error.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import autocomplete from '../../interactions/autocomplete.js';
 import {BuyType} from '../../types/user.js';
 

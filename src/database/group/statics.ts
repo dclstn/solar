@@ -1,4 +1,4 @@
-import {Defaults} from '../../constants.js';
+import {Defaults} from '../../lib/constants.js';
 import {Roles} from '../../utils/enums.js';
 import type {UserInterface} from '../../types/user.js';
 import {numberWithCommas} from '../../utils/embed.js';

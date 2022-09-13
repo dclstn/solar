@@ -1,12 +1,12 @@
 /* eslint-disable import/prefer-default-export */
 import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed} from 'discord.js';
 import chunk from 'lodash.chunk';
-import {Defaults} from '../../constants.js';
+import {Defaults} from '../../lib/constants.js';
 import {Item, Items} from '../../utils/items.js';
 import {emoteStrings} from '../../utils/emotes.js';
 import {createItemButton} from '../../utils/buttons.js';
 import {RECIPES} from '../../utils/recipes.js';
-import client from '../../client.js';
+import client from '../../lib/client.js';
 
 const PAGES: Item[][] = chunk(
   Object.values(RECIPES).map(({reward}) => Items[reward]),

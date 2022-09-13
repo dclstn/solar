@@ -2,14 +2,14 @@
 import Discord from 'discord.js';
 import * as dotenv from 'dotenv';
 import chalk from 'chalk';
-import Sentry from './sentry.js';
+import Sentry from './lib/sentry.js';
 
 dotenv.config();
 
 const manager = new Discord.ShardingManager('./dist/app.js', {
   totalShards: 'auto',
   token: process.env.DISCORD_TOKEN,
-  respawn: true
+  respawn: true,
 });
 
 manager.on('shardCreate', (shard) => {
@@ -23,4 +23,4 @@ manager.on('shardCreate', (shard) => {
 
 manager.spawn({timeout: 60000});
 
-import('./server.js');
+import('./lib/server.js');

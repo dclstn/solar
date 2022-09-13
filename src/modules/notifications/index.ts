@@ -1,5 +1,5 @@
 import {ButtonInteraction} from 'discord.js';
-import {MessageComponentIds} from '../../constants.js';
+import {MessageComponentIds} from '../../lib/constants.js';
 import components from '../../interactions/components.js';
 import Cooldown from '../../database/cooldown/index.js';
 import {success} from '../../utils/embed.js';

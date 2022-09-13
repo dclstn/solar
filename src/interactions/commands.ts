@@ -2,9 +2,9 @@ import {CommandInteraction, MessageActionRow} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Routes} from 'discord-api-types/v9';
 import {Context} from '@sentry/types';
-import Sentry from '../sentry.js';
-import rest from '../rest.js';
-import client from '../client.js';
+import Sentry from '../lib/sentry.js';
+import rest from '../lib/rest.js';
+import client from '../lib/client.js';
 import {warning} from '../utils/embed.js';
 import {INVITE_BOT} from '../utils/buttons.js';
 

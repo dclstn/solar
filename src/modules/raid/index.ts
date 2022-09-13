@@ -1,17 +1,17 @@
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageEmbed, User} from 'discord.js';
 import commands from '../../interactions/commands.js';
-import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions, MessageComponentIds} from '../../lib/constants.js';
 import Raid from '../../database/raid/index.js';
 import {createJoinRaidButton, createLeaveRaidButton, PROFILE_BUTTON, SHOP_BUTTON} from '../../utils/buttons.js';
 import components from '../../interactions/components.js';
 import {numberWithCommas, success, warning} from '../../utils/embed.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import ResponseError from '../../utils/error.js';
 import type {RaidResultInterface} from '../../types/raid.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import {emoteStrings} from '../../utils/emotes.js';
-import webhook from '../../webhook.js';
+import webhook from '../../lib/webhook.js';
 
 const createInitialEmbed = (user: User, target: User) =>
   new MessageEmbed()

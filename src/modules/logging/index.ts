@@ -1,7 +1,7 @@
 import {Interaction} from 'discord.js';
 import Mongoose from 'mongoose';
-import Sentry from '../../sentry.js';
-import client from '../../client.js';
+import Sentry from '../../lib/sentry.js';
+import client from '../../lib/client.js';
 import Guild from '../../database/guild/index.js';
 import UserModel from '../../database/user/index.js';
 

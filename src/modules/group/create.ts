@@ -5,7 +5,7 @@ import {success, warning} from '../../utils/embed.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import User from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import ResponseError from '../../utils/error.js';
 
 export default async function create(interaction: CommandInteraction) {

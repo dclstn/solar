@@ -1,10 +1,10 @@
 import {AutocompleteInteraction, CommandInteraction} from 'discord.js';
 import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {handleItemAutocomplete, Items} from '../../utils/items.js';
-import {CommandNames, CommandDescriptions, CommandOptions} from '../../constants.js';
+import {CommandNames, CommandDescriptions, CommandOptions} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 import User from '../../database/user/index.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import redlock, {userLock} from '../../redis/locks.js';
 import ResponseError from '../../utils/error.js';
 import {success, warning} from '../../utils/embed.js';

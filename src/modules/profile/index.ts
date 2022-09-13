@@ -9,12 +9,12 @@ import {
   UserCommandNames,
   MessageComponentIds,
   Defaults,
-} from '../../constants.js';
+} from '../../lib/constants.js';
 import commands from '../../interactions/commands.js';
 import UserModel from '../../database/user/index.js';
 import type {UserInterface} from '../../types/user.js';
 import components from '../../interactions/components.js';
-import Sentry from '../../sentry.js';
+import Sentry from '../../lib/sentry.js';
 import {findById, ItemIds, Items} from '../../utils/items.js';
 import {InventoryType} from '../../utils/enums.js';
 import {emoteStrings} from '../../utils/emotes.js';
