@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {Routes} from 'discord-api-types/v9';
 import dotenv from 'dotenv';
 import glob from 'glob';
@@ -16,6 +17,7 @@ async function reloadApplicationCommands(): Promise<void> {
     for await (const file of files) {
       try {
         await import(`../../${file}`);
+        console.log(`Importing: ${file}`);
       } catch (moduleErr) {
         Sentry.captureException(moduleErr);
       }
