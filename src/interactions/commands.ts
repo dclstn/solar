@@ -1,12 +1,10 @@
-import {CommandInteraction, MessageActionRow} from 'discord.js';
+import {CommandInteraction} from 'discord.js';
 import {EventEmitter} from 'events';
 import {Routes} from 'discord-api-types/v9';
 import {Context} from '@sentry/types';
 import Sentry from '../lib/sentry.js';
 import rest from '../lib/rest.js';
 import client from '../lib/client.js';
-import {warning} from '../utils/embed.js';
-import {INVITE_BOT} from '../utils/buttons.js';
 
 export interface Command {
   type: number;
@@ -37,38 +35,6 @@ class Commands extends EventEmitter {
         this.emit(interaction.commandName, interaction);
       });
     });
-
-    client.on('messageCreate', async (message) => {
-      this.commands.forEach(async (command) => {
-        if (message.content.startsWith(`!${command.name}`)) {
-          try {
-            await message.channel.send({
-              content: `<@${message.author.id}>`,
-              embeds: [
-                warning(
-                  `**IMPORTANT!** We have moved to slash commands! try \`/${command.name}\` instead! You may need to reinvite our bot with the correct permissions.`
-                ),
-              ],
-              components: [new MessageActionRow().addComponents(INVITE_BOT)],
-            });
-          } catch (e) {}
-        }
-      });
-
-      if (message.content.startsWith('!castle') || message.content.startsWith('!c')) {
-        try {
-          await message.channel.send({
-            content: `<@${message.author.id}>`,
-            embeds: [
-              warning(
-                `**IMPORTANT!** We have moved to slash commands! try \`/profile\` instead! You may need to reinvite our bot with the correct permissions.`
-              ),
-            ],
-            components: [new MessageActionRow().addComponents(INVITE_BOT)],
-          });
-        } catch (e) {}
-      }
-    });
   }
 
   getCommands() {
@@ -81,27 +47,6 @@ class Commands extends EventEmitter {
     }
 
     this.commands.set(command.name, command);
-  }
-
-  async reloadApplicationCommands(global = false): Promise<void> {
-    const commands = Array.from(this.commands.values()).map((command: Command) => ({
-      type: command.type,
-      name: command.name,
-      description: command.description,
-      options: command.options,
-    }));
-
-    if (global) {
-      await rest.put(Routes.applicationCommands(client.user.id), {body: commands});
-    } else {
-      await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID), {body: commands});
-    }
-
-    Sentry.addBreadcrumb({
-      category: 'commands',
-      message: 'Application commands were reloaded',
-      level: Sentry.Severity.Info,
-    });
   }
 }
 

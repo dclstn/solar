@@ -3,7 +3,6 @@ import {ApplicationCommandTypes} from 'discord.js/typings/enums';
 import {warning} from '../../utils/embed.js';
 import commands from '../../interactions/commands.js';
 import {CommandNames, CommandDescriptions, CommandOptions, AdminSubCommandNames} from '../../lib/constants.js';
-import reload from './reload.js';
 import giveItem from './give.js';
 
 commands.on(CommandNames.ADMIN, (interaction: CommandInteraction) => {
@@ -16,9 +15,6 @@ commands.on(CommandNames.ADMIN, (interaction: CommandInteraction) => {
   }
 
   switch (interaction.options.getSubcommand()) {
-    case AdminSubCommandNames.RELOAD:
-      reload(interaction);
-      break;
     case AdminSubCommandNames.GIVE:
       giveItem(interaction);
       break;

@@ -12,7 +12,7 @@ export interface RaidInterface extends Mongoose.Document {
 
 export interface RaidResultInterface {
   raiders: (UserInterface & {
-    _id: any;
+    _id: string;
   })[];
   target: UserInterface;
   success: boolean;
