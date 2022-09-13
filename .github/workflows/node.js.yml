@@ -17,7 +17,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
+      - name: Linting Check
+        run: npm run lint
+      - name: Clean Install
+        run: npm ci
       - name: Create env file
         run: |
           touch .env
@@ -35,8 +38,6 @@ jobs:
           echo WEBHOOK_URL=${{ secrets.WEBHOOK_URL }} >> .env
           echo STRIPE_WEBHOOK_KEY=${{ secrets.STRIPE_WEBHOOK_KEY }} >> .env
           cat .env
-      - name: Linting Check
-        run: npm run lint
       - name: Reload Application Commands
         run: npm run reload-commands
       - name: PM2 Restart
