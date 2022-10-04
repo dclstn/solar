@@ -27,7 +27,7 @@
     "eslint-plugin-import": "^2.26.0"
   },
   "dependencies": {
-    "@discordjs/rest": "^1.0.0",
+    "@discordjs/rest": "^1.2.0",
     "@fastify/cors": "^8.0.0",
     "@meanie/mongoose-upsert-many": "^2.2.0",
     "@sentry/integrations": "^7.8.1",
