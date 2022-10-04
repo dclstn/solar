@@ -17,7 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/mongoose": "^5.11.97",
-    "@types/node": "^18.7.10",
+    "@types/node": "^18.8.0",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.7.0",
     "eslint": "^8.4.1",
@@ -27,7 +27,7 @@
     "eslint-plugin-import": "^2.26.0"
   },
   "dependencies": {
-    "@discordjs/rest": "^1.0.0",
+    "@discordjs/rest": "^1.2.0",
     "@fastify/cors": "^8.0.0",
     "@meanie/mongoose-upsert-many": "^2.2.0",
     "@sentry/integrations": "^7.8.1",
@@ -38,7 +38,7 @@
     "chalk": "^5.0.0",
     "discord-api-types": "^0.37.0",
     "discord.js": "^13.1.0",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.3",
     "engine-blackjack": "^0.9.2",
     "fastify": "^4.3.0",
     "fastify-jwt": "^4.1.3",
