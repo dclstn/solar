@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import Sentry from '@sentry/node';
 import dotenv from 'dotenv';
-import Tracing from '@sentry/tracing';
 
 dotenv.config();
 
@@ -16,11 +15,6 @@ Sentry.init({
     }
     return event;
   },
-  integrations: [
-    new Tracing.Integrations.Mongo({
-      useMongoose: true,
-    }),
-  ],
 });
 
 export default Sentry;
