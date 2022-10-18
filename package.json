@@ -47,7 +47,7 @@
     "fastify-sentry": "^1.4.0",
     "fuse.js": "^6.6.2",
     "glob": "^7.2.0",
-    "humanize-duration": "^3.27.2",
+    "humanize-duration": "^3.27.3",
     "ioredis": "^4.28.2",
     "lodash": "^4.17.21",
     "lodash.chunk": "^4.2.0",
