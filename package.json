@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@discordjs/rest": "^1.2.0",
-    "@fastify/cors": "^8.0.0",
+    "@fastify/cors": "^8.1.1",
     "@meanie/mongoose-upsert-many": "^2.2.0",
     "@sentry/integrations": "^7.14.1",
     "@sentry/node": "^6.16.1",
