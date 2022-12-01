@@ -82,7 +82,7 @@ export default async function globalLeaderboard(interaction: CommandInteraction)
 
     await interaction.reply({
       embeds: [embed],
-      ephemeral: true,
+      ephemeral: false,
     });
   } catch (err) {
     if (err instanceof ResponseError) {
