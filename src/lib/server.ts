@@ -45,7 +45,7 @@ App.decorate('authenticate', async (request, response: FastifyReply) => {
 //   optionsSuccessStatus: 200,
 // });
 
-fastify.register(fastifyCors, {
+App.register(fastifyCors, {
   origin: "*",
   methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
 });
