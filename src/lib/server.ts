@@ -50,7 +50,7 @@ App.setErrorHandler(async (error, request, reply) => {
   reply.status(500).send({message: 'something went wrong'});
 });
 
-App.listen(PORT, (error) => {
+App.listen({port: PORT, host: '0.0.0.0'}, (error) => {
   if (error) {
     console.error(error);
     process.exit(1);
