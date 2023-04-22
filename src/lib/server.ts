@@ -16,7 +16,7 @@ import commandsRoute from '../routes/commands/index.js';
 import workshopRoute from '../routes/workshop/index.js';
 
 const App = fastify();
-const PORT = 8000;
+const PORT = process.env.PORT ?? 3000;
 
 App.register(fastifyJwt, {secret: process.env.JWT_SECRET});
 
