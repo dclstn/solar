@@ -45,10 +45,9 @@ App.register(fastifyCors, {
   optionsSuccessStatus: 200,
 });
 
-App.register(fastifyCors, {
-  origin: /https:\/\/api.castlemania.bot/,
-  credentials: true,
-  optionsSuccessStatus: 200,
+fastify.register(fastifyCors, {
+  origin: "*",
+  methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
 });
 
 App.setErrorHandler(async (error, request, reply) => {
