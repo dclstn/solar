@@ -4,6 +4,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 console.log('Connected to Mongoose');
 
-console.log(process.env.MONGO_URI);
+const connectionpOptions = {
+    dbName: "solar",
+    useNewParser: true,
+    useUnifiedTopology: true,
+};
 
-export default mongoose.connect(process.env.MONGO_URI);
+export default mongoose.createConnection(process.env.MONGO_URI, connectionpOptions);
