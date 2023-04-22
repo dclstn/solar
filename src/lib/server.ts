@@ -45,6 +45,12 @@ App.register(fastifyCors, {
   optionsSuccessStatus: 200,
 });
 
+App.register(fastifyCors, {
+  origin: /https:\/\/api.castlemania.bot/,
+  credentials: true,
+  optionsSuccessStatus: 200,
+});
+
 App.setErrorHandler(async (error, request, reply) => {
   Sentry.captureException(error);
   reply.status(500).send({message: 'something went wrong'});
