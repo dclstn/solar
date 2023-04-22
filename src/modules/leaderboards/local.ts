@@ -56,7 +56,7 @@ export default async function localLeaderboard(interaction: CommandInteraction) 
 
     interaction.reply({
       embeds: [embed],
-      ephemeral: true,
+      ephemeral: false,
     });
   } catch (err) {
     if (err instanceof ResponseError) {
