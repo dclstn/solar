@@ -6,7 +6,6 @@ console.log('Connected to Mongoose');
 
 const connectionpOptions = {
   dbName: 'solar',
-  useNewParser: true,
   useUnifiedTopology: true,
 };
 
