@@ -23,7 +23,7 @@ async function processPurchase(
 
   try {
     const user = await User.get(interaction.user);
-    await user.buy(item, amount, currency);
+    await user.buy(item, Math.floor(amount), currency);
 
     const NAV_ROW = new MessageActionRow().addComponents(createBuyButton(user, item, currency), PROFILE_BUTTON);
 
